@@ -791,7 +791,7 @@ function App() {
             {[
               { label: "Learn", id: "learn-section" },
               { label: "Topics", id: "topics-section" },
-              { label: "Market Trends", id: "market-trends-section" },
+              { label: "Newsletter", id: "market-trends-section" },
               { label: "Community", id: "community-section" },
               { label: "Ask a Question", id: "ask-question-section" },
             ].map((item) => (
@@ -1047,7 +1047,7 @@ function App() {
                 What do you want help with first?
               </div>
               <div style={{ color: "rgba(255,255,255,0.82)", lineHeight: "1.7", fontSize: "15px" }}>
-                Learning the basics, understanding investing, reading market trends, or connecting with experienced people.
+                Learning the basics, understanding investing, reading highlighted newsletter, or connecting with experienced people.
               </div>
             </div>
           </div>
