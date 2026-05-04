@@ -20,6 +20,81 @@ function App() {
 
   const topics = [
     {
+      title: "First-Time Learning",
+      slug: "first-time-learning",
+      description: "Start here if you are new and want the basics explained clearly.",
+      icon: "🌱",
+    },
+    {
+      title: "Investing",
+      slug: "investing",
+      description: "Understand how people build wealth through real estate and what to watch out for.",
+      icon: "📈",
+    },
+    {
+      title: "Development",
+      slug: "development",
+      description: "Learn how projects go from land and ideas to finished buildings.",
+      icon: "🏗️",
+    },
+    {
+      title: "Legal & Regulations",
+      slug: "legal-regulations",
+      description: "See the laws, rules, and approvals that shape how real estate works.",
+      icon: "⚖️",
+    },
+    {
+      title: "Tokenization",
+      slug: "tokenization",
+      description: "Learn how ownership can be split into digital shares and what that means.",
+      icon: "🪙",
+    },
+    {
+      title: "Market Data",
+      slug: "market-data",
+      description: "Read simple updates on prices, rents, and where the market is moving.",
+      icon: "📊",
+    },
+    {
+      title: "Brokerage/Agents",
+      slug: "brokerage-agents",
+      description: "Understand what agents do and how buyers and sellers work with them.",
+      icon: "🤝",
+    },
+    {
+      title: "Commercial Real Estate",
+      slug: "commercial-real-estate",
+      description: "Explore offices, retail, mixed-use properties, and larger deals.",
+      icon: "🏢",
+    },
+    {
+      title: "Financing",
+      slug: "financing",
+      description: "Learn how deals are funded, from mortgages to larger capital stacks.",
+      icon: "💵",
+    },
+    {
+      title: "Zoning",
+      slug: "zoning",
+      description: "See how land use rules affect what can be built and where.",
+      icon: "🗺️",
+    },
+    {
+      title: "PropTech",
+      slug: "proptech",
+      description: "Explore the technology changing how real estate is bought, managed, and understood.",
+      icon: "💻",
+    },
+    {
+      title: "Deal Flow",
+      slug: "deal-flow",
+      description: "Understand how opportunities are found, shared, and evaluated.",
+      icon: "📂",
+    },
+  ];
+  
+  const topicGroups = [
+    {
       groupTitle: "Start Here",
       groupDescription: "Best for beginners who are new to real estate.",
       items: ["First-Time Learning", "Market Data", "Brokerage/Agents"],
