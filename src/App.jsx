@@ -1146,7 +1146,16 @@ function App() {
         </section>
 
         <section id="topics-section" style={{ marginBottom: "34px" }}>
-          <div style={{ marginBottom: "18px" }}>
+          <div 
+            style={{ 
+              marginBottom: "28px",
+              textAlign:"center",
+              maxWidth: "700px",
+              marginLeft: "auto",
+              marginRight: "auto"
+
+            }}
+            >
             <div style={{ fontSize: "14px", fontWeight: "800", color: "#94613c", marginBottom: "10px" }}>
               TOPICS
             </div>
