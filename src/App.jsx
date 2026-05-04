@@ -20,76 +20,24 @@ function App() {
 
   const topics = [
     {
-      title: "First-Time Learning",
-      slug: "first-time-learning",
-      description: "Start here if you are new and want the basics explained clearly.",
-      icon: "🌱",
+      groupTitle: "Start Here",
+      groupDescription: "Best for beginners who are new to real estate.",
+      items: ["First-Time Learning", "Market Data", "Brokerage/Agents"],
     },
     {
-      title: "Investing",
-      slug: "investing",
-      description: "Understand how people build wealth through real estate and what to watch out for.",
-      icon: "📈",
+      groupTitle: "Money & Investing",
+      groupDescription: "Learn how money moves through real estate.",
+      items: ["Investing", "Financing", "Deal Flow"],
     },
     {
-      title: "Development",
-      slug: "development",
-      description: "Learn how projects go from land and ideas to finished buildings.",
-      icon: "🏗️",
+      groupTitle: "Building & Property Types",
+      groupDescription: "Understand how real estate is created and used.",
+      items: ["Development", "Commercial Real Estate", "Zoning"],
     },
     {
-      title: "Legal & Regulations",
-      slug: "legal-regulations",
-      description: "See the laws, rules, and approvals that shape how real estate works.",
-      icon: "⚖️",
-    },
-    {
-      title: "Tokenization",
-      slug: "tokenization",
-      description: "Learn how ownership can be split into digital shares and what that means.",
-      icon: "🪙",
-    },
-    {
-      title: "Market Data",
-      slug: "market-data",
-      description: "Read simple updates on prices, rents, and where the market is moving.",
-      icon: "📊",
-    },
-    {
-      title: "Brokerage/Agents",
-      slug: "brokerage-agents",
-      description: "Understand what agents do and how buyers and sellers work with them.",
-      icon: "🤝",
-    },
-    {
-      title: "Commercial Real Estate",
-      slug: "commercial-real-estate",
-      description: "Explore offices, retail, mixed-use properties, and larger deals.",
-      icon: "🏢",
-    },
-    {
-      title: "Financing",
-      slug: "financing",
-      description: "Learn how deals are funded, from mortgages to larger capital stacks.",
-      icon: "💵",
-    },
-    {
-      title: "Zoning",
-      slug: "zoning",
-      description: "See how land use rules affect what can be built and where.",
-      icon: "🗺️",
-    },
-    {
-      title: "PropTech",
-      slug: "proptech",
-      description: "Explore the technology changing how real estate is bought, managed, and understood.",
-      icon: "💻",
-    },
-    {
-      title: "Deal Flow",
-      slug: "deal-flow",
-      description: "Understand how opportunities are found, shared, and evaluated.",
-      icon: "📂",
+      groupTitle: "Rules, Ownership & Tech",
+      groupDescription: "Explore the systems changing real estate.",
+      items: ["Legal & Regulations", "Tokenization", "PropTech"],
     },
   ];
 
@@ -1127,109 +1075,98 @@ function App() {
             <div style={{ fontSize: "14px", fontWeight: "800", color: "#94613c", marginBottom: "10px" }}>
               TOPICS
             </div>
-            <h2 style={{ fontSize: "34px", marginBottom: "10px" }}>Pick a topic and start there</h2>
-            <p style={{ fontSize: "17px", color: "#61707d", lineHeight: "1.7", maxWidth: "780px" }}>
+            <h2 style={{ fontSize: "34px", marginBottom: "10px" }}>
+              Pick a topic and start there
+            </h2>
+            <p
+              style={{
+                fontSize: "17px",
+                color: "#61707d",
+                lineHeight: "1.7",
+                maxWidth: "780px",
+              }}
+            >
               These are not just tags. Each topic is meant to help beginners understand a part of real estate more clearly.
             </p>
           </div>
 
-          <div
-            style={{
-              display: "grid",
-              gridTemplateColumns: "repeat(3, minmax(0, 1fr))",
-              gap: "18px",
-            }}
-          >
-            {topics.map((topic) => {
-              return (
-                <button
-                  key={topic.title}
-                  onClick={() => openTopicPage(topic)}
-                  style={{
-                    textAlign: "left",
-                    border: "1px solid #ddd5ca",
-                    borderRadius: "24px",
-                    backgroundColor: "white",
-                    padding: "22px",
-                    cursor: "pointer",
-                    boxShadow: "0 4px 14px rgba(0,0,0,0.03)",
-                  }}
-                >
-                  <div style={{ fontSize: "24px", marginBottom: "12px" }}>{topic.icon}</div>
-                  <div
+          <div style={{ display: "grid", gap: "26px" }}>
+            {topicGroups.map((group) => (
+              <div key={group.groupTitle}>
+                <div style={{ marginBottom: "14px" }}>
+                  <h3
                     style={{
-                      fontSize: "20px",
-                      fontWeight: "700",
-                      marginBottom: "10px",
+                      fontSize: "24px",
+                      marginBottom: "6px",
                       color: "#233746",
                     }}
                   >
-                    {topic.title}
-                  </div>
-                  <div style={{ fontSize: "15px", lineHeight: "1.7", color: "#61707d" }}>
-                    {topic.description}
-                  </div>
-                </button>
-              );
-            })}
-          </div>
-        </section>
+                    {group.groupTitle}
+                  </h3>
 
-        <section
-          style={{
-            backgroundColor: "white",
-            border: "1px solid #e5ddd3",
-            borderRadius: "28px",
-            padding: "30px",
-            marginBottom: "34px",
-          }}
-        >
-          <div style={{ fontSize: "14px", fontWeight: "800", color: "#94613c", marginBottom: "10px" }}>
-            BEGINNER QUESTIONS
-          </div>
-          <h2 style={{ fontSize: "34px", marginBottom: "10px" }}>
-            What people usually want help with first
-          </h2>
-          <p style={{ fontSize: "17px", color: "#61707d", lineHeight: "1.7", marginBottom: "22px" }}>
-            This makes the product feel more direct. Instead of dropping someone into a busy feed, it shows them useful starting points.
-          </p>
-
-          <div style={{ display: "grid", gap: "16px" }}>
-            {beginnerQuestions.map((item) => (
-              <div
-                key={item.title}
-                style={{
-                  backgroundColor: "#faf7f2",
-                  border: "1px solid #ebe1d5",
-                  borderRadius: "22px",
-                  padding: "20px",
-                }}
-              >
-                <div style={{ fontSize: "19px", fontWeight: "700", marginBottom: "8px" }}>
-                  {item.title}
+                  <p
+                    style={{
+                      fontSize: "15px",
+                      color: "#61707d",
+                      lineHeight: "1.6",
+                      margin: 0,
+                    }}
+                  >
+                    {group.groupDescription}
+                  </p>
                 </div>
+
                 <div
                   style={{
-                    fontSize: "15px",
-                    color: "#61707d",
-                    lineHeight: "1.7",
-                    marginBottom: "10px",
+                    display: "grid",
+                    gridTemplateColumns: "repeat(3, minmax(0, 1fr))",
+                    gap: "18px",
                   }}
                 >
-                  {item.body}
-                </div>
-                <div
-                  style={{
-                    display: "inline-block",
-                    borderRadius: "999px",
-                    backgroundColor: "#ebecef",
-                    padding: "8px 12px",
-                    fontSize: "13px",
-                    fontWeight: "700",
-                    color: "#48657a",
-                  }}
-                >
-                  {item.topic}
+                  {group.items.map((topicTitle) => {
+                    const topic = topics.find((item) => item.title === topicTitle);
+
+                    return (
+                      <button
+                        key={topic.title}
+                        onClick={() => openTopicPage(topic)}
+                        style={{
+                          textAlign: "left",
+                          border: "1px solid #ddd5ca",
+                          borderRadius: "24px",
+                          backgroundColor: "white",
+                          padding: "22px",
+                          cursor: "pointer",
+                          boxShadow: "0 4px 14px rgba(0,0,0,0.03)",
+                        }}
+                      >
+                        <div style={{ fontSize: "24px", marginBottom: "12px" }}>
+                          {topic.icon}
+                        </div>
+
+                        <div
+                          style={{
+                            fontSize: "20px",
+                            fontWeight: "700",
+                            marginBottom: "10px",
+                            color: "#233746",
+                          }}
+                        >
+                          {topic.title}
+                        </div>
+
+                        <div
+                          style={{
+                            fontSize: "15px",
+                            lineHeight: "1.7",
+                            color: "#61707d",
+                          }}
+                        >
+                          {topic.description}
+                        </div>
+                      </button>
+                    );
+                  })}
                 </div>
               </div>
             ))}
