@@ -981,44 +981,6 @@ function App() {
                 See market updates
               </button>
             </div>
-
-            <div
-              style={{
-                display: "grid",
-                gridTemplateColumns: "repeat(3, minmax(0, 1fr))",
-                gap: "14px",
-              }}
-            >
-              {[
-                ["1", "Pick a topic"],
-                ["2", "Learn in simple language"],
-                ["3", "Connect with professionals"],
-              ].map(([num, text]) => (
-                <div
-                  key={text}
-                  style={{
-                    border: "1px solid #ece5db",
-                    borderRadius: "20px",
-                    padding: "18px",
-                    backgroundColor: "#fbf9f6",
-                  }}
-                >
-                  <div
-                    style={{
-                      fontSize: "13px",
-                      color: "#94613c",
-                      fontWeight: "800",
-                      marginBottom: "8px",
-                    }}
-                  >
-                    STEP {num}
-                  </div>
-                  <div style={{ fontSize: "17px", fontWeight: "700", lineHeight: "1.4" }}>
-                    {text}
-                  </div>
-                </div>
-              ))}
-            </div>
           </div>
 
           <div
