@@ -2,13 +2,13 @@ import { useState } from "react";
 
 function App() {
   const [showSignupModal, setShowSignupModal] = useState(false);
-  const [showWalkthrough, setShowWalkthrough] = useState(false);
   const [onboardingStep, setOnboardingStep] = useState(1);
   const [selectedGoal, setSelectedGoal] = useState("");
   const [activeNav, setActiveNav] = useState("Learn");
   const [savedInterests, setSavedInterests] = useState([]);
   const [currentTopicPage, setCurrentTopicPage] = useState(null);
 
+  // DATA: options shown in the sign-up modal.
   const learningGoals = [
     "Learn the basics",
     "Understand investing",
@@ -18,6 +18,7 @@ function App() {
     "Connect with professionals",
   ];
 
+  // DATA: topic cards used on the homepage and topic detail pages.
   const topics = [
     {
       title: "First-Time Learning",
@@ -93,6 +94,7 @@ function App() {
     },
   ];
 
+  // DATA: groups that organize the topic cards on the homepage.
   const topicGroups = [
     {
       groupTitle: "Start Here",
@@ -116,6 +118,7 @@ function App() {
     },
   ];
 
+  // DATA: people shown in the community section.
   const professionals = [
     {
       name: "Sarah Jenkins",
@@ -134,6 +137,7 @@ function App() {
     },
   ];
 
+  // DATA: content shown after someone clicks a topic card.
   const topicPageContent = {
     "first-time-learning": {
       intro:
@@ -257,6 +261,7 @@ function App() {
     },
   };
 
+  // DATA: newsletter content connected to each topic page.
   const topicNewsletterHighlights = {
     "first-time-learning": {
       label: "Beginner Basics",
@@ -392,6 +397,7 @@ function App() {
     },
   };
 
+  // DATA: main newsletter card on the homepage.
   const weeklyNewsletter = {
     label: "THIS WEEK’S HIGHLIGHT",
     date: "Week of April 21",
@@ -455,6 +461,7 @@ function App() {
     }
   };
 
+  // DATA: quick-start action cards in the blue hero box.
   const heroActions = [
     {
       number: "1",
@@ -479,6 +486,7 @@ function App() {
     },
   ];
 
+  // DATA: small feature chips under the main hero text.
   const featureChips = [
     {
       icon: "📖",
@@ -496,147 +504,106 @@ function App() {
       body: "Ask questions and learn from experts.",
     },
   ];
-  if (currentTopicPage) {
-    const topicInfo = topicPageContent[currentTopicPage.slug];
-    const topicNewsletter = topicNewsletterHighlights[currentTopicPage.slug];
-
-    return (
-      <div
-        style={{
-          minHeight: "100vh",
-          backgroundColor: "#f7f4ef",
-          color: "#243746",
-          fontFamily:
-            'Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif',
-          padding: "40px 24px 80px",
-          boxSizing: "border-box",
-        }}
-      >
-        <div style={{ maxWidth: "980px", margin: "0 auto" }}>
-          <button
-            onClick={goBackToHome}
-            style={{
-              border: "none",
-              background: "transparent",
-              color: "#355569",
-              fontSize: "16px",
-              fontWeight: "700",
-              cursor: "pointer",
-              marginBottom: "24px",
-            }}
-          >
-            ← Back to topics
-          </button>
-
-          <div
-            style={{
-              backgroundColor: "white",
-              border: "1px solid #e5ddd3",
-              borderRadius: "28px",
-              padding: "36px",
-              marginBottom: "24px",
-              boxSizing: "border-box",
-            }}
-          >
-            <div style={{ fontSize: "36px", marginBottom: "12px" }}>{currentTopicPage.icon}</div>
-
-            <div
+    // PAGE: Topic detail page shown when a user clicks one topic card.
+    if (currentTopicPage) {
+      const topicInfo = topicPageContent[currentTopicPage.slug];
+      const topicNewsletter = topicNewsletterHighlights[currentTopicPage.slug];
+  
+      return (
+        <div
+          style={{
+            minHeight: "100vh",
+            backgroundColor: "#f7f4ef",
+            color: "#243746",
+            fontFamily:
+              'Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif',
+            padding: "40px 24px 80px",
+            boxSizing: "border-box",
+          }}
+        >
+          <div style={{ maxWidth: "980px", margin: "0 auto" }}>
+            <button
+              onClick={goBackToHome}
               style={{
-                fontSize: "13px",
-                fontWeight: "800",
-                color: "#94613c",
-                marginBottom: "10px",
-              }}
-            >
-              TOPIC PAGE
-            </div>
-
-            <h1 style={{ fontSize: "42px", marginBottom: "12px" }}>{currentTopicPage.title}</h1>
-
-            <p
-              style={{
-                fontSize: "18px",
-                color: "#61707d",
-                lineHeight: "1.7",
+                border: "none",
+                background: "transparent",
+                color: "#355569",
+                fontSize: "16px",
+                fontWeight: "700",
+                cursor: "pointer",
                 marginBottom: "24px",
               }}
             >
-              {currentTopicPage.description}
-            </p>
-
+              ← Back to topics
+            </button>
+  
             <div
               style={{
-                backgroundColor: "#faf7f2",
-                border: "1px solid #ebe1d5",
-                borderRadius: "22px",
-                padding: "22px",
+                backgroundColor: "white",
+                border: "1px solid #e5ddd3",
+                borderRadius: "28px",
+                padding: "36px",
+                marginBottom: "24px",
+                boxSizing: "border-box",
               }}
             >
-              <h2 style={{ marginTop: 0, marginBottom: "10px" }}>
-                What this topic helps you understand
-              </h2>
-              <p
+              <div style={{ fontSize: "36px", marginBottom: "12px" }}>{currentTopicPage.icon}</div>
+  
+              <div
                 style={{
-                  fontSize: "16px",
-                  color: "#61707d",
-                  lineHeight: "1.7",
-                  margin: 0,
+                  fontSize: "13px",
+                  fontWeight: "800",
+                  color: "#94613c",
+                  marginBottom: "10px",
                 }}
               >
-                {topicInfo?.intro}
+                TOPIC PAGE
+              </div>
+  
+              <h1 style={{ fontSize: "42px", marginBottom: "12px" }}>{currentTopicPage.title}</h1>
+  
+              <p
+                style={{
+                  fontSize: "18px",
+                  color: "#61707d",
+                  lineHeight: "1.7",
+                  marginBottom: "24px",
+                }}
+              >
+                {currentTopicPage.description}
               </p>
-            </div>
-          </div>
-
-          <div
-            style={{
-              backgroundColor: "white",
-              border: "1px solid #e5ddd3",
-              borderRadius: "28px",
-              padding: "30px",
-              boxSizing: "border-box",
-            }}
-          >
-            <div
-              style={{
-                fontSize: "13px",
-                fontWeight: "800",
-                color: "#94613c",
-                marginBottom: "12px",
-              }}
-            >
-              START HERE
-            </div>
-
-            <h2 style={{ fontSize: "30px", marginBottom: "18px" }}>Simple things to explore first</h2>
-
-            <div style={{ display: "grid", gap: "14px", marginBottom: "24px" }}>
-              {topicInfo?.points.map((item) => (
-                <div
-                  key={item}
+  
+              <div
+                style={{
+                  backgroundColor: "#faf7f2",
+                  border: "1px solid #ebe1d5",
+                  borderRadius: "22px",
+                  padding: "22px",
+                }}
+              >
+                <h2 style={{ marginTop: 0, marginBottom: "10px" }}>
+                  What this topic helps you understand
+                </h2>
+                <p
                   style={{
-                    backgroundColor: "#faf7f2",
-                    border: "1px solid #ebe1d5",
-                    borderRadius: "20px",
-                    padding: "18px",
                     fontSize: "16px",
-                    fontWeight: "600",
-                    color: "#2b3d4b",
+                    color: "#61707d",
+                    lineHeight: "1.7",
+                    margin: 0,
                   }}
                 >
-                  {item}
-                </div>
-              ))}
+                  {topicInfo?.intro}
+                </p>
+              </div>
             </div>
-
+  
             <div
               style={{
                 backgroundColor: "white",
                 border: "1px solid #e5ddd3",
                 borderRadius: "28px",
                 padding: "30px",
-                marginTop: "24px",
-                marginBottom: "24px",
+                boxSizing: "border-box",
               }}
             >
               <div
@@ -647,1272 +614,1238 @@ function App() {
                   marginBottom: "12px",
                 }}
               >
-                NEWSLETTER HIGHLIGHT
+                START HERE
               </div>
-
-              <h2 style={{ fontSize: "30px", marginBottom: "12px" }}>
-                Related newsletter for this topic
-              </h2>
-
-              <p
-                style={{
-                  fontSize: "16px",
-                  color: "#61707d",
-                  lineHeight: "1.7",
-                  marginBottom: "20px",
-                  maxWidth: "760px",
-                }}
-              >
-                This gives beginners a simple read that connects directly to the topic they are exploring now.
-              </p>
-
+  
+              <h2 style={{ fontSize: "30px", marginBottom: "18px" }}>Simple things to explore first</h2>
+  
+              <div style={{ display: "grid", gap: "14px", marginBottom: "24px" }}>
+                {topicInfo?.points.map((item) => (
+                  <div
+                    key={item}
+                    style={{
+                      backgroundColor: "#faf7f2",
+                      border: "1px solid #ebe1d5",
+                      borderRadius: "20px",
+                      padding: "18px",
+                      fontSize: "16px",
+                      fontWeight: "600",
+                      color: "#2b3d4b",
+                    }}
+                  >
+                    {item}
+                  </div>
+                ))}
+              </div>
+  
               <div
                 style={{
-                  backgroundColor: "#fbf8f3",
-                  border: "1px solid #ebe1d5",
-                  borderRadius: "24px",
-                  padding: "24px",
+                  backgroundColor: "white",
+                  border: "1px solid #e5ddd3",
+                  borderRadius: "28px",
+                  padding: "30px",
+                  marginTop: "24px",
                   marginBottom: "24px",
                 }}
               >
                 <div
                   style={{
-                    display: "inline-block",
-                    borderRadius: "999px",
-                    padding: "7px 12px",
-                    backgroundColor: "#efe7dc",
-                    color: "#94613c",
-                    fontSize: "12px",
+                    fontSize: "13px",
                     fontWeight: "800",
+                    color: "#94613c",
                     marginBottom: "12px",
                   }}
                 >
-                  {topicNewsletter?.label}
+                  NEWSLETTER HIGHLIGHT
                 </div>
-
-                <div
+  
+                <h2 style={{ fontSize: "30px", marginBottom: "12px" }}>
+                  Related newsletter for this topic
+                </h2>
+  
+                <p
                   style={{
-                    fontSize: "24px",
-                    fontWeight: "800",
-                    marginBottom: "10px",
-                    color: "#233746",
-                  }}
-                >
-                  {topicNewsletter?.title}
-                </div>
-
-                <div
-                  style={{
-                    fontSize: "15px",
-                    lineHeight: "1.7",
+                    fontSize: "16px",
                     color: "#61707d",
-                    marginBottom: "14px",
+                    lineHeight: "1.7",
+                    marginBottom: "20px",
+                    maxWidth: "760px",
                   }}
                 >
-                  {topicNewsletter?.intro}
+                  This gives beginners a simple read that connects directly to the topic they are exploring now.
+                </p>
+  
+                <div
+                  style={{
+                    backgroundColor: "#fbf8f3",
+                    border: "1px solid #ebe1d5",
+                    borderRadius: "24px",
+                    padding: "24px",
+                    marginBottom: "24px",
+                  }}
+                >
+                  <div
+                    style={{
+                      display: "inline-block",
+                      borderRadius: "999px",
+                      padding: "7px 12px",
+                      backgroundColor: "#efe7dc",
+                      color: "#94613c",
+                      fontSize: "12px",
+                      fontWeight: "800",
+                      marginBottom: "12px",
+                    }}
+                  >
+                    {topicNewsletter?.label}
+                  </div>
+  
+                  <div
+                    style={{
+                      fontSize: "24px",
+                      fontWeight: "800",
+                      marginBottom: "10px",
+                      color: "#233746",
+                    }}
+                  >
+                    {topicNewsletter?.title}
+                  </div>
+  
+                  <div
+                    style={{
+                      fontSize: "15px",
+                      lineHeight: "1.7",
+                      color: "#61707d",
+                      marginBottom: "14px",
+                    }}
+                  >
+                    {topicNewsletter?.intro}
+                  </div>
+  
+                  <ul
+                    style={{
+                      paddingLeft: "20px",
+                      color: "#48657a",
+                      lineHeight: "1.9",
+                      fontSize: "15px",
+                      margin: 0,
+                    }}
+                  >
+                    {topicNewsletter?.bullets.map((bullet) => (
+                      <li key={bullet}>{bullet}</li>
+                    ))}
+                  </ul>
                 </div>
-
+              </div>
+  
+              <div style={{ display: "flex", gap: "12px", flexWrap: "wrap" }}>
+                <button
+                  onClick={() => saveInterest(currentTopicPage.title)}
+                  style={{
+                    border: "none",
+                    backgroundColor: savedInterests.includes(currentTopicPage.title)
+                      ? "#355569"
+                      : "#2f596e",
+                    color: "white",
+                    borderRadius: "16px",
+                    padding: "14px 20px",
+                    fontSize: "16px",
+                    fontWeight: "700",
+                    cursor: "pointer",
+                  }}
+                >
+                  {savedInterests.includes(currentTopicPage.title)
+                    ? "Saved to your top interests"
+                    : "Save to my top 3 interests"}
+                </button>
+  
+                <button
+                  onClick={openSignup}
+                  style={{
+                    border: "1px solid #d7dddd",
+                    backgroundColor: "white",
+                    color: "#355569",
+                    borderRadius: "16px",
+                    padding: "14px 20px",
+                    fontSize: "16px",
+                    fontWeight: "700",
+                    cursor: "pointer",
+                  }}
+                >
+                  Continue to sign up
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      );
+    }
+  
+    // PAGE: Homepage.
+    return (
+      <div
+        style={{
+          minHeight: "100vh",
+          backgroundColor: "#f7f4ef",
+          color: "#243746",
+          fontFamily:
+            'Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif',
+        }}
+      >
+        {/* SECTION: Sticky header / top navigation */}
+        <div
+          style={{
+            position: "sticky",
+            top: 0,
+            zIndex: 20,
+            backgroundColor: "rgba(247, 244, 239, 0.94)",
+            backdropFilter: "blur(10px)",
+            borderBottom: "1px solid #e5ddd3",
+          }}
+        >
+          <div
+            style={{
+              width: "100%",
+              maxWidth: "1500px",
+              margin: "0 auto",
+              padding: "18px clamp(20px, 4vw, 44px)",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+              gap: "24px",
+              flexWrap: "wrap",
+              boxSizing: "border-box",
+            }}
+          >
+            {/* Logo / brand */}
+            <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+              <div
+                style={{
+                  width: "42px",
+                  height: "42px",
+                  borderRadius: "14px",
+                  backgroundColor: "#2f596e",
+                  color: "white",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  fontWeight: "800",
+                  fontSize: "20px",
+                }}
+              >
+                ⌂
+              </div>
+              <div>
+                <div style={{ fontSize: "21px", fontWeight: "800", color: "#2f596e" }}>MyHome</div>
+                <div style={{ fontSize: "12px", color: "#7b8794" }}>
+                  Real estate, made easier to understand
+                </div>
+              </div>
+            </div>
+  
+            {/* Main navigation buttons */}
+            <div style={{ display: "flex", alignItems: "center", gap: "10px", flexWrap: "wrap" }}>
+              {[
+                { label: "Learn", id: "learn-section" },
+                { label: "Topics", id: "topics-section" },
+                { label: "Newsletter", id: "market-trends-section" },
+                { label: "Community", id: "community-section" },
+                { label: "Ask a Question", id: "ask-question-section" },
+              ].map((item) => (
+                <button
+                  key={item.label}
+                  onClick={() => handleNavClick(item.id, item.label)}
+                  style={{
+                    border: "none",
+                    borderRadius: "999px",
+                    padding: "10px 16px",
+                    backgroundColor: activeNav === item.label ? "#2f596e" : "transparent",
+                    color: activeNav === item.label ? "white" : "#355569",
+                    fontSize: "15px",
+                    fontWeight: "600",
+                    cursor: "pointer",
+                  }}
+                >
+                  {item.label}
+                </button>
+              ))}
+            </div>
+  
+            {/* Header call-to-action only. Removed the old "How it works" button. */}
+            <div style={{ display: "flex", alignItems: "center" }}>
+              <button
+                onClick={openSignup}
+                style={{
+                  border: "none",
+                  borderRadius: "14px",
+                  padding: "12px 18px",
+                  backgroundColor: "#2f596e",
+                  color: "white",
+                  fontSize: "15px",
+                  fontWeight: "700",
+                  cursor: "pointer",
+                }}
+              >
+                Sign up free
+              </button>
+            </div>
+          </div>
+        </div>
+  
+        {/* MAIN PAGE CONTENT */}
+        <main
+          style={{
+            width: "100%",
+            maxWidth: "1500px",
+            margin: "0 auto",
+            padding: "34px clamp(20px, 4vw, 44px) 80px",
+            boxSizing: "border-box",
+          }}
+        >
+          {/* SECTION: Hero / first screen */}
+          <section
+            id="learn-section"
+            style={{
+              display: "grid",
+              gridTemplateColumns: "minmax(0, 1.05fr) minmax(360px, 0.95fr)",
+              gap: "28px",
+              alignItems: "stretch",
+              marginBottom: "56px",
+            }}
+          >
+            {/* Left hero card: main message */}
+            <div
+              style={{
+                backgroundColor: "white",
+                border: "1px solid #e1d8cd",
+                borderRadius: "32px",
+                padding: "36px",
+                boxShadow: "0 8px 30px rgba(0,0,0,0.04)",
+                minHeight: "470px",
+                boxSizing: "border-box",
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "center",
+              }}
+            >
+              <div
+                style={{
+                  alignSelf: "flex-start",
+                  display: "inline-block",
+                  padding: "8px 14px",
+                  borderRadius: "999px",
+                  backgroundColor: "#efe7dc",
+                  color: "#94613c",
+                  fontSize: "13px",
+                  fontWeight: "700",
+                  marginBottom: "20px",
+                }}
+              >
+                Beginner-first real estate platform
+              </div>
+  
+              <h1
+                style={{
+                  fontSize: "44px",
+                  lineHeight: "1.08",
+                  margin: "0 0 18px",
+                  color: "#233746",
+                  maxWidth: "620px",
+                }}
+              >
+                Learn real estate
+                <br />
+                without feeling lost.
+              </h1>
+  
+              <p
+                style={{
+                  fontSize: "17px",
+                  lineHeight: "1.75",
+                  color: "#5f6d79",
+                  maxWidth: "620px",
+                  margin: "0 0 24px",
+                }}
+              >
+                MyHome helps beginners understand real estate in simple language, explore topics step by step, read
+                market newsletters, and connect with experienced people when they are ready.
+              </p>
+  
+              <div style={{ display: "flex", gap: "14px", flexWrap: "wrap", marginBottom: "30px" }}>
+                <button
+                  onClick={openSignup}
+                  style={{
+                    border: "none",
+                    borderRadius: "16px",
+                    padding: "14px 20px",
+                    backgroundColor: "#2f596e",
+                    color: "white",
+                    fontSize: "16px",
+                    fontWeight: "700",
+                    cursor: "pointer",
+                  }}
+                >
+                  Start learning
+                </button>
+  
+                <button
+                  onClick={() => handleNavClick("topics-section", "Topics")}
+                  style={{
+                    border: "1px solid #d7dddd",
+                    borderRadius: "16px",
+                    padding: "14px 20px",
+                    backgroundColor: "white",
+                    color: "#355569",
+                    fontSize: "16px",
+                    fontWeight: "700",
+                    cursor: "pointer",
+                  }}
+                >
+                  Browse topics
+                </button>
+  
+                <button
+                  onClick={() => handleNavClick("market-trends-section", "Newsletter")}
+                  style={{
+                    border: "1px solid #d7dddd",
+                    borderRadius: "16px",
+                    padding: "14px 20px",
+                    backgroundColor: "white",
+                    color: "#355569",
+                    fontSize: "16px",
+                    fontWeight: "700",
+                    cursor: "pointer",
+                  }}
+                >
+                  See market updates
+                </button>
+              </div>
+  
+              {/* Small supporting feature chips under the main hero buttons */}
+              <div
+                style={{
+                  display: "grid",
+                  gridTemplateColumns: "repeat(3, minmax(0, 1fr))",
+                  gap: "12px",
+                }}
+              >
+                {featureChips.map((item) => (
+                  <div
+                    key={item.title}
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      gap: "10px",
+                      minHeight: "64px",
+                    }}
+                  >
+                    <div
+                      style={{
+                        width: "42px",
+                        height: "42px",
+                        borderRadius: "999px",
+                        backgroundColor: "#f3eadf",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        fontSize: "18px",
+                        flexShrink: 0,
+                      }}
+                    >
+                      {item.icon}
+                    </div>
+                    <div>
+                      <div style={{ fontSize: "13px", fontWeight: "800", color: "#233746", marginBottom: "3px" }}>
+                        {item.title}
+                      </div>
+                      <div style={{ fontSize: "12px", lineHeight: "1.4", color: "#61707d" }}>
+                        {item.body}
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+  
+            {/* Right hero card: action-based quick start hub */}
+            <div
+              style={{
+                backgroundColor: "#2f596e",
+                color: "white",
+                borderRadius: "32px",
+                padding: "34px",
+                boxSizing: "border-box",
+                minHeight: "470px",
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "space-between",
+                boxShadow: "0 8px 30px rgba(0,0,0,0.05)",
+              }}
+            >
+              <div>
+                <div
+                  style={{
+                    fontSize: "13px",
+                    letterSpacing: "0.08em",
+                    fontWeight: "800",
+                    opacity: 0.82,
+                    marginBottom: "12px",
+                    textAlign: "center",
+                  }}
+                >
+                  START HERE
+                </div>
+  
+                <h2
+                  style={{
+                    fontSize: "30px",
+                    lineHeight: "1.18",
+                    margin: "0 0 20px",
+                    color: "white",
+                    textAlign: "center",
+                  }}
+                >
+                  3 easy ways to
+                  <br />
+                  get started
+                </h2>
+  
+                <div style={{ display: "grid", gap: "14px" }}>
+                  {heroActions.map((item) => (
+                    <button
+                      key={item.title}
+                      onClick={item.action}
+                      style={{
+                        width: "100%",
+                        border: "1px solid rgba(255,255,255,0.08)",
+                        backgroundColor: "rgba(255,255,255,0.08)",
+                        color: "white",
+                        borderRadius: "18px",
+                        padding: "16px",
+                        display: "grid",
+                        gridTemplateColumns: "42px 1fr 24px",
+                        gap: "12px",
+                        alignItems: "center",
+                        cursor: "pointer",
+                        textAlign: "left",
+                      }}
+                    >
+                      <div
+                        style={{
+                          width: "42px",
+                          height: "42px",
+                          borderRadius: "14px",
+                          backgroundColor: "rgba(255,255,255,0.10)",
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                          fontSize: "20px",
+                        }}
+                      >
+                        {item.icon}
+                      </div>
+  
+                      <div>
+                        <div style={{ fontSize: "14px", fontWeight: "800", marginBottom: "4px" }}>
+                          {item.number}. {item.title}
+                        </div>
+                        <div style={{ fontSize: "12px", lineHeight: "1.45", color: "rgba(255,255,255,0.78)" }}>
+                          {item.body}
+                        </div>
+                      </div>
+  
+                      <div
+                        style={{
+                          fontSize: "24px",
+                          color: "rgba(255,255,255,0.78)",
+                          textAlign: "right",
+                        }}
+                      >
+                        →
+                      </div>
+                    </button>
+                  ))}
+                </div>
+              </div>
+  
+              <div
+                style={{
+                  borderTop: "1px solid rgba(255,255,255,0.16)",
+                  marginTop: "24px",
+                  paddingTop: "18px",
+                  textAlign: "center",
+                }}
+              >
+                <div style={{ fontSize: "15px", fontWeight: "700", marginBottom: "12px" }}>
+                  Ready to personalize your experience?
+                </div>
+                <button
+                  onClick={openSignup}
+                  style={{
+                    border: "none",
+                    borderRadius: "14px",
+                    padding: "12px 16px",
+                    backgroundColor: "white",
+                    color: "#2f596e",
+                    fontSize: "15px",
+                    fontWeight: "800",
+                    cursor: "pointer",
+                  }}
+                >
+                  Create free profile
+                </button>
+              </div>
+            </div>
+          </section>
+  
+          {/* SECTION: Topics grid */}
+          <section id="topics-section" style={{ marginBottom: "34px" }}>
+            <div
+              style={{
+                marginBottom: "28px",
+                textAlign: "center",
+                maxWidth: "700px",
+                marginLeft: "auto",
+                marginRight: "auto",
+              }}
+            >
+              <div style={{ fontSize: "14px", fontWeight: "800", color: "#94613c", marginBottom: "10px" }}>
+                TOPICS
+              </div>
+              <h2 style={{ fontSize: "34px", marginBottom: "10px" }}>Pick a topic and start there</h2>
+              <p
+                style={{
+                  fontSize: "17px",
+                  color: "#61707d",
+                  lineHeight: "1.7",
+                  maxWidth: "780px",
+                }}
+              >
+                These are not just tags. Each topic is meant to help beginners understand a part of real estate more
+                clearly.
+              </p>
+            </div>
+  
+            <div style={{ display: "grid", gap: "26px" }}>
+              {topicGroups.map((group) => (
+                <div key={group.groupTitle}>
+                  <div style={{ marginBottom: "18px", textAlign: "left" }}>
+                    <h3
+                      style={{
+                        fontSize: "22px",
+                        marginBottom: "6px",
+                        color: "#233746",
+                      }}
+                    >
+                      {group.groupTitle}
+                    </h3>
+  
+                    <p
+                      style={{
+                        fontSize: "14px",
+                        color: "#61707d",
+                        lineHeight: "1.6",
+                        margin: 0,
+                      }}
+                    >
+                      {group.groupDescription}
+                    </p>
+                  </div>
+  
+                  <div
+                    style={{
+                      display: "grid",
+                      gridTemplateColumns: "repeat(3, minmax(0, 1fr))",
+                      gap: "18px",
+                    }}
+                  >
+                    {group.items.map((topicTitle) => {
+                      const topic = topics.find((item) => item.title === topicTitle);
+  
+                      return (
+                        <button
+                          key={topic.title}
+                          onClick={() => openTopicPage(topic)}
+                          style={{
+                            textAlign: "left",
+                            border: "1px solid #ddd5ca",
+                            borderRadius: "20px",
+                            backgroundColor: "white",
+                            padding: "22px",
+                            cursor: "pointer",
+                            boxShadow: "0 4px 14px rgba(0,0,0,0.03)",
+                            minHeight: "132px",
+                          }}
+                        >
+                          <div style={{ fontSize: "24px", marginBottom: "12px" }}>{topic.icon}</div>
+  
+                          <div
+                            style={{
+                              fontSize: "18px",
+                              fontWeight: "700",
+                              marginBottom: "8px",
+                              color: "#233746",
+                            }}
+                          >
+                            {topic.title}
+                          </div>
+  
+                          <div
+                            style={{
+                              fontSize: "14px",
+                              lineHeight: "1.6",
+                              color: "#61707d",
+                            }}
+                          >
+                            {topic.description}
+                          </div>
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </section>
+  
+          {/* SECTION: Newsletter and Community */}
+          <section
+            id="market-trends-section"
+            style={{
+              display: "grid",
+              gridTemplateColumns: "1.05fr 0.95fr",
+              gap: "22px",
+              marginBottom: "34px",
+            }}
+          >
+            <div
+              style={{
+                backgroundColor: "white",
+                border: "1px solid #e5ddd3",
+                borderRadius: "28px",
+                padding: "30px",
+              }}
+            >
+              <div style={{ fontSize: "14px", fontWeight: "800", color: "#94613c", marginBottom: "10px" }}>
+                THIS WEEK’S NEWSLETTER
+              </div>
+  
+              <h2 style={{ fontSize: "34px", marginBottom: "12px" }}>What we’re highlighting this week</h2>
+  
+              <p style={{ fontSize: "17px", color: "#61707d", lineHeight: "1.7", marginBottom: "20px" }}>
+                Instead of giving beginners too many newsletter choices at once, MyHome can feature one strong weekly
+                highlight that feels timely, easier to follow, and more intentional.
+              </p>
+  
+              <div
+                style={{
+                  backgroundColor: "#fbf8f3",
+                  border: "1px solid #ebe1d5",
+                  borderRadius: "24px",
+                  padding: "28px",
+                }}
+              >
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                    flexWrap: "wrap",
+                    gap: "12px",
+                    marginBottom: "16px",
+                  }}
+                >
+                  <div
+                    style={{
+                      display: "inline-block",
+                      borderRadius: "999px",
+                      padding: "7px 12px",
+                      backgroundColor: "#efe7dc",
+                      color: "#94613c",
+                      fontSize: "12px",
+                      fontWeight: "800",
+                    }}
+                  >
+                    {weeklyNewsletter.label}
+                  </div>
+  
+                  <div
+                    style={{
+                      fontSize: "13px",
+                      fontWeight: "700",
+                      color: "#61707d",
+                    }}
+                  >
+                    {weeklyNewsletter.date}
+                  </div>
+                </div>
+  
+                <div
+                  style={{
+                    fontSize: "28px",
+                    fontWeight: "800",
+                    marginBottom: "12px",
+                    color: "#233746",
+                    lineHeight: "1.2",
+                  }}
+                >
+                  {weeklyNewsletter.title}
+                </div>
+  
+                <div
+                  style={{
+                    fontSize: "16px",
+                    lineHeight: "1.8",
+                    color: "#61707d",
+                    marginBottom: "18px",
+                    maxWidth: "760px",
+                  }}
+                >
+                  {weeklyNewsletter.intro}
+                </div>
+  
                 <ul
                   style={{
                     paddingLeft: "20px",
                     color: "#48657a",
                     lineHeight: "1.9",
                     fontSize: "15px",
-                    margin: 0,
+                    marginBottom: "22px",
                   }}
                 >
-                  {topicNewsletter?.bullets.map((bullet) => (
+                  {weeklyNewsletter.bullets.map((bullet) => (
                     <li key={bullet}>{bullet}</li>
                   ))}
                 </ul>
-              </div>
-            </div>
-
-            <div style={{ display: "flex", gap: "12px", flexWrap: "wrap" }}>
-              <button
-                onClick={() => saveInterest(currentTopicPage.title)}
-                style={{
-                  border: "none",
-                  backgroundColor: savedInterests.includes(currentTopicPage.title)
-                    ? "#355569"
-                    : "#2f596e",
-                  color: "white",
-                  borderRadius: "16px",
-                  padding: "14px 20px",
-                  fontSize: "16px",
-                  fontWeight: "700",
-                  cursor: "pointer",
-                }}
-              >
-                {savedInterests.includes(currentTopicPage.title)
-                  ? "Saved to your top interests"
-                  : "Save to my top 3 interests"}
-              </button>
-
-              <button
-                onClick={openSignup}
-                style={{
-                  border: "1px solid #d7dddd",
-                  backgroundColor: "white",
-                  color: "#355569",
-                  borderRadius: "16px",
-                  padding: "14px 20px",
-                  fontSize: "16px",
-                  fontWeight: "700",
-                  cursor: "pointer",
-                }}
-              >
-                Continue to sign up
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-    );
-  }
-
-  return (
-    <div
-      style={{
-        minHeight: "100vh",
-        backgroundColor: "#f7f4ef",
-        color: "#243746",
-        fontFamily:
-          'Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif',
-      }}
-    >
-      <div
-        style={{
-          position: "sticky",
-          top: 0,
-          zIndex: 20,
-          backgroundColor: "rgba(247, 244, 239, 0.94)",
-          backdropFilter: "blur(10px)",
-          borderBottom: "1px solid #e5ddd3",
-        }}
-      >
-        <div
-          style={{
-            width: "100%",
-            maxWidth: "1440px",
-            margin: "0 auto",
-            padding: "18px clamp(20px, 4vw, 48px)",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-            gap: "24px",
-            flexWrap: "wrap",
-            boxSizing: "border-box",
-          }}
-        >
-          <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
-            <div
-              style={{
-                width: "42px",
-                height: "42px",
-                borderRadius: "14px",
-                backgroundColor: "#2f596e",
-                color: "white",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                fontWeight: "800",
-                fontSize: "20px",
-              }}
-            >
-              ⌂
-            </div>
-            <div>
-              <div style={{ fontSize: "21px", fontWeight: "800", color: "#2f596e" }}>MyHome</div>
-              <div style={{ fontSize: "12px", color: "#7b8794" }}>
-                Real estate, made easier to understand
-              </div>
-            </div>
-          </div>
-
-          <div style={{ display: "flex", alignItems: "center", gap: "10px", flexWrap: "wrap" }}>
-            {[
-              { label: "Learn", id: "learn-section" },
-              { label: "Topics", id: "topics-section" },
-              { label: "Newsletter", id: "market-trends-section" },
-              { label: "Community", id: "community-section" },
-              { label: "Ask a Question", id: "ask-question-section" },
-            ].map((item) => (
-              <button
-                key={item.label}
-                onClick={() => handleNavClick(item.id, item.label)}
-                style={{
-                  border: "none",
-                  borderRadius: "999px",
-                  padding: "10px 16px",
-                  backgroundColor: activeNav === item.label ? "#2f596e" : "transparent",
-                  color: activeNav === item.label ? "white" : "#355569",
-                  fontSize: "15px",
-                  fontWeight: "600",
-                  cursor: "pointer",
-                }}
-              >
-                {item.label}
-              </button>
-            ))}
-          </div>
-
-          <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
-            <button
-              onClick={() => setShowWalkthrough(true)}
-              style={{
-                border: "1px solid #cfd6d9",
-                borderRadius: "14px",
-                padding: "11px 16px",
-                backgroundColor: "white",
-                color: "#355569",
-                fontSize: "15px",
-                fontWeight: "600",
-                cursor: "pointer",
-              }}
-            >
-              How it works
-            </button>
-            <button
-              onClick={openSignup}
-              style={{
-                border: "none",
-                borderRadius: "14px",
-                padding: "12px 18px",
-                backgroundColor: "#2f596e",
-                color: "white",
-                fontSize: "15px",
-                fontWeight: "700",
-                cursor: "pointer",
-              }}
-            >
-              Sign up free
-            </button>
-          </div>
-        </div>
-      </div>
-
-      <main
-        style={{
-          width: "100%",
-          maxWidth: "1440px",
-          margin: "0 auto",
-          padding: "42px clamp(20px, 4vw, 48px) 80px",
-          boxSizing: "border-box",
-        }}
-      >
-        <section
-          id="learn-section"
-          style={{
-            display: "grid",
-            gridTemplateColumns: "minmax(0, 1.05fr) minmax(380px, 0.95fr)",
-            gap: "32px",
-            alignItems: "stretch",
-            marginBottom: "64px",
-          }}
-        >
-          <div
-            style={{
-              backgroundColor: "white",
-              border: "1px solid #e1d8cd",
-              borderRadius: "32px",
-              padding: "42px",
-              boxShadow: "0 8px 30px rgba(0,0,0,0.04)",
-              minHeight: "520px",
-              boxSizing: "border-box",
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "center",
-            }}
-          >
-            <div
-              style={{
-                alignSelf: "flex-start",
-                display: "inline-block",
-                padding: "8px 14px",
-                borderRadius: "999px",
-                backgroundColor: "#efe7dc",
-                color: "#94613c",
-                fontSize: "13px",
-                fontWeight: "700",
-                marginBottom: "22px",
-              }}
-            >
-              Beginner-first real estate platform
-            </div>
-
-            <h1
-              style={{
-                fontSize: "52px",
-                lineHeight: "1.06",
-                margin: "0 0 20px",
-                color: "#233746",
-                maxWidth: "680px",
-              }}
-            >
-              Learn real estate
-              <br />
-              without feeling lost.
-            </h1>
-
-            <p
-              style={{
-                fontSize: "18px",
-                lineHeight: "1.75",
-                color: "#5f6d79",
-                maxWidth: "660px",
-                margin: "0 0 28px",
-              }}
-            >
-              MyHome helps beginners understand real estate in simple language, explore topics step by step, read
-              market newsletters, and connect with experienced people when they are ready.
-            </p>
-
-            <div style={{ display: "flex", gap: "14px", flexWrap: "wrap", marginBottom: "36px" }}>
-              <button
-                onClick={openSignup}
-                style={{
-                  border: "none",
-                  borderRadius: "16px",
-                  padding: "15px 22px",
-                  backgroundColor: "#2f596e",
-                  color: "white",
-                  fontSize: "16px",
-                  fontWeight: "700",
-                  cursor: "pointer",
-                }}
-              >
-                Start learning
-              </button>
-
-              <button
-                onClick={() => handleNavClick("topics-section", "Topics")}
-                style={{
-                  border: "1px solid #d7dddd",
-                  borderRadius: "16px",
-                  padding: "15px 22px",
-                  backgroundColor: "white",
-                  color: "#355569",
-                  fontSize: "16px",
-                  fontWeight: "700",
-                  cursor: "pointer",
-                }}
-              >
-                Browse topics
-              </button>
-
-              <button
-                onClick={() => handleNavClick("market-trends-section", "Newsletter")}
-                style={{
-                  border: "1px solid #d7dddd",
-                  borderRadius: "16px",
-                  padding: "15px 22px",
-                  backgroundColor: "white",
-                  color: "#355569",
-                  fontSize: "16px",
-                  fontWeight: "700",
-                  cursor: "pointer",
-                }}
-              >
-                See market updates
-              </button>
-            </div>
-
-            <div
-              style={{
-                display: "grid",
-                gridTemplateColumns: "repeat(3, minmax(0, 1fr))",
-                gap: "14px",
-              }}
-            >
-              {featureChips.map((item) => (
-                <div
-                  key={item.title}
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    gap: "12px",
-                    minHeight: "74px",
-                  }}
-                >
-                  <div
+  
+                <div style={{ display: "flex", gap: "12px", flexWrap: "wrap" }}>
+                  <button
                     style={{
-                      width: "46px",
-                      height: "46px",
-                      borderRadius: "999px",
-                      backgroundColor: "#f3eadf",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      fontSize: "20px",
-                      flexShrink: 0,
+                      border: "none",
+                      borderRadius: "14px",
+                      padding: "12px 18px",
+                      backgroundColor: "#2f596e",
+                      color: "white",
+                      fontSize: "15px",
+                      fontWeight: "700",
+                      cursor: "pointer",
                     }}
                   >
-                    {item.icon}
-                  </div>
-                  <div>
-                    <div style={{ fontSize: "14px", fontWeight: "800", color: "#233746", marginBottom: "4px" }}>
-                      {item.title}
-                    </div>
-                    <div style={{ fontSize: "12px", lineHeight: "1.45", color: "#61707d" }}>
-                      {item.body}
-                    </div>
-                  </div>
+                    Read this week’s newsletter
+                  </button>
+  
+                  <button
+                    style={{
+                      border: "1px solid #d7dddd",
+                      borderRadius: "14px",
+                      padding: "12px 18px",
+                      backgroundColor: "white",
+                      color: "#355569",
+                      fontSize: "15px",
+                      fontWeight: "700",
+                      cursor: "pointer",
+                    }}
+                  >
+                    See past highlights
+                  </button>
                 </div>
-              ))}
+              </div>
             </div>
-          </div>
-
-          <div
-            style={{
-              backgroundColor: "#2f596e",
-              color: "white",
-              borderRadius: "32px",
-              padding: "40px",
-              boxSizing: "border-box",
-              minHeight: "520px",
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "space-between",
-              boxShadow: "0 8px 30px rgba(0,0,0,0.05)",
-            }}
-          >
-            <div>
+  
+            <div
+              id="community-section"
+              style={{
+                backgroundColor: "white",
+                border: "1px solid #e5ddd3",
+                borderRadius: "28px",
+                padding: "30px",
+              }}
+            >
+              <div style={{ fontSize: "14px", fontWeight: "800", color: "#94613c", marginBottom: "10px" }}>
+                COMMUNITY
+              </div>
+              <h2 style={{ fontSize: "34px", marginBottom: "12px" }}>Learn from people already in the field</h2>
+              <p style={{ fontSize: "17px", color: "#61707d", lineHeight: "1.7", marginBottom: "20px" }}>
+                Professionals are here to support the beginner journey, not take over the platform.
+              </p>
+  
+              <div style={{ display: "grid", gap: "14px", marginBottom: "18px" }}>
+                {professionals.map((person) => (
+                  <div
+                    key={person.name}
+                    style={{
+                      border: "1px solid #ebe1d5",
+                      borderRadius: "22px",
+                      padding: "18px",
+                      backgroundColor: "#faf7f2",
+                    }}
+                  >
+                    <div style={{ fontSize: "18px", fontWeight: "700", marginBottom: "4px" }}>{person.name}</div>
+                    <div
+                      style={{
+                        fontSize: "14px",
+                        fontWeight: "700",
+                        color: "#48657a",
+                        marginBottom: "8px",
+                      }}
+                    >
+                      {person.role}
+                    </div>
+                    <div style={{ fontSize: "15px", color: "#61707d", lineHeight: "1.7" }}>
+                      {person.help}
+                    </div>
+                  </div>
+                ))}
+              </div>
+  
               <div
+                id="ask-question-section"
                 style={{
-                  fontSize: "13px",
-                  letterSpacing: "0.08em",
-                  fontWeight: "800",
-                  opacity: 0.82,
-                  marginBottom: "14px",
+                  borderRadius: "22px",
+                  padding: "18px",
+                  backgroundColor: "#2f596e",
+                  color: "white",
                 }}
               >
-                START HERE
+                <div style={{ fontSize: "18px", fontWeight: "700", marginBottom: "8px" }}>
+                  Ask a beginner question
+                </div>
+                <div
+                  style={{
+                    fontSize: "15px",
+                    lineHeight: "1.7",
+                    color: "rgba(255,255,255,0.84)",
+                    marginBottom: "14px",
+                  }}
+                >
+                  See a topic you do not understand yet? Ask the community and get answers in simpler language.
+                </div>
+                <button
+                  onClick={openSignup}
+                  style={{
+                    border: "none",
+                    borderRadius: "14px",
+                    padding: "12px 16px",
+                    backgroundColor: "white",
+                    color: "#2f596e",
+                    fontSize: "15px",
+                    fontWeight: "700",
+                    cursor: "pointer",
+                  }}
+                >
+                  Continue to community
+                </button>
               </div>
-
+            </div>
+          </section>
+  
+          {/* SECTION: Bottom call-to-action */}
+          <section
+            style={{
+              backgroundColor: "#243746",
+              color: "white",
+              borderRadius: "30px",
+              padding: "40px 34px",
+              textAlign: "center",
+            }}
+          >
+            <div
+              style={{
+                maxWidth: "820px",
+                margin: "0 auto",
+              }}
+            >
+              <div
+                style={{
+                  fontSize: "14px",
+                  fontWeight: "800",
+                  letterSpacing: "0.08em",
+                  opacity: 0.75,
+                  marginBottom: "10px",
+                }}
+              >
+                READY TO KEEP GOING?
+              </div>
+  
               <h2
                 style={{
                   fontSize: "36px",
                   lineHeight: "1.15",
-                  margin: "0 0 22px",
+                  marginBottom: "12px",
                   color: "white",
                 }}
               >
-                3 easy ways to
-                <br />
-                get started
+                Explore the platform first, then make it yours.
               </h2>
-
-              <div style={{ display: "grid", gap: "14px" }}>
-                {heroActions.map((item) => (
-                  <button
-                    key={item.title}
-                    onClick={item.action}
-                    style={{
-                      width: "100%",
-                      border: "1px solid rgba(255,255,255,0.08)",
-                      backgroundColor: "rgba(255,255,255,0.08)",
-                      color: "white",
-                      borderRadius: "18px",
-                      padding: "18px",
-                      display: "grid",
-                      gridTemplateColumns: "44px 1fr 24px",
-                      gap: "14px",
-                      alignItems: "center",
-                      cursor: "pointer",
-                      textAlign: "left",
-                    }}
-                  >
-                    <div
-                      style={{
-                        width: "44px",
-                        height: "44px",
-                        borderRadius: "14px",
-                        backgroundColor: "rgba(255,255,255,0.10)",
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        fontSize: "22px",
-                      }}
-                    >
-                      {item.icon}
-                    </div>
-
-                    <div>
-                      <div style={{ fontSize: "15px", fontWeight: "800", marginBottom: "4px" }}>
-                        {item.number}. {item.title}
-                      </div>
-                      <div style={{ fontSize: "13px", lineHeight: "1.5", color: "rgba(255,255,255,0.78)" }}>
-                        {item.body}
-                      </div>
-                    </div>
-
-                    <div
-                      style={{
-                        fontSize: "24px",
-                        color: "rgba(255,255,255,0.78)",
-                        textAlign: "right",
-                      }}
-                    >
-                      →
-                    </div>
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            <div
-              style={{
-                borderTop: "1px solid rgba(255,255,255,0.16)",
-                marginTop: "28px",
-                paddingTop: "22px",
-              }}
-            >
-              <div style={{ fontSize: "15px", fontWeight: "700", marginBottom: "12px" }}>
-                Ready to personalize your experience?
-              </div>
-              <button
-                onClick={openSignup}
+  
+              <p
                 style={{
-                  border: "none",
-                  borderRadius: "14px",
-                  padding: "13px 18px",
-                  backgroundColor: "white",
-                  color: "#2f596e",
-                  fontSize: "15px",
-                  fontWeight: "800",
-                  cursor: "pointer",
-                }}
-              >
-                Create free profile
-              </button>
-            </div>
-          </div>
-        </section>
-
-        <section id="topics-section" style={{ marginBottom: "34px" }}>
-          <div
-            style={{
-              marginBottom: "28px",
-              textAlign: "center",
-              maxWidth: "700px",
-              marginLeft: "auto",
-              marginRight: "auto",
-            }}
-          >
-            <div style={{ fontSize: "14px", fontWeight: "800", color: "#94613c", marginBottom: "10px" }}>
-              TOPICS
-            </div>
-            <h2 style={{ fontSize: "34px", marginBottom: "10px" }}>Pick a topic and start there</h2>
-            <p
-              style={{
-                fontSize: "17px",
-                color: "#61707d",
-                lineHeight: "1.7",
-                maxWidth: "780px",
-              }}
-            >
-              These are not just tags. Each topic is meant to help beginners understand a part of real estate more
-              clearly.
-            </p>
-          </div>
-
-          <div style={{ display: "grid", gap: "26px" }}>
-            {topicGroups.map((group) => (
-              <div key={group.groupTitle}>
-                <div style={{ marginBottom: "18px", textAlign: "left" }}>
-                  <h3
-                    style={{
-                      fontSize: "22px",
-                      marginBottom: "6px",
-                      color: "#233746",
-                    }}
-                  >
-                    {group.groupTitle}
-                  </h3>
-
-                  <p
-                    style={{
-                      fontSize: "14px",
-                      color: "#61707d",
-                      lineHeight: "1.6",
-                      margin: 0,
-                    }}
-                  >
-                    {group.groupDescription}
-                  </p>
-                </div>
-
-                <div
-                  style={{
-                    display: "grid",
-                    gridTemplateColumns: "repeat(3, minmax(0, 1fr))",
-                    gap: "18px",
-                  }}
-                >
-                  {group.items.map((topicTitle) => {
-                    const topic = topics.find((item) => item.title === topicTitle);
-
-                    return (
-                      <button
-                        key={topic.title}
-                        onClick={() => openTopicPage(topic)}
-                        style={{
-                          textAlign: "left",
-                          border: "1px solid #ddd5ca",
-                          borderRadius: "20px",
-                          backgroundColor: "white",
-                          padding: "22px",
-                          cursor: "pointer",
-                          boxShadow: "0 4px 14px rgba(0,0,0,0.03)",
-                          minHeight: "132px",
-                        }}
-                      >
-                        <div style={{ fontSize: "24px", marginBottom: "12px" }}>{topic.icon}</div>
-
-                        <div
-                          style={{
-                            fontSize: "18px",
-                            fontWeight: "700",
-                            marginBottom: "8px",
-                            color: "#233746",
-                          }}
-                        >
-                          {topic.title}
-                        </div>
-
-                        <div
-                          style={{
-                            fontSize: "14px",
-                            lineHeight: "1.6",
-                            color: "#61707d",
-                          }}
-                        >
-                          {topic.description}
-                        </div>
-                      </button>
-                    );
-                  })}
-                </div>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        <section
-          id="market-trends-section"
-          style={{
-            display: "grid",
-            gridTemplateColumns: "1.05fr 0.95fr",
-            gap: "22px",
-            marginBottom: "34px",
-          }}
-        >
-          <div
-            style={{
-              backgroundColor: "white",
-              border: "1px solid #e5ddd3",
-              borderRadius: "28px",
-              padding: "30px",
-            }}
-          >
-            <div style={{ fontSize: "14px", fontWeight: "800", color: "#94613c", marginBottom: "10px" }}>
-              THIS WEEK’S NEWSLETTER
-            </div>
-
-            <h2 style={{ fontSize: "34px", marginBottom: "12px" }}>What we’re highlighting this week</h2>
-
-            <p style={{ fontSize: "17px", color: "#61707d", lineHeight: "1.7", marginBottom: "20px" }}>
-              Instead of giving beginners too many newsletter choices at once, MyHome can feature one strong weekly
-              highlight that feels timely, easier to follow, and more intentional.
-            </p>
-
-            <div
-              style={{
-                backgroundColor: "#fbf8f3",
-                border: "1px solid #ebe1d5",
-                borderRadius: "24px",
-                padding: "28px",
-              }}
-            >
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  alignItems: "center",
-                  flexWrap: "wrap",
-                  gap: "12px",
-                  marginBottom: "16px",
-                }}
-              >
-                <div
-                  style={{
-                    display: "inline-block",
-                    borderRadius: "999px",
-                    padding: "7px 12px",
-                    backgroundColor: "#efe7dc",
-                    color: "#94613c",
-                    fontSize: "12px",
-                    fontWeight: "800",
-                  }}
-                >
-                  {weeklyNewsletter.label}
-                </div>
-
-                <div
-                  style={{
-                    fontSize: "13px",
-                    fontWeight: "700",
-                    color: "#61707d",
-                  }}
-                >
-                  {weeklyNewsletter.date}
-                </div>
-              </div>
-
-              <div
-                style={{
-                  fontSize: "28px",
-                  fontWeight: "800",
-                  marginBottom: "12px",
-                  color: "#233746",
-                  lineHeight: "1.2",
-                }}
-              >
-                {weeklyNewsletter.title}
-              </div>
-
-              <div
-                style={{
-                  fontSize: "16px",
+                  fontSize: "17px",
                   lineHeight: "1.8",
-                  color: "#61707d",
-                  marginBottom: "18px",
-                  maxWidth: "760px",
-                }}
-              >
-                {weeklyNewsletter.intro}
-              </div>
-
-              <ul
-                style={{
-                  paddingLeft: "20px",
-                  color: "#48657a",
-                  lineHeight: "1.9",
-                  fontSize: "15px",
+                  color: "rgba(255,255,255,0.82)",
                   marginBottom: "22px",
                 }}
               >
-                {weeklyNewsletter.bullets.map((bullet) => (
-                  <li key={bullet}>{bullet}</li>
-                ))}
-              </ul>
-
-              <div style={{ display: "flex", gap: "12px", flexWrap: "wrap" }}>
-                <button
-                  style={{
-                    border: "none",
-                    borderRadius: "14px",
-                    padding: "12px 18px",
-                    backgroundColor: "#2f596e",
-                    color: "white",
-                    fontSize: "15px",
-                    fontWeight: "700",
-                    cursor: "pointer",
-                  }}
-                >
-                  Read this week’s newsletter
-                </button>
-
-                <button
-                  style={{
-                    border: "1px solid #d7dddd",
-                    borderRadius: "14px",
-                    padding: "12px 18px",
-                    backgroundColor: "white",
-                    color: "#355569",
-                    fontSize: "15px",
-                    fontWeight: "700",
-                    cursor: "pointer",
-                  }}
-                >
-                  See past highlights
-                </button>
-              </div>
-            </div>
-          </div>
-
-          <div
-            id="community-section"
-            style={{
-              backgroundColor: "white",
-              border: "1px solid #e5ddd3",
-              borderRadius: "28px",
-              padding: "30px",
-            }}
-          >
-            <div style={{ fontSize: "14px", fontWeight: "800", color: "#94613c", marginBottom: "10px" }}>
-              COMMUNITY
-            </div>
-            <h2 style={{ fontSize: "34px", marginBottom: "12px" }}>Learn from people already in the field</h2>
-            <p style={{ fontSize: "17px", color: "#61707d", lineHeight: "1.7", marginBottom: "20px" }}>
-              Professionals are here to support the beginner journey, not take over the platform.
-            </p>
-
-            <div style={{ display: "grid", gap: "14px", marginBottom: "18px" }}>
-              {professionals.map((person) => (
-                <div
-                  key={person.name}
-                  style={{
-                    border: "1px solid #ebe1d5",
-                    borderRadius: "22px",
-                    padding: "18px",
-                    backgroundColor: "#faf7f2",
-                  }}
-                >
-                  <div style={{ fontSize: "18px", fontWeight: "700", marginBottom: "4px" }}>{person.name}</div>
-                  <div
-                    style={{
-                      fontSize: "14px",
-                      fontWeight: "700",
-                      color: "#48657a",
-                      marginBottom: "8px",
-                    }}
-                  >
-                    {person.role}
-                  </div>
-                  <div style={{ fontSize: "15px", color: "#61707d", lineHeight: "1.7" }}>
-                    {person.help}
-                  </div>
-                </div>
-              ))}
-            </div>
-
-            <div
-              id="ask-question-section"
-              style={{
-                borderRadius: "22px",
-                padding: "18px",
-                backgroundColor: "#2f596e",
-                color: "white",
-              }}
-            >
-              <div style={{ fontSize: "18px", fontWeight: "700", marginBottom: "8px" }}>
-                Ask a beginner question
-              </div>
+                This keeps the experience open and intuitive, while still giving you a sign-up moment like Reddit or
+                LinkedIn.
+              </p>
+  
               <div
                 style={{
-                  fontSize: "15px",
-                  lineHeight: "1.7",
-                  color: "rgba(255,255,255,0.84)",
-                  marginBottom: "14px",
+                  display: "flex",
+                  gap: "14px",
+                  flexWrap: "wrap",
+                  justifyContent: "center",
                 }}
               >
-                See a topic you do not understand yet? Ask the community and get answers in simpler language.
+                <button
+                  onClick={openSignup}
+                  style={{
+                    border: "none",
+                    borderRadius: "16px",
+                    padding: "14px 20px",
+                    backgroundColor: "#d58d6b",
+                    color: "white",
+                    fontSize: "16px",
+                    fontWeight: "700",
+                    cursor: "pointer",
+                  }}
+                >
+                  Create free profile
+                </button>
+  
+                <button
+                  style={{
+                    border: "1px solid rgba(255,255,255,0.24)",
+                    borderRadius: "16px",
+                    padding: "14px 20px",
+                    backgroundColor: "transparent",
+                    color: "white",
+                    fontSize: "16px",
+                    fontWeight: "700",
+                    cursor: "pointer",
+                  }}
+                >
+                  Browse as guest
+                </button>
               </div>
-              <button
-                onClick={openSignup}
-                style={{
-                  border: "none",
-                  borderRadius: "14px",
-                  padding: "12px 16px",
-                  backgroundColor: "white",
-                  color: "#2f596e",
-                  fontSize: "15px",
-                  fontWeight: "700",
-                  cursor: "pointer",
-                }}
-              >
-                Continue to community
-              </button>
             </div>
-          </div>
-        </section>
-
-        <section
-          style={{
-            backgroundColor: "#243746",
-            color: "white",
-            borderRadius: "30px",
-            padding: "34px",
-          }}
-        >
-          <div style={{ maxWidth: "760px" }}>
+          </section>
+        </main>
+  
+        {/* MODAL: Sign-up / onboarding flow */}
+        {showSignupModal && (
+          <>
             <div
-              style={{
-                fontSize: "14px",
-                fontWeight: "800",
-                letterSpacing: "0.08em",
-                opacity: 0.75,
-                marginBottom: "10px",
-              }}
-            >
-              READY TO KEEP GOING?
-            </div>
-            <h2 style={{ fontSize: "38px", lineHeight: "1.15", marginBottom: "12px", color: "white" }}>
-              Explore the platform first, then make it yours.
-            </h2>
-            <p
-              style={{
-                fontSize: "17px",
-                lineHeight: "1.8",
-                color: "rgba(255,255,255,0.82)",
-                marginBottom: "20px",
-              }}
-            >
-              This keeps the experience open and intuitive, while still giving you a sign-up moment like Reddit or
-              LinkedIn.
-            </p>
-            <div style={{ display: "flex", gap: "14px", flexWrap: "wrap" }}>
-              <button
-                onClick={openSignup}
-                style={{
-                  border: "none",
-                  borderRadius: "16px",
-                  padding: "14px 20px",
-                  backgroundColor: "#d58d6b",
-                  color: "white",
-                  fontSize: "16px",
-                  fontWeight: "700",
-                  cursor: "pointer",
-                }}
-              >
-                Create free profile
-              </button>
-              <button
-                style={{
-                  border: "1px solid rgba(255,255,255,0.24)",
-                  borderRadius: "16px",
-                  padding: "14px 20px",
-                  backgroundColor: "transparent",
-                  color: "white",
-                  fontSize: "16px",
-                  fontWeight: "700",
-                  cursor: "pointer",
-                }}
-              >
-                Browse as guest
-              </button>
-            </div>
-          </div>
-        </section>
-      </main>
-
-      {showSignupModal && (
-        <>
-          <div
-            onClick={closeSignup}
-            style={{
-              position: "fixed",
-              inset: 0,
-              backgroundColor: "rgba(15, 23, 30, 0.48)",
-              zIndex: 40,
-            }}
-          />
-          <div
-            style={{
-              position: "fixed",
-              top: "50%",
-              left: "50%",
-              transform: "translate(-50%, -50%)",
-              width: "760px",
-              maxWidth: "92%",
-              backgroundColor: "white",
-              borderRadius: "28px",
-              padding: "34px",
-              zIndex: 50,
-              boxShadow: "0 24px 55px rgba(0,0,0,0.22)",
-            }}
-          >
-            <button
               onClick={closeSignup}
               style={{
-                position: "absolute",
-                top: "16px",
-                right: "18px",
-                border: "none",
-                background: "transparent",
-                fontSize: "30px",
-                color: "#6b7280",
-                cursor: "pointer",
+                position: "fixed",
+                inset: 0,
+                backgroundColor: "rgba(15, 23, 30, 0.48)",
+                zIndex: 40,
               }}
-            >
-              ×
-            </button>
-
-            {onboardingStep === 1 ? (
-              <>
-                <div style={{ fontSize: "13px", fontWeight: "800", color: "#94613c", marginBottom: "8px" }}>
-                  STEP 1 OF 2
-                </div>
-                <div style={{ fontSize: "29px", fontWeight: "800", color: "#233746", marginBottom: "10px" }}>
-                  Welcome to MyHome
-                </div>
-                <div
-                  style={{
-                    color: "#61707d",
-                    fontSize: "17px",
-                    lineHeight: "1.7",
-                    marginBottom: "24px",
-                    maxWidth: "620px",
-                  }}
-                >
-                  A simpler way to learn real estate. Start by telling us what you want help with first.
-                </div>
-
-                <div style={{ fontSize: "21px", fontWeight: "700", marginBottom: "16px" }}>
-                  What would you like help with first?
-                </div>
-
-                <div
-                  style={{
-                    display: "grid",
-                    gridTemplateColumns: "repeat(2, minmax(0, 1fr))",
-                    gap: "14px",
-                    marginBottom: "28px",
-                  }}
-                >
-                  {learningGoals.map((goal) => {
-                    const isSelected = selectedGoal === goal;
-
-                    return (
-                      <button
-                        key={goal}
-                        onClick={() => setSelectedGoal(goal)}
-                        style={{
-                          padding: "18px",
-                          borderRadius: "18px",
-                          border: isSelected ? "2px solid #355569" : "1px solid #d7dddd",
-                          backgroundColor: isSelected ? "#eef3f5" : "white",
-                          color: "#2b3d4b",
-                          fontSize: "16px",
-                          fontWeight: "600",
-                          cursor: "pointer",
-                          textAlign: "left",
-                        }}
-                      >
-                        {goal}
-                      </button>
-                    );
-                  })}
-                </div>
-
-                <div style={{ display: "flex", justifyContent: "flex-end" }}>
-                  <button
-                    onClick={nextStep}
-                    style={{
-                      border: "none",
-                      backgroundColor: "#2f596e",
-                      color: "white",
-                      borderRadius: "16px",
-                      padding: "15px 24px",
-                      fontSize: "17px",
-                      fontWeight: "700",
-                      cursor: "pointer",
-                    }}
-                  >
-                    Continue
-                  </button>
-                </div>
-              </>
-            ) : (
-              <>
-                <div style={{ fontSize: "13px", fontWeight: "800", color: "#94613c", marginBottom: "8px" }}>
-                  STEP 2 OF 2
-                </div>
-
-                <div style={{ fontSize: "29px", fontWeight: "800", color: "#233746", marginBottom: "12px" }}>
-                  Pick topics you want to explore
-                </div>
-
-                <div
-                  style={{
-                    color: "#61707d",
-                    fontSize: "17px",
-                    lineHeight: "1.7",
-                    marginBottom: "24px",
-                    maxWidth: "640px",
-                  }}
-                >
-                  This helps us show you beginner-friendly content first.
-                </div>
-
-                <div
-                  style={{
-                    display: "flex",
-                    flexWrap: "wrap",
-                    gap: "12px",
-                    marginBottom: "28px",
-                  }}
-                >
-                  {topics.map((topic) => {
-                    const isSelected = savedInterests.includes(topic.title);
-
-                    return (
-                      <button
-                        key={topic.title}
-                        onClick={() => saveInterest(topic.title)}
-                        style={{
-                          padding: "12px 18px",
-                          borderRadius: "999px",
-                          border: isSelected ? "2px solid #355569" : "1px solid #d7dddd",
-                          backgroundColor: isSelected ? "#eef3f5" : "white",
-                          color: "#2b3d4b",
-                          fontSize: "15px",
-                          cursor: "pointer",
-                          fontWeight: "600",
-                        }}
-                      >
-                        {topic.title}
-                      </button>
-                    );
-                  })}
-                </div>
-
-                <div style={{ display: "flex", justifyContent: "space-between", gap: "12px", flexWrap: "wrap" }}>
-                  <button
-                    onClick={() => setOnboardingStep(1)}
-                    style={{
-                      border: "1px solid #d7dddd",
-                      backgroundColor: "white",
-                      color: "#355569",
-                      borderRadius: "16px",
-                      padding: "15px 22px",
-                      fontSize: "16px",
-                      fontWeight: "700",
-                      cursor: "pointer",
-                    }}
-                  >
-                    Back
-                  </button>
-
-                  <button
-                    onClick={nextStep}
-                    disabled={savedInterests.length !== 3}
-                    style={{
-                      border: "none",
-                      backgroundColor: savedInterests.length === 3 ? "#2f596e" : "#d7dddd",
-                      color: "white",
-                      borderRadius: "16px",
-                      padding: "15px 24px",
-                      fontSize: "17px",
-                      fontWeight: "700",
-                      cursor: savedInterests.length === 3 ? "pointer" : "not-allowed",
-                      opacity: savedInterests.length === 3 ? 1 : 0.7,
-                    }}
-                  >
-                    Continue ({savedInterests.length}/3)
-                  </button>
-                </div>
-              </>
-            )}
-          </div>
-        </>
-      )}
-
-      {showWalkthrough && (
-        <>
-          <div
-            onClick={() => setShowWalkthrough(false)}
-            style={{
-              position: "fixed",
-              inset: 0,
-              backgroundColor: "rgba(15, 23, 30, 0.48)",
-              zIndex: 60,
-            }}
-          />
-          <div
-            style={{
-              position: "fixed",
-              top: "50%",
-              left: "50%",
-              transform: "translate(-50%, -50%)",
-              width: "820px",
-              maxWidth: "92%",
-              backgroundColor: "white",
-              borderRadius: "28px",
-              padding: "34px",
-              zIndex: 70,
-              boxShadow: "0 24px 55px rgba(0,0,0,0.22)",
-            }}
-          >
-            <button
-              onClick={() => setShowWalkthrough(false)}
-              style={{
-                position: "absolute",
-                top: "16px",
-                right: "18px",
-                border: "none",
-                background: "transparent",
-                fontSize: "30px",
-                color: "#6b7280",
-                cursor: "pointer",
-              }}
-            >
-              ×
-            </button>
-
-            <div style={{ fontSize: "13px", fontWeight: "800", color: "#94613c", marginBottom: "8px" }}>
-              QUICK WALKTHROUGH
-            </div>
-            <div style={{ fontSize: "29px", fontWeight: "800", color: "#233746", marginBottom: "12px" }}>
-              Here is what each part of the site helps you do
-            </div>
+            />
             <div
               style={{
-                color: "#61707d",
-                fontSize: "17px",
-                lineHeight: "1.7",
-                marginBottom: "24px",
-                maxWidth: "700px",
+                position: "fixed",
+                top: "50%",
+                left: "50%",
+                transform: "translate(-50%, -50%)",
+                width: "760px",
+                maxWidth: "92%",
+                backgroundColor: "white",
+                borderRadius: "28px",
+                padding: "34px",
+                zIndex: 50,
+                boxShadow: "0 24px 55px rgba(0,0,0,0.22)",
               }}
             >
-              This makes the homepage feel more intuitive by explaining the pieces instead of expecting users to figure
-              them out on their own.
+              <button
+                onClick={closeSignup}
+                style={{
+                  position: "absolute",
+                  top: "16px",
+                  right: "18px",
+                  border: "none",
+                  background: "transparent",
+                  fontSize: "30px",
+                  color: "#6b7280",
+                  cursor: "pointer",
+                }}
+              >
+                ×
+              </button>
+  
+              {onboardingStep === 1 ? (
+                <>
+                  <div style={{ fontSize: "13px", fontWeight: "800", color: "#94613c", marginBottom: "8px" }}>
+                    STEP 1 OF 2
+                  </div>
+                  <div style={{ fontSize: "29px", fontWeight: "800", color: "#233746", marginBottom: "10px" }}>
+                    Welcome to MyHome
+                  </div>
+                  <div
+                    style={{
+                      color: "#61707d",
+                      fontSize: "17px",
+                      lineHeight: "1.7",
+                      marginBottom: "24px",
+                      maxWidth: "620px",
+                    }}
+                  >
+                    A simpler way to learn real estate. Start by telling us what you want help with first.
+                  </div>
+  
+                  <div style={{ fontSize: "21px", fontWeight: "700", marginBottom: "16px" }}>
+                    What would you like help with first?
+                  </div>
+  
+                  <div
+                    style={{
+                      display: "grid",
+                      gridTemplateColumns: "repeat(2, minmax(0, 1fr))",
+                      gap: "14px",
+                      marginBottom: "28px",
+                    }}
+                  >
+                    {learningGoals.map((goal) => {
+                      const isSelected = selectedGoal === goal;
+  
+                      return (
+                        <button
+                          key={goal}
+                          onClick={() => setSelectedGoal(goal)}
+                          style={{
+                            padding: "18px",
+                            borderRadius: "18px",
+                            border: isSelected ? "2px solid #355569" : "1px solid #d7dddd",
+                            backgroundColor: isSelected ? "#eef3f5" : "white",
+                            color: "#2b3d4b",
+                            fontSize: "16px",
+                            fontWeight: "600",
+                            cursor: "pointer",
+                            textAlign: "left",
+                          }}
+                        >
+                          {goal}
+                        </button>
+                      );
+                    })}
+                  </div>
+  
+                  <div style={{ display: "flex", justifyContent: "flex-end" }}>
+                    <button
+                      onClick={nextStep}
+                      style={{
+                        border: "none",
+                        backgroundColor: "#2f596e",
+                        color: "white",
+                        borderRadius: "16px",
+                        padding: "15px 24px",
+                        fontSize: "17px",
+                        fontWeight: "700",
+                        cursor: "pointer",
+                      }}
+                    >
+                      Continue
+                    </button>
+                  </div>
+                </>
+              ) : (
+                <>
+                  <div style={{ fontSize: "13px", fontWeight: "800", color: "#94613c", marginBottom: "8px" }}>
+                    STEP 2 OF 2
+                  </div>
+  
+                  <div style={{ fontSize: "29px", fontWeight: "800", color: "#233746", marginBottom: "12px" }}>
+                    Pick topics you want to explore
+                  </div>
+  
+                  <div
+                    style={{
+                      color: "#61707d",
+                      fontSize: "17px",
+                      lineHeight: "1.7",
+                      marginBottom: "24px",
+                      maxWidth: "640px",
+                    }}
+                  >
+                    This helps us show you beginner-friendly content first.
+                  </div>
+  
+                  <div
+                    style={{
+                      display: "flex",
+                      flexWrap: "wrap",
+                      gap: "12px",
+                      marginBottom: "28px",
+                    }}
+                  >
+                    {topics.map((topic) => {
+                      const isSelected = savedInterests.includes(topic.title);
+  
+                      return (
+                        <button
+                          key={topic.title}
+                          onClick={() => saveInterest(topic.title)}
+                          style={{
+                            padding: "12px 18px",
+                            borderRadius: "999px",
+                            border: isSelected ? "2px solid #355569" : "1px solid #d7dddd",
+                            backgroundColor: isSelected ? "#eef3f5" : "white",
+                            color: "#2b3d4b",
+                            fontSize: "15px",
+                            cursor: "pointer",
+                            fontWeight: "600",
+                          }}
+                        >
+                          {topic.title}
+                        </button>
+                      );
+                    })}
+                  </div>
+  
+                  <div style={{ display: "flex", justifyContent: "space-between", gap: "12px", flexWrap: "wrap" }}>
+                    <button
+                      onClick={() => setOnboardingStep(1)}
+                      style={{
+                        border: "1px solid #d7dddd",
+                        backgroundColor: "white",
+                        color: "#355569",
+                        borderRadius: "16px",
+                        padding: "15px 22px",
+                        fontSize: "16px",
+                        fontWeight: "700",
+                        cursor: "pointer",
+                      }}
+                    >
+                      Back
+                    </button>
+  
+                    <button
+                      onClick={nextStep}
+                      disabled={savedInterests.length !== 3}
+                      style={{
+                        border: "none",
+                        backgroundColor: savedInterests.length === 3 ? "#2f596e" : "#d7dddd",
+                        color: "white",
+                        borderRadius: "16px",
+                        padding: "15px 24px",
+                        fontSize: "17px",
+                        fontWeight: "700",
+                        cursor: savedInterests.length === 3 ? "pointer" : "not-allowed",
+                        opacity: savedInterests.length === 3 ? 1 : 0.7,
+                      }}
+                    >
+                      Continue ({savedInterests.length}/3)
+                    </button>
+                  </div>
+                </>
+              )}
             </div>
-
-            <div style={{ display: "grid", gap: "14px" }}>
-              {[
-                {
-                  title: "Hero section",
-                  body: "Explains what MyHome is for right away: beginner-friendly real estate learning and support.",
-                },
-                {
-                  title: "Topics",
-                  body: "Lets users choose a part of real estate they want to understand without needing prior knowledge.",
-                },
-                {
-                  title: "Market Trends",
-                  body: "Shows beginner-friendly newsletters and research in simpler language.",
-                },
-                {
-                  title: "Community",
-                  body: "Connects beginners with experienced people who can answer questions and share insight.",
-                },
-                {
-                  title: "Sign-up flow",
-                  body: "Works like Reddit or LinkedIn by letting users preview the site first, then continue into onboarding.",
-                },
-              ].map((item) => (
-                <div
-                  key={item.title}
-                  style={{
-                    backgroundColor: "#faf7f2",
-                    border: "1px solid #ebe1d5",
-                    borderRadius: "20px",
-                    padding: "18px",
-                  }}
-                >
-                  <div style={{ fontSize: "18px", fontWeight: "700", marginBottom: "6px" }}>{item.title}</div>
-                  <div style={{ fontSize: "15px", color: "#61707d", lineHeight: "1.7" }}>{item.body}</div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </>
-      )}
-    </div>
-  );
-}
-
-export default App;
+          </>
+        )}
+      </div>
+    );
+  }
+  
+  export default App;
