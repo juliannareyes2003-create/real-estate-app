@@ -867,7 +867,7 @@ function App() {
             gridTemplateColumns: "minmax(0, 1.15fr) minmax(360px, 0.85fr)",
             gap: "32px",
             alignItems: "stretch",
-            marginBottom: "34px",
+            marginBottom: "80px",
           }}
         >
           <div
@@ -877,10 +877,6 @@ function App() {
               borderRadius: "32px",
               padding: "40px",
               boxShadow: "0 8px 30px rgba(0,0,0,0.04)",
-              height: "100%",
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "center",
             }}
           >
             <div
@@ -985,7 +981,7 @@ function App() {
               display: "flex",
               flexDirection: "column",
               justifyContent: "space-between",
-              height: "100%",
+              minHeight: "100%",
             }}
           >
             <div>
