@@ -205,7 +205,7 @@ function App() {
               display: "grid",
               gridTemplateColumns: "1fr auto",
               gap: "32px",
-              alignItems: "flex-start",
+              alignItems: "center",
               marginBottom: "36px",
             }}>
               <div>
