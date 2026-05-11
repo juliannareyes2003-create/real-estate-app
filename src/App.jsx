@@ -136,7 +136,8 @@ function App() {
 
   const topicPageContent = {
     "first-time-learning": {
-      intro: "This page is for beginners who want a simple starting point before diving into more specific parts of real estate.",
+      intro:
+        "This page is for beginners who want a simple starting point before diving into more specific parts of real estate.",
       points: [
         "What real estate includes",
         "Basic terms you will hear often",
@@ -145,7 +146,8 @@ function App() {
       ],
     },
     investing: {
-      intro: "This page explains how people use real estate to build wealth and what beginners should understand before going deeper.",
+      intro:
+        "This page explains how people use real estate to build wealth and what beginners should understand before going deeper.",
       points: [
         "Different ways people invest",
         "Risk versus reward",
@@ -154,7 +156,8 @@ function App() {
       ],
     },
     development: {
-      intro: "This page breaks down how projects move from ideas and land to approved, financed, and completed buildings.",
+      intro:
+        "This page breaks down how projects move from ideas and land to approved, financed, and completed buildings.",
       points: [
         "What developers do",
         "How projects get approved",
@@ -163,7 +166,8 @@ function App() {
       ],
     },
     "legal-regulations": {
-      intro: "This page helps beginners understand how laws, approvals, and regulations shape real estate decisions.",
+      intro:
+        "This page helps beginners understand how laws, approvals, and regulations shape real estate decisions.",
       points: [
         "Zoning basics",
         "Permits and approvals",
@@ -172,7 +176,8 @@ function App() {
       ],
     },
     tokenization: {
-      intro: "This page introduces tokenization in simpler language and explains how digital ownership connects to real estate.",
+      intro:
+        "This page introduces tokenization in simpler language and explains how digital ownership connects to real estate.",
       points: [
         "What tokenization means",
         "How ownership can be split",
@@ -181,7 +186,8 @@ function App() {
       ],
     },
     "market-data": {
-      intro: "This page shows how to think about pricing, rents, and market movement without getting overwhelmed.",
+      intro:
+        "This page shows how to think about pricing, rents, and market movement without getting overwhelmed.",
       points: [
         "Home prices",
         "Rent trends",
@@ -190,7 +196,8 @@ function App() {
       ],
     },
     "brokerage-agents": {
-      intro: "This page explains what agents do and how buyers and sellers work with them.",
+      intro:
+        "This page explains what agents do and how buyers and sellers work with them.",
       points: [
         "What agents actually do",
         "Working with buyers",
@@ -199,7 +206,8 @@ function App() {
       ],
     },
     "commercial-real-estate": {
-      intro: "This page introduces commercial real estate and explains how it differs from residential.",
+      intro:
+        "This page introduces commercial real estate and explains how it differs from residential.",
       points: [
         "Office properties",
         "Retail properties",
@@ -208,7 +216,8 @@ function App() {
       ],
     },
     financing: {
-      intro: "This page explains how real estate deals are funded and why financing shapes what is possible.",
+      intro:
+        "This page explains how real estate deals are funded and why financing shapes what is possible.",
       points: [
         "Mortgages",
         "Debt and equity",
@@ -217,7 +226,8 @@ function App() {
       ],
     },
     zoning: {
-      intro: "This page explains how land use rules affect what can be built and where.",
+      intro:
+        "This page explains how land use rules affect what can be built and where.",
       points: [
         "What zoning is",
         "How zoning affects land use",
@@ -226,7 +236,8 @@ function App() {
       ],
     },
     proptech: {
-      intro: "This page introduces the technology side of real estate and how digital tools are changing the industry.",
+      intro:
+        "This page introduces the technology side of real estate and how digital tools are changing the industry.",
       points: [
         "Platforms and apps",
         "Data tools",
@@ -235,7 +246,8 @@ function App() {
       ],
     },
     "deal-flow": {
-      intro: "This page explains how opportunities are found, shared, and evaluated in real estate.",
+      intro:
+        "This page explains how opportunities are found, shared, and evaluated in real estate.",
       points: [
         "What deal flow means",
         "How opportunities are found",
@@ -249,7 +261,8 @@ function App() {
     "first-time-learning": {
       label: "Beginner Basics",
       title: "Where New Learners Should Start",
-      intro: "A simple overview of the first ideas beginners should understand before diving deeper into real estate topics.",
+      intro:
+        "A simple overview of the first ideas beginners should understand before diving deeper into real estate topics.",
       bullets: [
         "Learn the difference between residential and commercial real estate.",
         "Get comfortable with the basic language used across the industry.",
@@ -259,7 +272,8 @@ function App() {
     investing: {
       label: "Investor Mindset",
       title: "Thinking About Real Estate Investing Without the Confusion",
-      intro: "A straightforward guide to beginner strategies like REITs, house hacking, and learning how to judge risk.",
+      intro:
+        "A straightforward guide to beginner strategies like REITs, house hacking, and learning how to judge risk.",
       bullets: [
         "REITs can be one of the easiest starting points for beginners.",
         "House hacking is a clear entry strategy to learn first.",
@@ -269,7 +283,8 @@ function App() {
     development: {
       label: "Development Update",
       title: "How Projects Move From Idea to Building",
-      intro: "A beginner-friendly look at how development projects are planned, approved, financed, and completed.",
+      intro:
+        "A beginner-friendly look at how development projects are planned, approved, financed, and completed.",
       bullets: [
         "Development starts long before construction begins.",
         "Approvals, financing, and timelines shape every project.",
@@ -279,7 +294,8 @@ function App() {
     "legal-regulations": {
       label: "Policy Watch",
       title: "Why Legal Rules Shape Real Estate So Much",
-      intro: "An easier explanation of how zoning, approvals, and regulations affect projects, ownership, and opportunity.",
+      intro:
+        "An easier explanation of how zoning, approvals, and regulations affect projects, ownership, and opportunity.",
       bullets: [
         "Zoning rules affect what can be built and where.",
         "Permits and approvals can slow or reshape development.",
@@ -289,7 +305,8 @@ function App() {
     tokenization: {
       label: "Tokenization Spotlight",
       title: "Digital Ownership, Explained More Clearly",
-      intro: "A simple breakdown of how tokenization connects to ownership, access, and investor questions in real estate.",
+      intro:
+        "A simple breakdown of how tokenization connects to ownership, access, and investor questions in real estate.",
       bullets: [
         "Tokenization can split ownership into smaller pieces.",
         "It raises questions about regulation, access, and risk.",
@@ -299,7 +316,8 @@ function App() {
     "market-data": {
       label: "U.S. Market Overview",
       title: "The Market Right Now: What You Actually Need to Know",
-      intro: "A simple breakdown of where the market stands today and what beginners should pay attention to first.",
+      intro:
+        "A simple breakdown of where the market stands today and what beginners should pay attention to first.",
       bullets: [
         "Mortgage rates are still shaping buyer behavior.",
         "Inventory changes affect how people compare opportunities.",
@@ -309,7 +327,8 @@ function App() {
     "brokerage-agents": {
       label: "Broker Perspective",
       title: "What Agents Actually Help With",
-      intro: "A clearer look at how agents guide buyers and sellers and where beginners often misunderstand their role.",
+      intro:
+        "A clearer look at how agents guide buyers and sellers and where beginners often misunderstand their role.",
       bullets: [
         "Agents help with pricing, search, negotiation, and process.",
         "Their value depends on the market and the client’s needs.",
@@ -319,7 +338,8 @@ function App() {
     "commercial-real-estate": {
       label: "Commercial Spotlight",
       title: "Commercial Real Estate Without the Jargon",
-      intro: "An intro to how office, retail, and mixed-use properties work and why commercial deals feel so different.",
+      intro:
+        "An intro to how office, retail, and mixed-use properties work and why commercial deals feel so different.",
       bullets: [
         "Commercial properties usually depend more on income and leases.",
         "The scale and analysis differ from residential real estate.",
@@ -329,7 +349,8 @@ function App() {
     financing: {
       label: "Financing Focus",
       title: "How Real Estate Deals Get Funded",
-      intro: "A simpler explanation of mortgages, debt, equity, and why capital structure matters in real estate.",
+      intro:
+        "A simpler explanation of mortgages, debt, equity, and why capital structure matters in real estate.",
       bullets: [
         "Mortgages are only one part of the financing picture.",
         "Debt and equity play different roles in a deal.",
@@ -339,7 +360,8 @@ function App() {
     zoning: {
       label: "Zoning Watch",
       title: "Why Land Use Rules Matter So Much",
-      intro: "A beginner-friendly explanation of zoning and how it affects development, value, and neighborhood change.",
+      intro:
+        "A beginner-friendly explanation of zoning and how it affects development, value, and neighborhood change.",
       bullets: [
         "Zoning controls what can be built on a site.",
         "Land use rules affect supply and neighborhood growth.",
@@ -349,7 +371,8 @@ function App() {
     proptech: {
       label: "PropTech Update",
       title: "Technology Changing How Real Estate Works",
-      intro: "A simple look at how data platforms, automation, and digital tools are shaping the industry.",
+      intro:
+        "A simple look at how data platforms, automation, and digital tools are shaping the industry.",
       bullets: [
         "PropTech improves access to information and workflow speed.",
         "Digital tools are changing research, management, and transactions.",
@@ -359,7 +382,8 @@ function App() {
     "deal-flow": {
       label: "Deal Flow Insight",
       title: "How Opportunities Get Found and Shared",
-      intro: "A clearer explanation of how deals move through networks, platforms, and professional relationships.",
+      intro:
+        "A clearer explanation of how deals move through networks, platforms, and professional relationships.",
       bullets: [
         "Deal flow is about how opportunities reach people.",
         "Strong networks often shape who sees what first.",
@@ -417,7 +441,7 @@ function App() {
 
     const section = document.getElementById(sectionId);
     if (section) {
-      const y = section.getBoundingClientRect().top + window.pageYOffset - 110;
+      const y = section.getBoundingClientRect().top + window.pageYOffset - 112;
       window.scrollTo({ top: y, behavior: "smooth" });
     }
   };
@@ -431,6 +455,47 @@ function App() {
     }
   };
 
+  const heroActions = [
+    {
+      number: "1",
+      icon: "📖",
+      title: "Pick a topic",
+      body: "Choose one area and start learning.",
+      action: () => handleNavClick("topics-section", "Topics"),
+    },
+    {
+      number: "2",
+      icon: "📰",
+      title: "Read this week’s update",
+      body: "Stay close to simple market insights.",
+      action: () => handleNavClick("market-trends-section", "Newsletter"),
+    },
+    {
+      number: "3",
+      icon: "💬",
+      title: "Ask a beginner question",
+      body: "Get support from the community.",
+      action: () => handleNavClick("ask-question-section", "Ask a Question"),
+    },
+  ];
+
+  const featureChips = [
+    {
+      icon: "📖",
+      title: "Beginner friendly",
+      body: "No jargon. Just simple explanations.",
+    },
+    {
+      icon: "📊",
+      title: "Step by step",
+      body: "Learn at your own pace with clear topics.",
+    },
+    {
+      icon: "👥",
+      title: "Real people",
+      body: "Ask questions and learn from experts.",
+    },
+  ];
   if (currentTopicPage) {
     const topicInfo = topicPageContent[currentTopicPage.slug];
     const topicNewsletter = topicNewsletterHighlights[currentTopicPage.slug];
@@ -444,6 +509,7 @@ function App() {
           fontFamily:
             'Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif',
           padding: "40px 24px 80px",
+          boxSizing: "border-box",
         }}
       >
         <div style={{ maxWidth: "980px", margin: "0 auto" }}>
@@ -469,11 +535,10 @@ function App() {
               borderRadius: "28px",
               padding: "36px",
               marginBottom: "24px",
+              boxSizing: "border-box",
             }}
           >
-            <div style={{ fontSize: "36px", marginBottom: "12px" }}>
-              {currentTopicPage.icon}
-            </div>
+            <div style={{ fontSize: "36px", marginBottom: "12px" }}>{currentTopicPage.icon}</div>
 
             <div
               style={{
@@ -486,9 +551,7 @@ function App() {
               TOPIC PAGE
             </div>
 
-            <h1 style={{ fontSize: "42px", marginBottom: "12px" }}>
-              {currentTopicPage.title}
-            </h1>
+            <h1 style={{ fontSize: "42px", marginBottom: "12px" }}>{currentTopicPage.title}</h1>
 
             <p
               style={{
@@ -531,6 +594,7 @@ function App() {
               border: "1px solid #e5ddd3",
               borderRadius: "28px",
               padding: "30px",
+              boxSizing: "border-box",
             }}
           >
             <div
@@ -544,9 +608,7 @@ function App() {
               START HERE
             </div>
 
-            <h2 style={{ fontSize: "30px", marginBottom: "18px" }}>
-              Simple things to explore first
-            </h2>
+            <h2 style={{ fontSize: "30px", marginBottom: "18px" }}>Simple things to explore first</h2>
 
             <div style={{ display: "grid", gap: "14px", marginBottom: "24px" }}>
               {topicInfo?.points.map((item) => (
@@ -731,14 +793,16 @@ function App() {
       >
         <div
           style={{
-            maxWidth: "1500px",
+            width: "100%",
+            maxWidth: "1440px",
             margin: "0 auto",
-            padding: "18px 48px",
+            padding: "18px clamp(20px, 4vw, 48px)",
             display: "flex",
             alignItems: "center",
             justifyContent: "space-between",
             gap: "24px",
             flexWrap: "wrap",
+            boxSizing: "border-box",
           }}
         >
           <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
@@ -759,9 +823,7 @@ function App() {
               ⌂
             </div>
             <div>
-              <div style={{ fontSize: "21px", fontWeight: "800", color: "#2f596e" }}>
-                MyHome
-              </div>
+              <div style={{ fontSize: "21px", fontWeight: "800", color: "#2f596e" }}>MyHome</div>
               <div style={{ fontSize: "12px", color: "#7b8794" }}>
                 Real estate, made easier to understand
               </div>
@@ -843,10 +905,10 @@ function App() {
           id="learn-section"
           style={{
             display: "grid",
-            gridTemplateColumns: "repeat(2, minmax(0, 1fr))",
-            gap: "28px",
+            gridTemplateColumns: "minmax(0, 1.05fr) minmax(380px, 0.95fr)",
+            gap: "32px",
             alignItems: "stretch",
-            marginBottom: "70px",
+            marginBottom: "64px",
           }}
         >
           <div
@@ -854,14 +916,18 @@ function App() {
               backgroundColor: "white",
               border: "1px solid #e1d8cd",
               borderRadius: "32px",
-              padding: "40px",
+              padding: "42px",
               boxShadow: "0 8px 30px rgba(0,0,0,0.04)",
               minHeight: "520px",
               boxSizing: "border-box",
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "center",
             }}
           >
             <div
               style={{
+                alignSelf: "flex-start",
                 display: "inline-block",
                 padding: "8px 14px",
                 borderRadius: "999px",
@@ -869,7 +935,7 @@ function App() {
                 color: "#94613c",
                 fontSize: "13px",
                 fontWeight: "700",
-                marginBottom: "18px",
+                marginBottom: "22px",
               }}
             >
               Beginner-first real estate platform
@@ -877,11 +943,11 @@ function App() {
 
             <h1
               style={{
-                fontSize: "48px",
-                lineHeight: "1.08",
-                marginBottom: "18px",
+                fontSize: "52px",
+                lineHeight: "1.06",
+                margin: "0 0 20px",
                 color: "#233746",
-                maxWidth: "700px",
+                maxWidth: "680px",
               }}
             >
               Learn real estate
@@ -891,18 +957,18 @@ function App() {
 
             <p
               style={{
-                fontSize: "19px",
-                lineHeight: "1.7",
+                fontSize: "18px",
+                lineHeight: "1.75",
                 color: "#5f6d79",
-                maxWidth: "690px",
-                marginBottom: "28px",
+                maxWidth: "660px",
+                margin: "0 0 28px",
               }}
             >
-              MyHome helps beginners understand real estate in simple language, explore topics step by step,
-              read market newsletters, and connect with experienced people when they are ready.
+              MyHome helps beginners understand real estate in simple language, explore topics step by step, read
+              market newsletters, and connect with experienced people when they are ready.
             </p>
 
-            <div style={{ display: "flex", gap: "14px", flexWrap: "wrap" }}>
+            <div style={{ display: "flex", gap: "14px", flexWrap: "wrap", marginBottom: "36px" }}>
               <button
                 onClick={openSignup}
                 style={{
@@ -936,7 +1002,7 @@ function App() {
               </button>
 
               <button
-                onClick={() => handleNavClick("market-trends-section", "Market Trends")}
+                onClick={() => handleNavClick("market-trends-section", "Newsletter")}
                 style={{
                   border: "1px solid #d7dddd",
                   borderRadius: "16px",
@@ -951,6 +1017,50 @@ function App() {
                 See market updates
               </button>
             </div>
+
+            <div
+              style={{
+                display: "grid",
+                gridTemplateColumns: "repeat(3, minmax(0, 1fr))",
+                gap: "14px",
+              }}
+            >
+              {featureChips.map((item) => (
+                <div
+                  key={item.title}
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "12px",
+                    minHeight: "74px",
+                  }}
+                >
+                  <div
+                    style={{
+                      width: "46px",
+                      height: "46px",
+                      borderRadius: "999px",
+                      backgroundColor: "#f3eadf",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      fontSize: "20px",
+                      flexShrink: 0,
+                    }}
+                  >
+                    {item.icon}
+                  </div>
+                  <div>
+                    <div style={{ fontSize: "14px", fontWeight: "800", color: "#233746", marginBottom: "4px" }}>
+                      {item.title}
+                    </div>
+                    <div style={{ fontSize: "12px", lineHeight: "1.45", color: "#61707d" }}>
+                      {item.body}
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
 
           <div
@@ -958,12 +1068,13 @@ function App() {
               backgroundColor: "#2f596e",
               color: "white",
               borderRadius: "32px",
-              padding: "32px",
+              padding: "40px",
+              boxSizing: "border-box",
+              minHeight: "520px",
               display: "flex",
               flexDirection: "column",
               justifyContent: "space-between",
-              minHeight: "520px",
-              boxSizing: "border-box",
+              boxShadow: "0 8px 30px rgba(0,0,0,0.05)",
             }}
           >
             <div>
@@ -972,69 +1083,109 @@ function App() {
                   fontSize: "13px",
                   letterSpacing: "0.08em",
                   fontWeight: "800",
-                  opacity: 0.8,
-                  marginBottom: "16px",
+                  opacity: 0.82,
+                  marginBottom: "14px",
                 }}
               >
-                WHY MYHOME WORKS
+                START HERE
               </div>
 
-              <div
+              <h2
                 style={{
-                  fontSize: "30px",
-                  lineHeight: "1.25",
-                  fontWeight: "800",
-                  marginBottom: "18px",
+                  fontSize: "36px",
+                  lineHeight: "1.15",
+                  margin: "0 0 22px",
+                  color: "white",
                 }}
               >
-                Simple real estate learning,
+                3 easy ways to
                 <br />
-                without the overwhelm.
-              </div>
+                get started
+              </h2>
 
-              <p
-                style={{
-                  fontSize: "16px",
-                  lineHeight: "1.7",
-                  color: "rgba(255,255,255,0.86)",
-                  marginBottom: 0,
-                }}
-              >
-                No confusing jargon. No endless searching. Just clear topics, useful updates,
-                and support when you need it.
-              </p>
+              <div style={{ display: "grid", gap: "14px" }}>
+                {heroActions.map((item) => (
+                  <button
+                    key={item.title}
+                    onClick={item.action}
+                    style={{
+                      width: "100%",
+                      border: "1px solid rgba(255,255,255,0.08)",
+                      backgroundColor: "rgba(255,255,255,0.08)",
+                      color: "white",
+                      borderRadius: "18px",
+                      padding: "18px",
+                      display: "grid",
+                      gridTemplateColumns: "44px 1fr 24px",
+                      gap: "14px",
+                      alignItems: "center",
+                      cursor: "pointer",
+                      textAlign: "left",
+                    }}
+                  >
+                    <div
+                      style={{
+                        width: "44px",
+                        height: "44px",
+                        borderRadius: "14px",
+                        backgroundColor: "rgba(255,255,255,0.10)",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        fontSize: "22px",
+                      }}
+                    >
+                      {item.icon}
+                    </div>
+
+                    <div>
+                      <div style={{ fontSize: "15px", fontWeight: "800", marginBottom: "4px" }}>
+                        {item.number}. {item.title}
+                      </div>
+                      <div style={{ fontSize: "13px", lineHeight: "1.5", color: "rgba(255,255,255,0.78)" }}>
+                        {item.body}
+                      </div>
+                    </div>
+
+                    <div
+                      style={{
+                        fontSize: "24px",
+                        color: "rgba(255,255,255,0.78)",
+                        textAlign: "right",
+                      }}
+                    >
+                      →
+                    </div>
+                  </button>
+                ))}
+              </div>
             </div>
 
             <div
               style={{
+                borderTop: "1px solid rgba(255,255,255,0.16)",
                 marginTop: "28px",
-                backgroundColor: "rgba(255,255,255,0.08)",
-                borderRadius: "24px",
-                padding: "18px",
+                paddingTop: "22px",
               }}
             >
-              <div style={{ fontSize: "14px", fontWeight: "800", marginBottom: "10px" }}>
-                START HERE
+              <div style={{ fontSize: "15px", fontWeight: "700", marginBottom: "12px" }}>
+                Ready to personalize your experience?
               </div>
-
-              <div
+              <button
+                onClick={openSignup}
                 style={{
-                  fontSize: "20px",
-                  fontWeight: "700",
-                  marginBottom: "10px",
-                  lineHeight: "1.35",
+                  border: "none",
+                  borderRadius: "14px",
+                  padding: "13px 18px",
+                  backgroundColor: "white",
+                  color: "#2f596e",
+                  fontSize: "15px",
+                  fontWeight: "800",
+                  cursor: "pointer",
                 }}
               >
-                Pick a topic.
-                <br />
-                Read one update.
-                <br />
-                Ask questions.
-              </div>
-
-              <div style={{ color: "rgba(255,255,255,0.82)", lineHeight: "1.7", fontSize: "14px" }}>
-                A simpler way to explore real estate without feeling lost.
-              </div>
+                Create free profile
+              </button>
             </div>
           </div>
         </section>
@@ -1052,9 +1203,7 @@ function App() {
             <div style={{ fontSize: "14px", fontWeight: "800", color: "#94613c", marginBottom: "10px" }}>
               TOPICS
             </div>
-            <h2 style={{ fontSize: "34px", marginBottom: "10px" }}>
-              Pick a topic and start there
-            </h2>
+            <h2 style={{ fontSize: "34px", marginBottom: "10px" }}>Pick a topic and start there</h2>
             <p
               style={{
                 fontSize: "17px",
@@ -1071,10 +1220,10 @@ function App() {
           <div style={{ display: "grid", gap: "26px" }}>
             {topicGroups.map((group) => (
               <div key={group.groupTitle}>
-                <div style={{ marginBottom: "18px", textAlign: "center" }}>
+                <div style={{ marginBottom: "18px", textAlign: "left" }}>
                   <h3
                     style={{
-                      fontSize: "24px",
+                      fontSize: "22px",
                       marginBottom: "6px",
                       color: "#233746",
                     }}
@@ -1084,7 +1233,7 @@ function App() {
 
                   <p
                     style={{
-                      fontSize: "15px",
+                      fontSize: "14px",
                       color: "#61707d",
                       lineHeight: "1.6",
                       margin: 0,
@@ -1111,11 +1260,12 @@ function App() {
                         style={{
                           textAlign: "left",
                           border: "1px solid #ddd5ca",
-                          borderRadius: "24px",
+                          borderRadius: "20px",
                           backgroundColor: "white",
-                          padding: "20px",
+                          padding: "22px",
                           cursor: "pointer",
                           boxShadow: "0 4px 14px rgba(0,0,0,0.03)",
+                          minHeight: "132px",
                         }}
                       >
                         <div style={{ fontSize: "24px", marginBottom: "12px" }}>{topic.icon}</div>
@@ -1124,7 +1274,7 @@ function App() {
                           style={{
                             fontSize: "18px",
                             fontWeight: "700",
-                            marginBottom: "10px",
+                            marginBottom: "8px",
                             color: "#233746",
                           }}
                         >
@@ -1134,7 +1284,7 @@ function App() {
                         <div
                           style={{
                             fontSize: "14px",
-                            lineHeight: "1.65",
+                            lineHeight: "1.6",
                             color: "#61707d",
                           }}
                         >
@@ -1170,9 +1320,7 @@ function App() {
               THIS WEEK’S NEWSLETTER
             </div>
 
-            <h2 style={{ fontSize: "34px", marginBottom: "12px" }}>
-              What we’re highlighting this week
-            </h2>
+            <h2 style={{ fontSize: "34px", marginBottom: "12px" }}>What we’re highlighting this week</h2>
 
             <p style={{ fontSize: "17px", color: "#61707d", lineHeight: "1.7", marginBottom: "20px" }}>
               Instead of giving beginners too many newsletter choices at once, MyHome can feature one strong weekly
@@ -1306,9 +1454,7 @@ function App() {
             <div style={{ fontSize: "14px", fontWeight: "800", color: "#94613c", marginBottom: "10px" }}>
               COMMUNITY
             </div>
-            <h2 style={{ fontSize: "34px", marginBottom: "12px" }}>
-              Learn from people already in the field
-            </h2>
+            <h2 style={{ fontSize: "34px", marginBottom: "12px" }}>Learn from people already in the field</h2>
             <p style={{ fontSize: "17px", color: "#61707d", lineHeight: "1.7", marginBottom: "20px" }}>
               Professionals are here to support the beginner journey, not take over the platform.
             </p>
@@ -1324,9 +1470,7 @@ function App() {
                     backgroundColor: "#faf7f2",
                   }}
                 >
-                  <div style={{ fontSize: "18px", fontWeight: "700", marginBottom: "4px" }}>
-                    {person.name}
-                  </div>
+                  <div style={{ fontSize: "18px", fontWeight: "700", marginBottom: "4px" }}>{person.name}</div>
                   <div
                     style={{
                       fontSize: "14px",
