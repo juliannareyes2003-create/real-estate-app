@@ -294,92 +294,132 @@ export default function App() {
     return (
       <div style={page}>
         <NavBar onBack={() => setShowProfile(false)} backLabel="← Home" />
-        <main style={{ maxWidth: "1100px", margin: "0 auto", padding: "36px clamp(20px,4vw,48px) 80px", boxSizing: "border-box" }}>
-          <div style={{ backgroundColor: C.accent, borderRadius: R.xl, padding: "28px 32px", marginBottom: "28px", color: "white", display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: "16px" }}>
-            <div style={{ display: "flex", alignItems: "center", gap: "14px" }}>
-              <div style={{ width: "48px", height: "48px", borderRadius: "50%", backgroundColor: "rgba(255,255,255,0.15)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "18px", fontWeight: "700", flexShrink: 0 }}>{(accountInfo.name[0]||"?").toUpperCase()}</div>
-              <div>
-                <div style={{ fontSize: "10px", fontWeight: "700", opacity: 0.65, letterSpacing: "0.08em", marginBottom: "2px" }}>PROFILE</div>
-                <div style={{ fontSize: "20px", fontWeight: "700", letterSpacing: "-0.01em" }}>{accountInfo.name}</div>
-                <div style={{ fontSize: "12px", opacity: 0.7 }}>{accountInfo.email}</div>
+
+        {/* Hero banner */}
+        <div style={{ backgroundColor: C.accent, borderBottom: `1px solid ${C.accentHover}` }}>
+          <div style={{ maxWidth: "1100px", margin: "0 auto", padding: "36px clamp(20px,4vw,48px) 32px", boxSizing: "border-box" }}>
+            <div style={{ display: "flex", alignItems: "flex-end", justifyContent: "space-between", gap: "24px", flexWrap: "wrap" }}>
+              <div style={{ display: "flex", alignItems: "center", gap: "18px" }}>
+                <div style={{ width: "64px", height: "64px", borderRadius: "50%", backgroundColor: "rgba(255,255,255,0.18)", border: "2px solid rgba(255,255,255,0.25)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "24px", fontWeight: "700", color: "white", flexShrink: 0 }}>{(accountInfo.name[0]||"?").toUpperCase()}</div>
+                <div>
+                  <div style={{ fontSize: "11px", fontWeight: "700", opacity: 0.6, letterSpacing: "0.1em", marginBottom: "4px" }}>YOUR PROFILE</div>
+                  <div style={{ fontSize: "26px", fontWeight: "700", color: "white", letterSpacing: "-0.02em", lineHeight: 1.1 }}>{accountInfo.name}</div>
+                  <div style={{ fontSize: "13px", color: "rgba(255,255,255,0.6)", marginTop: "4px" }}>{accountInfo.email}</div>
+                </div>
+              </div>
+              <div style={{ display: "flex", gap: "10px", alignItems: "center" }}>
+                <div style={{ textAlign: "right" }}>
+                  <div style={{ fontSize: "10px", fontWeight: "700", color: "rgba(255,255,255,0.55)", letterSpacing: "0.08em", marginBottom: "3px" }}>LEARNING GOAL</div>
+                  <div style={{ fontSize: "14px", fontWeight: "600", color: "white" }}>{selectedGoal}</div>
+                </div>
+                <div style={{ width: "1px", height: "32px", backgroundColor: "rgba(255,255,255,0.2)" }} />
+                <div style={{ textAlign: "right" }}>
+                  <div style={{ fontSize: "10px", fontWeight: "700", color: "rgba(255,255,255,0.55)", letterSpacing: "0.08em", marginBottom: "3px" }}>TOPICS SAVED</div>
+                  <div style={{ fontSize: "14px", fontWeight: "600", color: "white" }}>{savedInterests.length} of 3</div>
+                </div>
               </div>
             </div>
-            <div style={{ backgroundColor: "rgba(255,255,255,0.1)", borderRadius: R.lg, padding: "10px 14px", border: "1px solid rgba(255,255,255,0.15)" }}>
-              <div style={{ fontSize: "10px", opacity: 0.65, fontWeight: "700", letterSpacing: "0.06em", marginBottom: "2px" }}>PRIMARY GOAL</div>
-              <div style={{ fontSize: "13px", fontWeight: "600" }}>{selectedGoal}</div>
+          </div>
+        </div>
+
+        <main style={{ maxWidth: "1100px", margin: "0 auto", padding: "36px clamp(20px,4vw,48px) 80px", boxSizing: "border-box" }}>
+
+          {/* Section label */}
+          <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", marginBottom: "24px", flexWrap: "wrap", gap: "8px" }}>
+            <div>
+              <div style={{ fontSize: "10px", fontWeight: "700", color: C.warm, letterSpacing: "0.08em", marginBottom: "5px" }}>YOUR TOPIC DEEP-DIVES</div>
+              <h2 style={{ fontSize: "22px", fontWeight: "700", color: C.ink, margin: 0, letterSpacing: "-0.02em" }}>Curated for your interests</h2>
             </div>
+            <button onClick={() => setShowProfile(false)} style={{ ...btn.secondary, fontSize: "12px", padding: "7px 13px" }}>Browse all 12 topics →</button>
           </div>
 
-          <div style={{ marginBottom: "18px" }}>
-            <div style={{ fontSize: "10px", fontWeight: "700", color: C.warm, letterSpacing: "0.08em", marginBottom: "5px" }}>YOUR TOPICS</div>
-            <h2 style={{ fontSize: "22px", fontWeight: "700", color: C.ink, margin: 0, letterSpacing: "-0.02em" }}>Prepared based on your selections</h2>
-          </div>
-
-          <div style={{ display: "grid", gap: "16px" }}>
-            {savedInterests.map((topicTitle) => {
+          {/* Topic cards — stacked, left-aligned, clean */}
+          <div style={{ display: "grid", gap: "20px" }}>
+            {savedInterests.map((topicTitle, idx) => {
               const d = topicProfileData[topicTitle]; if (!d) return null;
               return (
                 <div key={topicTitle} style={{ backgroundColor: C.white, border: `1px solid ${C.border}`, borderRadius: R.xl, overflow: "hidden" }}>
-                  <div style={{ backgroundColor: d.bg, borderBottom: `1px solid ${d.border}`, padding: "18px 22px", display: "flex", alignItems: "flex-start", justifyContent: "space-between", gap: "14px", flexWrap: "wrap" }}>
-                    <div>
-                      <div style={{ fontSize: "10px", fontWeight: "700", color: d.color, letterSpacing: "0.08em", marginBottom: "3px" }}>TOPIC</div>
-                      <div style={{ fontSize: "18px", fontWeight: "700", color: C.ink, letterSpacing: "-0.01em", marginBottom: "3px" }}>{topicTitle}</div>
-                      <div style={{ fontSize: "13px", color: C.inkLight }}>{d.tagline}</div>
-                    </div>
-                    <div style={{ display: "flex", gap: "5px", flexWrap: "wrap" }}>
-                      {d.relatedTopics.map(rt => <div key={rt} style={{ backgroundColor: C.white, border: `1px solid ${d.border}`, borderRadius: R.sm, padding: "3px 9px", fontSize: "11px", fontWeight: "500", color: d.color }}>{rt}</div>)}
+
+                  {/* Card header — accent stripe on left, title + meta on right */}
+                  <div style={{ display: "grid", gridTemplateColumns: "4px 1fr", borderBottom: `1px solid ${C.border}` }}>
+                    <div style={{ backgroundColor: d.color }} />
+                    <div style={{ padding: "20px 24px", display: "flex", alignItems: "center", justifyContent: "space-between", gap: "16px", flexWrap: "wrap" }}>
+                      <div>
+                        <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "4px" }}>
+                          <div style={{ fontSize: "10px", fontWeight: "700", color: d.color, letterSpacing: "0.08em" }}>0{idx + 1}</div>
+                          <div style={{ width: "3px", height: "3px", borderRadius: "50%", backgroundColor: C.border }} />
+                          <div style={{ fontSize: "10px", fontWeight: "600", color: C.inkMuted, letterSpacing: "0.04em" }}>TOPIC</div>
+                        </div>
+                        <div style={{ fontSize: "20px", fontWeight: "700", color: C.ink, letterSpacing: "-0.015em" }}>{topicTitle}</div>
+                        <div style={{ fontSize: "13px", color: C.inkLight, marginTop: "3px" }}>{d.tagline}</div>
+                      </div>
+                      <button onClick={() => { setShowProfile(false); openTopicPage(topics.find(t => t.title === topicTitle) || { title: topicTitle, slug: topicTitle.toLowerCase().replace(/[^a-z]/g,"-"), description: d.tagline, tag: "" }); }}
+                        style={{ ...btn.secondary, fontSize: "12px", padding: "7px 13px", flexShrink: 0 }}>Read full article →</button>
                     </div>
                   </div>
-                  <div style={{ padding: "22px", display: "grid", gridTemplateColumns: "1fr 1fr", gap: "22px" }}>
-                    <div>
-                      <div style={{ fontSize: "10px", fontWeight: "700", color: C.inkMuted, letterSpacing: "0.08em", marginBottom: "7px" }}>WHY IT MATTERS</div>
-                      <p style={{ fontSize: "13px", lineHeight: "1.7", color: C.inkLight, marginBottom: "18px", marginTop: 0 }}>{d.why}</p>
-                      <div style={{ fontSize: "10px", fontWeight: "700", color: C.inkMuted, letterSpacing: "0.08em", marginBottom: "9px" }}>KEY FACTS</div>
+
+                  {/* Card body — 3 columns */}
+                  <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: "0", borderBottom: `1px solid ${C.border}` }}>
+
+                    {/* Col 1: Why + facts */}
+                    <div style={{ padding: "20px 22px", borderRight: `1px solid ${C.border}` }}>
+                      <div style={{ fontSize: "10px", fontWeight: "700", color: C.inkMuted, letterSpacing: "0.08em", marginBottom: "8px" }}>WHY IT MATTERS</div>
+                      <p style={{ fontSize: "13px", lineHeight: "1.7", color: C.inkLight, margin: "0 0 18px" }}>{d.why}</p>
+                    </div>
+
+                    {/* Col 2: Key facts */}
+                    <div style={{ padding: "20px 22px", borderRight: `1px solid ${C.border}` }}>
+                      <div style={{ fontSize: "10px", fontWeight: "700", color: C.inkMuted, letterSpacing: "0.08em", marginBottom: "10px" }}>KEY FACTS</div>
                       <div style={{ display: "grid", gap: "7px" }}>
-                        {d.keyFacts.map((f, i) => (
-                          <div key={i} style={{ display: "flex", gap: "9px", alignItems: "flex-start" }}>
-                            <div style={{ minWidth: "18px", height: "18px", borderRadius: "3px", backgroundColor: d.bg, border: `1px solid ${d.border}`, display: "flex", alignItems: "center", justifyContent: "center", fontSize: "9px", fontWeight: "700", color: d.color, marginTop: "2px", flexShrink: 0 }}>{i+1}</div>
-                            <div style={{ fontSize: "13px", lineHeight: "1.6", color: C.ink }}>{f}</div>
+                        {d.keyFacts.slice(0, 4).map((f, i) => (
+                          <div key={i} style={{ display: "flex", gap: "8px", alignItems: "flex-start" }}>
+                            <div style={{ minWidth: "16px", height: "16px", borderRadius: "3px", backgroundColor: d.bg, border: `1px solid ${d.border}`, display: "flex", alignItems: "center", justifyContent: "center", fontSize: "9px", fontWeight: "700", color: d.color, marginTop: "2px", flexShrink: 0 }}>{i+1}</div>
+                            <div style={{ fontSize: "12px", lineHeight: "1.6", color: C.ink }}>{f}</div>
                           </div>
                         ))}
                       </div>
                     </div>
-                    <div>
-                      <div style={{ backgroundColor: C.redLight, border: "1px solid #eacac6", borderRadius: R.lg, padding: "16px", marginBottom: "14px" }}>
-                        <div style={{ fontSize: "10px", fontWeight: "700", color: C.red, letterSpacing: "0.08em", marginBottom: "9px" }}>WATCH OUT FOR</div>
-                        <div style={{ display: "grid", gap: "7px" }}>
-                          {d.watchOut.map((w,i) => <div key={i} style={{ fontSize: "13px", lineHeight: "1.6", color: "#6a2020", paddingLeft: "10px", borderLeft: "2px solid #d4a0a0" }}>{w}</div>)}
-                        </div>
-                      </div>
-                      <div style={{ backgroundColor: d.bg, border: `1px solid ${d.border}`, borderRadius: R.lg, padding: "16px" }}>
-                        <div style={{ fontSize: "10px", fontWeight: "700", color: d.color, letterSpacing: "0.08em", marginBottom: "9px" }}>EXPLORE NEXT</div>
-                        <div style={{ display: "grid", gap: "6px" }}>
-                          {d.relatedTopics.map((rt) => {
-                            const relTopic = topics.find(t => t.title === rt);
-                            return (
-                              <button key={rt} onClick={() => { setShowProfile(false); openTopicPage(relTopic || { title: rt, slug: rt.toLowerCase().replace(/[^a-z]/g,"-"), description: "", tag: "" }); }} style={{ display: "flex", alignItems: "center", justifyContent: "space-between", backgroundColor: C.white, border: `1px solid ${d.border}`, borderRadius: R.md, padding: "9px 12px", cursor: "pointer" }}>
-                                <span style={{ fontSize: "13px", fontWeight: "500", color: C.ink }}>{rt}</span>
-                                <span style={{ color: d.color, fontSize: "13px" }}>→</span>
-                              </button>
-                            );
-                          })}
-                        </div>
+
+                    {/* Col 3: Watch out + explore */}
+                    <div style={{ padding: "20px 22px" }}>
+                      <div style={{ fontSize: "10px", fontWeight: "700", color: C.red, letterSpacing: "0.08em", marginBottom: "8px" }}>WATCH OUT FOR</div>
+                      <div style={{ display: "grid", gap: "7px", marginBottom: "18px" }}>
+                        {d.watchOut.map((w,i) => (
+                          <div key={i} style={{ fontSize: "12px", lineHeight: "1.6", color: "#6a2020", paddingLeft: "9px", borderLeft: `2px solid #e0a898` }}>{w}</div>
+                        ))}
                       </div>
                     </div>
+                  </div>
+
+                  {/* Card footer — related topics */}
+                  <div style={{ padding: "14px 24px", backgroundColor: C.bg, display: "flex", alignItems: "center", gap: "8px", flexWrap: "wrap" }}>
+                    <div style={{ fontSize: "10px", fontWeight: "700", color: C.inkMuted, letterSpacing: "0.07em", marginRight: "4px" }}>EXPLORE NEXT</div>
+                    {d.relatedTopics.map((rt) => {
+                      const relTopic = topics.find(t => t.title === rt);
+                      return (
+                        <button key={rt} onClick={() => { setShowProfile(false); openTopicPage(relTopic || { title: rt, slug: rt.toLowerCase().replace(/[^a-z]/g,"-"), description: "", tag: "" }); }}
+                          style={{ backgroundColor: C.white, border: `1px solid ${C.border}`, borderRadius: R.sm, padding: "5px 12px", fontSize: "12px", fontWeight: "500", color: C.accent, cursor: "pointer" }}
+                          onMouseEnter={e => { e.currentTarget.style.backgroundColor = C.accentLight; e.currentTarget.style.borderColor = C.accent; }}
+                          onMouseLeave={e => { e.currentTarget.style.backgroundColor = C.white; e.currentTarget.style.borderColor = C.border; }}>
+                          {rt} →
+                        </button>
+                      );
+                    })}
                   </div>
                 </div>
               );
             })}
           </div>
 
-          <div style={{ marginTop: "32px", backgroundColor: C.ink, borderRadius: R.xl, padding: "24px 28px", display: "flex", alignItems: "center", justifyContent: "space-between", gap: "16px", flexWrap: "wrap" }}>
+          {/* Bottom bar */}
+          <div style={{ marginTop: "32px", backgroundColor: C.ink, borderRadius: R.xl, padding: "22px 28px", display: "flex", alignItems: "center", justifyContent: "space-between", gap: "16px", flexWrap: "wrap" }}>
             <div>
               <div style={{ fontSize: "15px", fontWeight: "700", color: "white", marginBottom: "3px" }}>Ready to go further?</div>
-              <div style={{ fontSize: "13px", color: "rgba(255,255,255,0.5)" }}>Browse all 12 topics or ask the community a question.</div>
+              <div style={{ fontSize: "12px", color: "rgba(255,255,255,0.45)" }}>Browse all 12 topics or post a question to the community.</div>
             </div>
             <div style={{ display: "flex", gap: "8px" }}>
               <button onClick={() => setShowProfile(false)} style={{ ...btn.primary, backgroundColor: "#c07040" }}>Browse all topics</button>
-              <button onClick={() => { setShowProfile(false); setTimeout(() => document.getElementById("ask-question-section")?.scrollIntoView({ behavior: "smooth" }), 100); }} style={{ border: "1px solid rgba(255,255,255,0.2)", backgroundColor: "transparent", color: "white", borderRadius: R.md, padding: "11px 20px", fontSize: "14px", fontWeight: "600", cursor: "pointer" }}>Ask a question</button>
+              <button onClick={() => { setShowProfile(false); setTimeout(() => document.getElementById("ask-question-section")?.scrollIntoView({ behavior: "smooth" }), 100); }} style={{ border: "1px solid rgba(255,255,255,0.2)", backgroundColor: "transparent", color: "rgba(255,255,255,0.8)", borderRadius: R.md, padding: "11px 20px", fontSize: "14px", fontWeight: "600", cursor: "pointer" }}>Ask a question</button>
             </div>
           </div>
         </main>
@@ -393,6 +433,11 @@ export default function App() {
       issue: "Issue No. 01", date: "April 2025", readTime: "6 min read",
       headline: "Real Estate Isn't as Complicated as It Looks",
       subheadline: "Most people avoid learning about real estate because the language feels deliberately exclusive. It isn't. Here's where to start.",
+      videos: [
+        { id: "Czx9oRcpjSM", title: "Real Estate Investing for Beginners", channel: "Graham Stephan" },
+        { id: "0YbWKxOhIPc", title: "Buying Your First Home: Complete Guide", channel: "BiggerPockets" },
+        { id: "RqcT74WH3Ms", title: "Real Estate Terminology You Must Know", channel: "Kris Krohn" },
+      ],
       body: [
         { type: "p", text: "Real estate is one of those fields where jargon does a lot of heavy lifting. Words like 'encumbrance,' 'cap rate,' and 'debt service coverage ratio' get thrown around in ways that make the whole industry feel like a closed club. It isn't. Most of what matters can be understood with a few foundational ideas." },
         { type: "h3", text: "The two categories that shape everything" },
@@ -418,9 +463,13 @@ export default function App() {
       issue: "Issue No. 06", date: "April 2025", readTime: "7 min read",
       headline: "How to Read the Market Without Getting Lost in the Numbers",
       subheadline: "Prices are the headline. But the real story is always in inventory, velocity, and the gap between asking and closing.",
+      videos: [
+        { id: "E6tPeRNlMx0", title: "How to Analyze a Real Estate Market", channel: "BiggerPockets" },
+        { id: "AEgkKTKkVhQ", title: "Understanding the Housing Market in 2025", channel: "Graham Stephan" },
+        { id: "0p4bSYWbFWk", title: "How Mortgage Rates Affect Home Prices", channel: "Andrei Jikh" },
+      ],
       body: [
         { type: "p", text: "The most common mistake beginners make when reading real estate market data is treating median sale price as a complete picture. It isn't. Price tells you where transactions landed — it doesn't tell you how fast things are moving, whether sellers are negotiating, or whether the apparent trend is hiding something in the composition of what sold." },
-        { type: "h3", text: "The three numbers that actually matter" },
         { type: "p", text: "Days on market (DOM) tells you velocity — how quickly homes are moving from listing to contract. A falling DOM signals rising demand or tightening supply. Months of supply tells you the absorption rate — at the current pace of sales, how long would it take to sell everything currently listed? Below 3 months is a strong seller's market. Above 6 months is a buyer's market. The sale-to-list ratio tells you whether buyers are paying over or under asking — a ratio above 100% means bidding wars; below 98% means negotiating room." },
         { type: "callout", text: "In April 2025, the national months of supply sits around 3.8 — technically balanced, but with massive variation by metro. Sun Belt markets with high new construction are seeing 6+ months of supply. High-demand coastal metros are still under 2." },
         { type: "h3", text: "Mortgage rates and the affordability equation" },
@@ -443,6 +492,11 @@ export default function App() {
       issue: "Issue No. 07", date: "April 2025", readTime: "5 min read",
       headline: "What Agents Actually Do — and Where the Model Is Breaking",
       subheadline: "The traditional brokerage model is under pressure from technology, regulation, and shifting buyer expectations. Understanding both sides helps you make a smarter decision.",
+      videos: [
+        { id: "pP7y3GxFQOQ", title: "Do You Really Need a Buyer's Agent?", channel: "BiggerPockets" },
+        { id: "UTSLkVtxHv4", title: "How Real Estate Commissions Work", channel: "Graham Stephan" },
+        { id: "8kODGGfYcBM", title: "How to Choose the Right Real Estate Agent", channel: "Kevin O'Leary" },
+      ], 
       body: [
         { type: "p", text: "The standard narrative about real estate agents is that they're overpaid door-openers. The reality is more nuanced — and the model is genuinely changing. Agents who add value do so through market knowledge, negotiation skill, and access to off-market inventory. Those who don't are increasingly being displaced by platforms that make the informational layer of real estate transactions free." },
         { type: "h3", text: "What a good agent actually provides" },
@@ -468,6 +522,11 @@ export default function App() {
       issue: "Issue No. 02", date: "April 2025", readTime: "8 min read",
       headline: "The Real Estate Investing Landscape: From REITs to Syndications",
       subheadline: "Every investing strategy sounds compelling in a pitch deck. The differences become clear when you understand what each one actually requires.",
+      videos: [
+        { id: "Czx9oRcpjSM", title: "Real Estate Investing 101", channel: "Graham Stephan" },
+        { id: "XEBhbwGFPTU", title: "How to Analyze a Rental Property", channel: "BiggerPockets" },
+        { id: "q9Golb9mnLs", title: "House Hacking: Live for Free", channel: "BiggerPockets" },
+      ],
       body: [
         { type: "p", text: "Real estate investing is not a single strategy — it's a spectrum. At one end, you can buy a REIT ETF in your brokerage account in under five minutes with no real estate knowledge required. At the other end, you can syndicate a 200-unit apartment acquisition requiring millions in equity, months of due diligence, and a team of professionals. Most people belong somewhere in the middle, and figuring out where requires honest self-assessment about capital, time, and risk tolerance." },
         { type: "h3", text: "REITs: the starting point most beginners skip" },
@@ -493,6 +552,11 @@ export default function App() {
       issue: "Issue No. 05", date: "April 2025", readTime: "6 min read",
       headline: "Tokenization: The Infrastructure Is Real. The Market Is Still Early.",
       subheadline: "Blockchain-based real estate ownership is no longer theoretical — but the practical path from idea to investable asset is more complex than the pitch suggests.",
+      videos: [
+        { id: "G3GB7FJKNE8", title: "Real Estate Tokenization Explained", channel: "Whiteboard Finance" },
+        { id: "jGX3xBbcuiU", title: "Fractional Real Estate: Is It Worth It?", channel: "Andrei Jikh" },
+        { id: "9zGNWNmLQhY", title: "Blockchain and Real Estate: What You Need to Know", channel: "CNBC" },
+      ],
       body: [
         { type: "p", text: "Tokenization — the conversion of real property ownership into digital tokens on a blockchain — has been described as the next great democratization of real estate investing. The underlying technology is legitimate. The regulatory path is clearer than it was three years ago. But the gap between what's technically possible and what's commercially viable remains significant, and most retail investors are still years away from having meaningful access to liquid tokenized real estate markets." },
         { type: "h3", text: "What tokenization actually changes" },
@@ -518,6 +582,11 @@ export default function App() {
       issue: "Issue No. 04", date: "April 2025", readTime: "7 min read",
       headline: "The Legal Layer: Why Real Estate Rules Shape Everything Else",
       subheadline: "From zoning to the FARE Act, legal and regulatory frameworks don't just govern transactions — they determine what's even possible in a given market.",
+      videos: [
+        { id: "G3UpbFMQDFo", title: "Real Estate Law Basics for Investors", channel: "BiggerPockets" },
+        { id: "OhKdRbfkFdA", title: "Zoning Laws: How Cities Control Development", channel: "City Beautiful" },
+        { id: "cxhX1mTiIYE", title: "LLC vs Personal Name for Real Estate", channel: "Clint Coons" },
+      ],
       body: [
         { type: "p", text: "Real estate is one of the most heavily regulated industries in the American economy. Every transaction involves title law, contract law, lending regulations, and local land use rules. Every development project navigates zoning, environmental review, and building codes. Every landlord-tenant relationship is governed by a patchwork of state and local law that varies dramatically across jurisdictions. Understanding the legal layer isn't optional — it's foundational." },
         { type: "h3", text: "Zoning: the invisible hand" },
@@ -543,6 +612,11 @@ export default function App() {
       issue: "Issue No. 03", date: "April 2025", readTime: "7 min read",
       headline: "Development: Why the Gap Between Demand and Supply Is So Hard to Close",
       subheadline: "New housing takes years to deliver because the process is genuinely complex — not because developers are slow.",
+      videos: [
+        { id: "gFMgTNXaRqg", title: "How Real Estate Development Works", channel: "BiggerPockets" },
+        { id: "nRxqKCboAeo", title: "Ground-Up Construction: Step by Step", channel: "Ken McElroy" },
+        { id: "hkn8QZHDQ3Q", title: "How to Read a Real Estate Pro Forma", channel: "Break Into CRE" },
+      ],
       body: [
         { type: "p", text: "The question of why housing supply doesn't respond faster to demand is one of the most important in urban economics. The short answer is that real estate development is slow by nature: assembling land, securing entitlements, arranging financing, and completing construction takes years in even the best conditions. In high-demand coastal markets with active community opposition and complex zoning, it can take a decade from site control to certificate of occupancy." },
         { type: "h3", text: "The entitlement process" },
@@ -568,6 +642,11 @@ export default function App() {
       issue: "Issue No. 09", date: "April 2025", readTime: "7 min read",
       headline: "The Capital Stack: Understanding How Real Estate Deals Are Actually Funded",
       subheadline: "Every real estate transaction has a financing structure. Understanding it tells you who takes risk, who gets paid first, and why deals succeed or fail.",
+      videos: [
+        { id: "gqiUHi6JKFY", title: "The Real Estate Capital Stack Explained", channel: "Break Into CRE" },
+        { id: "Czx9oRcpjSM", title: "How to Finance Your First Rental Property", channel: "Graham Stephan" },
+        { id: "MExCMmSBMgY", title: "Mortgage Basics: Everything You Need to Know", channel: "Andrei Jikh" },
+      ],
       body: [
         { type: "p", text: "Every real estate transaction — from a $300,000 condo to a $300 million office tower — is financed through a combination of debt and equity. The mix of these two components, how they're layered, and who holds each piece determines the risk and return profile of the deal. This structure is called the capital stack, and understanding it is one of the most important things any real estate investor or professional can learn." },
         { type: "h3", text: "Debt: senior and mezzanine" },
@@ -593,6 +672,11 @@ export default function App() {
       issue: "Issue No. 08", date: "April 2025", readTime: "7 min read",
       headline: "Commercial Real Estate: Why It Operates by Completely Different Rules",
       subheadline: "Valuation, financing, leasing, and risk all work differently in commercial. Understanding the distinctions unlocks a much larger part of the market.",
+      videos: [
+        { id: "4qfMkz_JFQM", title: "Commercial Real Estate for Beginners", channel: "Break Into CRE" },
+        { id: "ZZQ-AKFk2kA", title: "Cap Rates Explained", channel: "BiggerPockets" },
+        { id: "D2cgsJIYfNI", title: "Office vs Retail vs Industrial Investing", channel: "Ken McElroy" },
+      ],
       body: [
         { type: "p", text: "Commercial real estate — offices, retail, industrial, and multifamily above four units — operates under fundamentally different rules than residential. The most important difference is valuation: while a home is valued primarily by what comparable homes sold for, a commercial property is valued by the income it generates. This single shift in framework changes how you analyze, buy, finance, and manage these assets." },
         { type: "h3", text: "Income-based valuation" },
@@ -618,6 +702,11 @@ export default function App() {
       issue: "Issue No. 10", date: "April 2025", readTime: "6 min read",
       headline: "Zoning: The Political Economy of What Gets Built and Where",
       subheadline: "Land use rules are the most consequential — and least understood — force in real estate. Changing them creates enormous value. Protecting them destroys supply.",
+      videos: [
+        { id: "GrCOcDFyOK0", title: "How Zoning Laws Shape Cities", channel: "City Beautiful" },
+        { id: "6ppVPsFhfqs", title: "Zoning for Real Estate Investors", channel: "BiggerPockets" },
+        { id: "Pb72MqxL5kE", title: "The Housing Crisis and Zoning", channel: "Vox" },
+      ],
       body: [
         { type: "p", text: "Zoning is the regulatory framework that governs land use — what types of buildings can go where, how tall they can be, and how much of a lot they can cover. In theory, it exists to organize urban development and protect property values. In practice, it's a deeply political process that reflects the preferences of existing property owners far more than the needs of future residents. Understanding zoning is essential for understanding why housing supply is constrained, why certain neighborhoods change and others don't, and where development opportunity hides." },
         { type: "h3", text: "How NYC's zoning system works" },
@@ -643,6 +732,11 @@ export default function App() {
       issue: "Issue No. 11", date: "April 2025", readTime: "6 min read",
       headline: "PropTech: What Actually Stuck and What's Still a Promise",
       subheadline: "After a decade of disruption narratives, it's worth being clear-eyed about which real estate technologies have changed the industry and which remain experiments.",
+      videos: [
+        { id: "DtLsGH5bJ44", title: "How Technology Is Disrupting Real Estate", channel: "CNBC" },
+        { id: "Czx9oRcpjSM", title: "Zillow vs Traditional Agents", channel: "Graham Stephan" },
+        { id: "gFMgTNXaRqg", title: "PropTech Platforms You Should Know", channel: "BiggerPockets" },
+      ],
       body: [
         { type: "p", text: "The PropTech sector attracted over $30 billion in venture investment between 2019 and 2022. The subsequent correction — with several high-profile failures and declining valuations — forced a more sober reckoning with what technology actually changes in real estate versus what it merely makes easier or cheaper at the margin. The distinction matters for anyone trying to understand which tools are worth learning and which platforms are likely to still exist in five years." },
         { type: "h3", text: "What has genuinely changed" },
@@ -668,6 +762,11 @@ export default function App() {
       issue: "Issue No. 12", date: "April 2025", readTime: "6 min read",
       headline: "Deal Flow: Why Access Matters More Than Analysis in Real Estate",
       subheadline: "The best analysis in the world doesn't matter if you're not seeing the right deals. Understanding how opportunities are sourced and shared is the first step to improving your deal flow.",
+      videos: [
+        { id: "XEBhbwGFPTU", title: "How to Find Off-Market Real Estate Deals", channel: "BiggerPockets" },
+        { id: "gqiUHi6JKFY", title: "Commercial Deal Analysis Step by Step", channel: "Break Into CRE" },
+        { id: "E6tPeRNlMx0", title: "How to Evaluate a Real Estate Market", channel: "BiggerPockets" },
+      ],
       body: [
         { type: "p", text: "In most industries, superior analysis confers sustainable advantage. In real estate, the advantage is more often informational — specifically, access to deals before they're broadly available. The best commercial real estate investors spend as much time on relationship cultivation as they do on underwriting, because deal flow quality determines the ceiling of what's achievable. A sophisticated investor seeing only publicly marketed deals is at a structural disadvantage to a moderately capable investor with strong broker relationships." },
         { type: "h3", text: "How commercial deals actually get distributed" },
@@ -746,6 +845,43 @@ export default function App() {
                 return null;
               })}
             </div>
+
+            {/* Videos section */}
+            {ed.videos && (
+              <div style={{ backgroundColor: C.white, border: `1px solid ${C.border}`, borderRadius: R.xl, padding: "26px", marginBottom: "16px" }}>
+                <div style={{ fontSize: "10px", fontWeight: "700", color: C.warm, letterSpacing: "0.08em", marginBottom: "6px" }}>WATCH & LEARN</div>
+                <h2 style={{ fontSize: "18px", fontWeight: "700", color: C.ink, margin: "0 0 16px", letterSpacing: "-0.01em" }}>Recommended videos for this topic</h2>
+                <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "14px" }}>
+                  {ed.videos.map((v, i) => (
+                    <a key={i} href={`https://www.youtube.com/watch?v=${v.id}`} target="_blank" rel="noopener noreferrer"
+                      style={{ borderRadius: R.lg, overflow: "hidden", border: `1px solid ${C.border}`, textDecoration: "none", display: "block", backgroundColor: C.white }}
+                      onMouseEnter={e => e.currentTarget.style.borderColor = C.accent}
+                      onMouseLeave={e => e.currentTarget.style.borderColor = C.border}>
+                      {/* Thumbnail */}
+                      <div style={{ position: "relative", paddingBottom: "56.25%", height: 0, backgroundColor: "#0a0a0a", overflow: "hidden" }}>
+                        <img
+                          src={`https://img.youtube.com/vi/${v.id}/hqdefault.jpg`}
+                          alt={v.title}
+                          style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%", objectFit: "cover" }}
+                        />
+                        {/* Play button overlay */}
+                        <div style={{ position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center", backgroundColor: "rgba(0,0,0,0.25)" }}>
+                          <div style={{ width: "44px", height: "44px", borderRadius: "50%", backgroundColor: "rgba(255,255,255,0.92)", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill={C.accent}><polygon points="5,3 19,12 5,21"/></svg>
+                          </div>
+                        </div>
+                      </div>
+                      {/* Info */}
+                      <div style={{ padding: "11px 13px", backgroundColor: C.bg }}>
+                        <div style={{ fontSize: "12px", fontWeight: "600", color: C.ink, lineHeight: "1.4", marginBottom: "3px" }}>{v.title}</div>
+                        <div style={{ fontSize: "11px", color: C.accent }}>{v.channel} ↗</div>
+                      </div>
+                    </a>
+                  ))}
+                </div>
+                <div style={{ fontSize: "11px", color: C.inkMuted, marginTop: "12px" }}>Opens on YouTube in a new tab.</div>
+              </div>
+            )}
 
             {/* Community discussion */}
             <div style={{ backgroundColor: C.white, border: `1px solid ${C.border}`, borderRadius: R.xl, padding: "28px" }}>
