@@ -92,7 +92,7 @@ function App() {
       icon: "📂",
     },
   ];
-  
+
   const topicGroups = [
     {
       groupTitle: "Start Here",
@@ -113,24 +113,6 @@ function App() {
       groupTitle: "Rules, Ownership & Tech",
       groupDescription: "Explore the systems changing real estate.",
       items: ["Legal & Regulations", "Tokenization", "PropTech"],
-    },
-  ];
-
-  const beginnerQuestions = [
-    {
-      title: "Where do I even start if I’m new to real estate?",
-      body: "Start with First-Time Learning, then move into one topic like Investing or Development. You do not need to learn everything at once.",
-      topic: "First-Time Learning",
-    },
-    {
-      title: "What is the difference between residential and commercial real estate?",
-      body: "Residential usually means homes and apartments. Commercial usually means offices, retail, warehouses, or larger income-producing properties.",
-      topic: "Commercial Real Estate",
-    },
-    {
-      title: "What should I understand before looking into tokenization?",
-      body: "Start with ownership structure, legal rules, investor risk, and how digital shares relate to actual real estate assets.",
-      topic: "Tokenization",
     },
   ];
 
@@ -214,8 +196,7 @@ function App() {
       ],
     },
     "brokerage-agents": {
-      intro:
-        "This page explains what agents do and how buyers and sellers work with them.",
+      intro: "This page explains what agents do and how buyers and sellers work with them.",
       points: [
         "What agents actually do",
         "Working with buyers",
@@ -244,8 +225,7 @@ function App() {
       ],
     },
     zoning: {
-      intro:
-        "This page explains how land use rules affect what can be built and where.",
+      intro: "This page explains how land use rules affect what can be built and where.",
       points: [
         "What zoning is",
         "How zoning affects land use",
@@ -773,9 +753,9 @@ function App() {
       >
         <div
           style={{
-            maxWidth: "1240px",
+            maxWidth: "1500px",
             margin: "0 auto",
-            padding: "18px 24px",
+            padding: "18px 48px",
             display: "flex",
             alignItems: "center",
             justifyContent: "space-between",
@@ -872,14 +852,21 @@ function App() {
         </div>
       </div>
 
-      <main style={{ maxWidth: "1240px", margin: "0 auto", padding: "42px 24px 80px" }}>
+      <main
+        style={{
+          width: "100%",
+          maxWidth: "1500px",
+          margin: "0 auto",
+          padding: "42px clamp(24px, 4vw, 64px) 80px",
+        }}
+      >
         <section
           id="learn-section"
           style={{
             display: "grid",
-            gridTemplateColumns: "1.2fr 0.8fr",
-            gap: "28px",
-            alignItems: "start",
+            gridTemplateColumns: "minmax(0, 1.15fr) minmax(360px, 0.85fr)",
+            gap: "32px",
+            alignItems: "stretch",
             marginBottom: "34px",
           }}
         >
@@ -888,8 +875,12 @@ function App() {
               backgroundColor: "white",
               border: "1px solid #e1d8cd",
               borderRadius: "32px",
-              padding: "46px",
+              padding: "40px",
               boxShadow: "0 8px 30px rgba(0,0,0,0.04)",
+              height: "100%",
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "center",
             }}
           >
             <div
@@ -909,8 +900,8 @@ function App() {
 
             <h1
               style={{
-                fontSize: "56px",
-                lineHeight: "1.05",
+                fontSize: "48px",
+                lineHeight: "1.08",
                 marginBottom: "18px",
                 color: "#233746",
                 maxWidth: "700px",
@@ -934,7 +925,7 @@ function App() {
               read market newsletters, and connect with experienced people when they are ready.
             </p>
 
-            <div style={{ display: "flex", gap: "14px", flexWrap: "wrap", marginBottom: "28px" }}>
+            <div style={{ display: "flex", gap: "14px", flexWrap: "wrap" }}>
               <button
                 onClick={openSignup}
                 style={{
@@ -950,6 +941,7 @@ function App() {
               >
                 Start learning
               </button>
+
               <button
                 onClick={() => handleNavClick("topics-section", "Topics")}
                 style={{
@@ -965,6 +957,7 @@ function App() {
               >
                 Browse topics
               </button>
+
               <button
                 onClick={() => handleNavClick("market-trends-section", "Market Trends")}
                 style={{
@@ -988,10 +981,11 @@ function App() {
               backgroundColor: "#2f596e",
               color: "white",
               borderRadius: "32px",
-              padding: "42px",
+              padding: "36px",
               display: "flex",
               flexDirection: "column",
               justifyContent: "space-between",
+              height: "100%",
             }}
           >
             <div>
@@ -1004,16 +998,32 @@ function App() {
                   marginBottom: "16px",
                 }}
               >
-                WHY PEOPLE USE MYHOME
+                WHY MYHOME WORKS
               </div>
-              <div style={{ fontSize: "32px", lineHeight: "1.2", fontWeight: "800", marginBottom: "18px" }}>
-                Clearer than a random search.
+
+              <div
+                style={{
+                  fontSize: "30px",
+                  lineHeight: "1.25",
+                  fontWeight: "800",
+                  marginBottom: "18px",
+                }}
+              >
+                Simple real estate learning,
                 <br />
-                Less intimidating than industry jargon.
+                without the overwhelm.
               </div>
-              <p style={{ fontSize: "17px", lineHeight: "1.7", color: "rgba(255,255,255,0.86)" }}>
-                Instead of throwing beginners into a complex feed, MyHome helps them understand what they are
-                looking at, why it matters, and who they can learn from next.
+
+              <p
+                style={{
+                  fontSize: "16px",
+                  lineHeight: "1.7",
+                  color: "rgba(255,255,255,0.86)",
+                  marginBottom: 0,
+                }}
+              >
+                No confusing jargon. No endless searching. Just clear topics, useful updates,
+                and support when you need it.
               </p>
             </div>
 
@@ -1026,35 +1036,45 @@ function App() {
               }}
             >
               <div style={{ fontSize: "14px", fontWeight: "800", marginBottom: "10px" }}>
-                Preview
+                START HERE
               </div>
-              <div style={{ fontSize: "22px", fontWeight: "700", marginBottom: "10px" }}>
-                What do you want help with first?
+
+              <div
+                style={{
+                  fontSize: "22px",
+                  fontWeight: "700",
+                  marginBottom: "10px",
+                  lineHeight: "1.35",
+                }}
+              >
+                Pick a topic.
+                <br />
+                Read one update.
+                <br />
+                Ask questions.
               </div>
-              <div style={{ color: "rgba(255,255,255,0.82)", lineHeight: "1.7", fontSize: "15px" }}>
-                Learning the basics, understanding investing, reading highlighted newsletter, or connecting with experienced people.
+
+              <div style={{ color: "rgba(255,255,255,0.82)", lineHeight: "1.7", fontSize: "14px" }}>
+                A simpler way to explore real estate without feeling lost.
               </div>
             </div>
           </div>
         </section>
 
         <section id="topics-section" style={{ marginBottom: "34px" }}>
-          <div 
-            style={{ 
+          <div
+            style={{
               marginBottom: "28px",
-              textAlign:"center",
+              textAlign: "center",
               maxWidth: "700px",
               marginLeft: "auto",
-              marginRight: "auto"
-
+              marginRight: "auto",
             }}
-            >
+          >
             <div style={{ fontSize: "14px", fontWeight: "800", color: "#94613c", marginBottom: "10px" }}>
               TOPICS
             </div>
-            <h2 style={{ fontSize: "34px", marginBottom: "10px" }}>
-              Pick a topic and start there
-            </h2>
+            <h2 style={{ fontSize: "34px", marginBottom: "10px" }}>Pick a topic and start there</h2>
             <p
               style={{
                 fontSize: "17px",
@@ -1063,14 +1083,15 @@ function App() {
                 maxWidth: "780px",
               }}
             >
-              These are not just tags. Each topic is meant to help beginners understand a part of real estate more clearly.
+              These are not just tags. Each topic is meant to help beginners understand a part of real estate more
+              clearly.
             </p>
           </div>
 
           <div style={{ display: "grid", gap: "26px" }}>
             {topicGroups.map((group) => (
               <div key={group.groupTitle}>
-                <div style={{ marginBottom: "14px" }}>
+                <div style={{ marginBottom: "18px", textAlign: "center" }}>
                   <h3
                     style={{
                       fontSize: "24px",
@@ -1112,18 +1133,16 @@ function App() {
                           border: "1px solid #ddd5ca",
                           borderRadius: "24px",
                           backgroundColor: "white",
-                          padding: "22px",
+                          padding: "20px",
                           cursor: "pointer",
                           boxShadow: "0 4px 14px rgba(0,0,0,0.03)",
                         }}
                       >
-                        <div style={{ fontSize: "24px", marginBottom: "12px" }}>
-                          {topic.icon}
-                        </div>
+                        <div style={{ fontSize: "24px", marginBottom: "12px" }}>{topic.icon}</div>
 
                         <div
                           style={{
-                            fontSize: "20px",
+                            fontSize: "18px",
                             fontWeight: "700",
                             marginBottom: "10px",
                             color: "#233746",
@@ -1134,8 +1153,8 @@ function App() {
 
                         <div
                           style={{
-                            fontSize: "15px",
-                            lineHeight: "1.7",
+                            fontSize: "14px",
+                            lineHeight: "1.65",
                             color: "#61707d",
                           }}
                         >
@@ -1171,12 +1190,11 @@ function App() {
               THIS WEEK’S NEWSLETTER
             </div>
 
-            <h2 style={{ fontSize: "34px", marginBottom: "12px" }}>
-              What we’re highlighting this week
-            </h2>
+            <h2 style={{ fontSize: "34px", marginBottom: "12px" }}>What we’re highlighting this week</h2>
 
             <p style={{ fontSize: "17px", color: "#61707d", lineHeight: "1.7", marginBottom: "20px" }}>
-              Instead of giving beginners too many newsletter choices at once, MyHome can feature one strong weekly highlight that feels timely, easier to follow, and more intentional.
+              Instead of giving beginners too many newsletter choices at once, MyHome can feature one strong weekly
+              highlight that feels timely, easier to follow, and more intentional.
             </p>
 
             <div
@@ -1306,9 +1324,7 @@ function App() {
             <div style={{ fontSize: "14px", fontWeight: "800", color: "#94613c", marginBottom: "10px" }}>
               COMMUNITY
             </div>
-            <h2 style={{ fontSize: "34px", marginBottom: "12px" }}>
-              Learn from people already in the field
-            </h2>
+            <h2 style={{ fontSize: "34px", marginBottom: "12px" }}>Learn from people already in the field</h2>
             <p style={{ fontSize: "17px", color: "#61707d", lineHeight: "1.7", marginBottom: "20px" }}>
               Professionals are here to support the beginner journey, not take over the platform.
             </p>
@@ -1324,9 +1340,7 @@ function App() {
                     backgroundColor: "#faf7f2",
                   }}
                 >
-                  <div style={{ fontSize: "18px", fontWeight: "700", marginBottom: "4px" }}>
-                    {person.name}
-                  </div>
+                  <div style={{ fontSize: "18px", fontWeight: "700", marginBottom: "4px" }}>{person.name}</div>
                   <div
                     style={{
                       fontSize: "14px",
@@ -1405,7 +1419,7 @@ function App() {
             >
               READY TO KEEP GOING?
             </div>
-            <h2 style={{ fontSize: "38px", lineHeight: "1.15", marginBottom: "12px" }}>
+            <h2 style={{ fontSize: "38px", lineHeight: "1.15", marginBottom: "12px", color: "white" }}>
               Explore the platform first, then make it yours.
             </h2>
             <p
@@ -1416,7 +1430,8 @@ function App() {
                 marginBottom: "20px",
               }}
             >
-              This keeps the experience open and intuitive, while still giving you a sign-up moment like Reddit or LinkedIn.
+              This keeps the experience open and intuitive, while still giving you a sign-up moment like Reddit or
+              LinkedIn.
             </p>
             <div style={{ display: "flex", gap: "14px", flexWrap: "wrap" }}>
               <button
@@ -1722,7 +1737,8 @@ function App() {
                 maxWidth: "700px",
               }}
             >
-              This makes the homepage feel more intuitive by explaining the pieces instead of expecting users to figure them out on their own.
+              This makes the homepage feel more intuitive by explaining the pieces instead of expecting users to figure
+              them out on their own.
             </div>
 
             <div style={{ display: "grid", gap: "14px" }}>
@@ -1757,12 +1773,8 @@ function App() {
                     padding: "18px",
                   }}
                 >
-                  <div style={{ fontSize: "18px", fontWeight: "700", marginBottom: "6px" }}>
-                    {item.title}
-                  </div>
-                  <div style={{ fontSize: "15px", color: "#61707d", lineHeight: "1.7" }}>
-                    {item.body}
-                  </div>
+                  <div style={{ fontSize: "18px", fontWeight: "700", marginBottom: "6px" }}>{item.title}</div>
+                  <div style={{ fontSize: "15px", color: "#61707d", lineHeight: "1.7" }}>{item.body}</div>
                 </div>
               ))}
             </div>
