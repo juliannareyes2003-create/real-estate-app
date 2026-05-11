@@ -136,8 +136,7 @@ function App() {
 
   const topicPageContent = {
     "first-time-learning": {
-      intro:
-        "This page is for beginners who want a simple starting point before diving into more specific parts of real estate.",
+      intro: "This page is for beginners who want a simple starting point before diving into more specific parts of real estate.",
       points: [
         "What real estate includes",
         "Basic terms you will hear often",
@@ -146,8 +145,7 @@ function App() {
       ],
     },
     investing: {
-      intro:
-        "This page explains how people use real estate to build wealth and what beginners should understand before going deeper.",
+      intro: "This page explains how people use real estate to build wealth and what beginners should understand before going deeper.",
       points: [
         "Different ways people invest",
         "Risk versus reward",
@@ -156,8 +154,7 @@ function App() {
       ],
     },
     development: {
-      intro:
-        "This page breaks down how projects move from ideas and land to approved, financed, and completed buildings.",
+      intro: "This page breaks down how projects move from ideas and land to approved, financed, and completed buildings.",
       points: [
         "What developers do",
         "How projects get approved",
@@ -166,8 +163,7 @@ function App() {
       ],
     },
     "legal-regulations": {
-      intro:
-        "This page helps beginners understand how laws, approvals, and regulations shape real estate decisions.",
+      intro: "This page helps beginners understand how laws, approvals, and regulations shape real estate decisions.",
       points: [
         "Zoning basics",
         "Permits and approvals",
@@ -176,8 +172,7 @@ function App() {
       ],
     },
     tokenization: {
-      intro:
-        "This page introduces tokenization in simpler language and explains how digital ownership connects to real estate.",
+      intro: "This page introduces tokenization in simpler language and explains how digital ownership connects to real estate.",
       points: [
         "What tokenization means",
         "How ownership can be split",
@@ -186,8 +181,7 @@ function App() {
       ],
     },
     "market-data": {
-      intro:
-        "This page shows how to think about pricing, rents, and market movement without getting overwhelmed.",
+      intro: "This page shows how to think about pricing, rents, and market movement without getting overwhelmed.",
       points: [
         "Home prices",
         "Rent trends",
@@ -205,8 +199,7 @@ function App() {
       ],
     },
     "commercial-real-estate": {
-      intro:
-        "This page introduces commercial real estate and explains how it differs from residential.",
+      intro: "This page introduces commercial real estate and explains how it differs from residential.",
       points: [
         "Office properties",
         "Retail properties",
@@ -215,8 +208,7 @@ function App() {
       ],
     },
     financing: {
-      intro:
-        "This page explains how real estate deals are funded and why financing shapes what is possible.",
+      intro: "This page explains how real estate deals are funded and why financing shapes what is possible.",
       points: [
         "Mortgages",
         "Debt and equity",
@@ -234,8 +226,7 @@ function App() {
       ],
     },
     proptech: {
-      intro:
-        "This page introduces the technology side of real estate and how digital tools are changing the industry.",
+      intro: "This page introduces the technology side of real estate and how digital tools are changing the industry.",
       points: [
         "Platforms and apps",
         "Data tools",
@@ -244,8 +235,7 @@ function App() {
       ],
     },
     "deal-flow": {
-      intro:
-        "This page explains how opportunities are found, shared, and evaluated in real estate.",
+      intro: "This page explains how opportunities are found, shared, and evaluated in real estate.",
       points: [
         "What deal flow means",
         "How opportunities are found",
@@ -259,8 +249,7 @@ function App() {
     "first-time-learning": {
       label: "Beginner Basics",
       title: "Where New Learners Should Start",
-      intro:
-        "A simple overview of the first ideas beginners should understand before diving deeper into real estate topics.",
+      intro: "A simple overview of the first ideas beginners should understand before diving deeper into real estate topics.",
       bullets: [
         "Learn the difference between residential and commercial real estate.",
         "Get comfortable with the basic language used across the industry.",
@@ -270,8 +259,7 @@ function App() {
     investing: {
       label: "Investor Mindset",
       title: "Thinking About Real Estate Investing Without the Confusion",
-      intro:
-        "A straightforward guide to beginner strategies like REITs, house hacking, and learning how to judge risk.",
+      intro: "A straightforward guide to beginner strategies like REITs, house hacking, and learning how to judge risk.",
       bullets: [
         "REITs can be one of the easiest starting points for beginners.",
         "House hacking is a clear entry strategy to learn first.",
@@ -281,8 +269,7 @@ function App() {
     development: {
       label: "Development Update",
       title: "How Projects Move From Idea to Building",
-      intro:
-        "A beginner-friendly look at how development projects are planned, approved, financed, and completed.",
+      intro: "A beginner-friendly look at how development projects are planned, approved, financed, and completed.",
       bullets: [
         "Development starts long before construction begins.",
         "Approvals, financing, and timelines shape every project.",
@@ -292,8 +279,7 @@ function App() {
     "legal-regulations": {
       label: "Policy Watch",
       title: "Why Legal Rules Shape Real Estate So Much",
-      intro:
-        "An easier explanation of how zoning, approvals, and regulations affect projects, ownership, and opportunity.",
+      intro: "An easier explanation of how zoning, approvals, and regulations affect projects, ownership, and opportunity.",
       bullets: [
         "Zoning rules affect what can be built and where.",
         "Permits and approvals can slow or reshape development.",
@@ -303,8 +289,7 @@ function App() {
     tokenization: {
       label: "Tokenization Spotlight",
       title: "Digital Ownership, Explained More Clearly",
-      intro:
-        "A simple breakdown of how tokenization connects to ownership, access, and investor questions in real estate.",
+      intro: "A simple breakdown of how tokenization connects to ownership, access, and investor questions in real estate.",
       bullets: [
         "Tokenization can split ownership into smaller pieces.",
         "It raises questions about regulation, access, and risk.",
@@ -314,8 +299,7 @@ function App() {
     "market-data": {
       label: "U.S. Market Overview",
       title: "The Market Right Now: What You Actually Need to Know",
-      intro:
-        "A simple breakdown of where the market stands today and what beginners should pay attention to first.",
+      intro: "A simple breakdown of where the market stands today and what beginners should pay attention to first.",
       bullets: [
         "Mortgage rates are still shaping buyer behavior.",
         "Inventory changes affect how people compare opportunities.",
@@ -325,8 +309,7 @@ function App() {
     "brokerage-agents": {
       label: "Broker Perspective",
       title: "What Agents Actually Help With",
-      intro:
-        "A clearer look at how agents guide buyers and sellers and where beginners often misunderstand their role.",
+      intro: "A clearer look at how agents guide buyers and sellers and where beginners often misunderstand their role.",
       bullets: [
         "Agents help with pricing, search, negotiation, and process.",
         "Their value depends on the market and the client’s needs.",
@@ -336,8 +319,7 @@ function App() {
     "commercial-real-estate": {
       label: "Commercial Spotlight",
       title: "Commercial Real Estate Without the Jargon",
-      intro:
-        "An intro to how office, retail, and mixed-use properties work and why commercial deals feel so different.",
+      intro: "An intro to how office, retail, and mixed-use properties work and why commercial deals feel so different.",
       bullets: [
         "Commercial properties usually depend more on income and leases.",
         "The scale and analysis differ from residential real estate.",
@@ -347,8 +329,7 @@ function App() {
     financing: {
       label: "Financing Focus",
       title: "How Real Estate Deals Get Funded",
-      intro:
-        "A simpler explanation of mortgages, debt, equity, and why capital structure matters in real estate.",
+      intro: "A simpler explanation of mortgages, debt, equity, and why capital structure matters in real estate.",
       bullets: [
         "Mortgages are only one part of the financing picture.",
         "Debt and equity play different roles in a deal.",
@@ -358,8 +339,7 @@ function App() {
     zoning: {
       label: "Zoning Watch",
       title: "Why Land Use Rules Matter So Much",
-      intro:
-        "A beginner-friendly explanation of zoning and how it affects development, value, and neighborhood change.",
+      intro: "A beginner-friendly explanation of zoning and how it affects development, value, and neighborhood change.",
       bullets: [
         "Zoning controls what can be built on a site.",
         "Land use rules affect supply and neighborhood growth.",
@@ -369,8 +349,7 @@ function App() {
     proptech: {
       label: "PropTech Update",
       title: "Technology Changing How Real Estate Works",
-      intro:
-        "A simple look at how data platforms, automation, and digital tools are shaping the industry.",
+      intro: "A simple look at how data platforms, automation, and digital tools are shaping the industry.",
       bullets: [
         "PropTech improves access to information and workflow speed.",
         "Digital tools are changing research, management, and transactions.",
@@ -380,8 +359,7 @@ function App() {
     "deal-flow": {
       label: "Deal Flow Insight",
       title: "How Opportunities Get Found and Shared",
-      intro:
-        "A clearer explanation of how deals move through networks, platforms, and professional relationships.",
+      intro: "A clearer explanation of how deals move through networks, platforms, and professional relationships.",
       bullets: [
         "Deal flow is about how opportunities reach people.",
         "Strong networks often shape who sees what first.",
@@ -855,19 +833,20 @@ function App() {
       <main
         style={{
           width: "100%",
-          maxWidth: "1500px",
+          maxWidth: "1440px",
           margin: "0 auto",
-          padding: "42px clamp(24px, 4vw, 64px) 80px",
+          padding: "42px clamp(20px, 4vw, 48px) 80px",
+          boxSizing: "border-box",
         }}
       >
         <section
           id="learn-section"
           style={{
             display: "grid",
-            gridTemplateColumns: "minmax(0, 1.15fr) minmax(360px, 0.85fr)",
-            gap: "32px",
+            gridTemplateColumns: "repeat(2, minmax(0, 1fr))",
+            gap: "28px",
             alignItems: "stretch",
-            marginBottom: "80px",
+            marginBottom: "70px",
           }}
         >
           <div
@@ -877,6 +856,8 @@ function App() {
               borderRadius: "32px",
               padding: "40px",
               boxShadow: "0 8px 30px rgba(0,0,0,0.04)",
+              minHeight: "520px",
+              boxSizing: "border-box",
             }}
           >
             <div
@@ -977,11 +958,12 @@ function App() {
               backgroundColor: "#2f596e",
               color: "white",
               borderRadius: "32px",
-              padding: "36px",
+              padding: "32px",
               display: "flex",
               flexDirection: "column",
               justifyContent: "space-between",
-              minHeight: "100%",
+              minHeight: "520px",
+              boxSizing: "border-box",
             }}
           >
             <div>
@@ -1028,7 +1010,7 @@ function App() {
                 marginTop: "28px",
                 backgroundColor: "rgba(255,255,255,0.08)",
                 borderRadius: "24px",
-                padding: "22px",
+                padding: "18px",
               }}
             >
               <div style={{ fontSize: "14px", fontWeight: "800", marginBottom: "10px" }}>
@@ -1037,7 +1019,7 @@ function App() {
 
               <div
                 style={{
-                  fontSize: "22px",
+                  fontSize: "20px",
                   fontWeight: "700",
                   marginBottom: "10px",
                   lineHeight: "1.35",
@@ -1070,7 +1052,9 @@ function App() {
             <div style={{ fontSize: "14px", fontWeight: "800", color: "#94613c", marginBottom: "10px" }}>
               TOPICS
             </div>
-            <h2 style={{ fontSize: "34px", marginBottom: "10px" }}>Pick a topic and start there</h2>
+            <h2 style={{ fontSize: "34px", marginBottom: "10px" }}>
+              Pick a topic and start there
+            </h2>
             <p
               style={{
                 fontSize: "17px",
@@ -1186,7 +1170,9 @@ function App() {
               THIS WEEK’S NEWSLETTER
             </div>
 
-            <h2 style={{ fontSize: "34px", marginBottom: "12px" }}>What we’re highlighting this week</h2>
+            <h2 style={{ fontSize: "34px", marginBottom: "12px" }}>
+              What we’re highlighting this week
+            </h2>
 
             <p style={{ fontSize: "17px", color: "#61707d", lineHeight: "1.7", marginBottom: "20px" }}>
               Instead of giving beginners too many newsletter choices at once, MyHome can feature one strong weekly
@@ -1320,7 +1306,9 @@ function App() {
             <div style={{ fontSize: "14px", fontWeight: "800", color: "#94613c", marginBottom: "10px" }}>
               COMMUNITY
             </div>
-            <h2 style={{ fontSize: "34px", marginBottom: "12px" }}>Learn from people already in the field</h2>
+            <h2 style={{ fontSize: "34px", marginBottom: "12px" }}>
+              Learn from people already in the field
+            </h2>
             <p style={{ fontSize: "17px", color: "#61707d", lineHeight: "1.7", marginBottom: "20px" }}>
               Professionals are here to support the beginner journey, not take over the platform.
             </p>
@@ -1336,7 +1324,9 @@ function App() {
                     backgroundColor: "#faf7f2",
                   }}
                 >
-                  <div style={{ fontSize: "18px", fontWeight: "700", marginBottom: "4px" }}>{person.name}</div>
+                  <div style={{ fontSize: "18px", fontWeight: "700", marginBottom: "4px" }}>
+                    {person.name}
+                  </div>
                   <div
                     style={{
                       fontSize: "14px",
