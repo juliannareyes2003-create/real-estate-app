@@ -35,6 +35,8 @@ export default function App() {
   const [showProfile, setShowProfile] = useState(false);
   const [activeComment, setActiveComment] = useState("");
   const [comments, setComments] = useState([]);
+  const [selectedProfessional, setSelectedProfessional] = useState(null);
+  const [proMessage, setProMessage] = useState("");
 
   const learningGoals = ["Learn the basics","Understand investing","Explore development","Follow market trends","Learn laws and regulations","Connect with professionals"];
 
@@ -61,9 +63,30 @@ export default function App() {
   ];
 
   const professionals = [
-    { name: "Sarah Jenkins", role: "Real Estate Attorney", help: "Explains contracts, zoning, and legal basics clearly." },
-    { name: "Marcus Chen", role: "Developer", help: "Walks through how projects are financed, approved, and built." },
-    { name: "Elena Rodriguez", role: "Investor & Broker", help: "Covers beginner investing questions and market dynamics." },
+    {
+      name: "Sarah Jenkins", role: "Real Estate Attorney", initials: "SJ",
+      help: "Explains contracts, zoning, and legal basics clearly.",
+      location: "New York, NY", experience: "14 years",
+      bio: "Sarah specializes in residential and commercial real estate transactions, zoning disputes, and landlord-tenant law. She has represented buyers, sellers, and developers across NYC and the tri-state area. She's particularly focused on helping first-time buyers understand what they're signing.",
+      topics: ["Legal & Regulations", "Zoning", "First-Time Learning"],
+      availability: "Responds within 24 hours",
+    },
+    {
+      name: "Marcus Chen", role: "Developer", initials: "MC",
+      help: "Walks through how projects are financed, approved, and built.",
+      location: "Brooklyn, NY", experience: "11 years",
+      bio: "Marcus has developed mixed-use and residential projects across Brooklyn and Queens, with a focus on ground-up construction and adaptive reuse. He's navigated NYC's complex entitlement process dozens of times and enjoys breaking it down for people who are new to development.",
+      topics: ["Development", "Financing", "Zoning"],
+      availability: "Responds within 48 hours",
+    },
+    {
+      name: "Elena Rodriguez", role: "Investor & Broker", initials: "ER",
+      help: "Covers beginner investing questions and market dynamics.",
+      location: "Miami, FL", experience: "9 years",
+      bio: "Elena started as a residential agent before building a portfolio of income-producing properties in South Florida. She now splits her time between brokerage and managing her own investments. She's particularly good at explaining cap rates, cash flow analysis, and how to evaluate your first deal.",
+      topics: ["Investing", "Market Data", "Deal Flow"],
+      availability: "Responds within 24 hours",
+    },
   ];
 
   const topicPageContent = {
@@ -803,22 +826,81 @@ export default function App() {
               <div style={{ fontSize: "10px", fontWeight: "700", color: C.warm, letterSpacing: "0.08em", marginBottom: "10px" }}>ASK A PROFESSIONAL</div>
               <div style={{ display: "grid", gap: "8px", marginBottom: "12px" }}>
                 {professionals.map(p => (
-                  <div key={p.name} style={{ borderRadius: R.md, padding: "11px 12px", backgroundColor: C.bg, border: `1px solid ${C.border}` }}>
-                    <div style={{ fontSize: "12px", fontWeight: "700", color: C.ink }}>{p.name}</div>
-                    <div style={{ fontSize: "11px", color: C.inkMuted, marginBottom: "3px" }}>{p.role}</div>
-                    <div style={{ fontSize: "11px", color: C.inkLight, lineHeight: "1.5" }}>{p.help}</div>
-                  </div>
+                  <button key={p.name} onClick={() => { setSelectedProfessional(p); setProMessage(""); }}
+                    style={{ borderRadius: R.md, padding: "12px", backgroundColor: C.bg, border: `1px solid ${C.border}`, textAlign: "left", cursor: "pointer", width: "100%" }}
+                    onMouseEnter={e => { e.currentTarget.style.borderColor = C.accent; e.currentTarget.style.backgroundColor = C.accentLight; }}
+                    onMouseLeave={e => { e.currentTarget.style.borderColor = C.border; e.currentTarget.style.backgroundColor = C.bg; }}>
+                    <div style={{ display: "flex", alignItems: "center", gap: "9px", marginBottom: "4px" }}>
+                      <div style={{ width: "28px", height: "28px", borderRadius: "50%", backgroundColor: C.accent, display: "flex", alignItems: "center", justifyContent: "center", fontSize: "10px", fontWeight: "700", color: "white", flexShrink: 0 }}>{p.initials}</div>
+                      <div>
+                        <div style={{ fontSize: "12px", fontWeight: "700", color: C.ink }}>{p.name}</div>
+                        <div style={{ fontSize: "11px", color: C.inkMuted }}>{p.role}</div>
+                      </div>
+                    </div>
+                    <div style={{ fontSize: "11px", color: C.inkLight, lineHeight: "1.5", paddingLeft: "37px" }}>{p.help}</div>
+                  </button>
                 ))}
               </div>
-              <button onClick={openSignup} style={{ ...btn.primary, width: "100%", justifyContent: "center", fontSize: "13px", padding: "10px" }}>Connect with professionals</button>
+              <div style={{ backgroundColor: C.bg, border: `1px solid ${C.border}`, borderRadius: R.md, padding: "12px 14px" }}>
+                <div style={{ fontSize: "11px", color: C.inkMuted, lineHeight: "1.6" }}>
+                  <strong style={{ color: C.ink, display: "block", marginBottom: "3px" }}>Want a direct answer?</strong>
+                  Click any professional above to view their profile and send them a question about this topic.
+                </div>
+              </div>
             </div>
           </div>
         </main>
+
+        {/* Professional profile modal */}
+        {selectedProfessional && (
+          <>
+            <div onClick={() => setSelectedProfessional(null)} style={{ position: "fixed", inset: 0, backgroundColor: "rgba(10,18,26,0.55)", zIndex: 40 }} />
+            <div style={{ position: "fixed", top: "50%", left: "50%", transform: "translate(-50%,-50%)", width: "520px", maxWidth: "92%", backgroundColor: C.white, borderRadius: R.xl, zIndex: 50, boxShadow: "0 20px 60px rgba(0,0,0,0.2)", overflow: "hidden", boxSizing: "border-box" }}>
+              <div style={{ backgroundColor: C.accent, padding: "24px 24px 20px", position: "relative" }}>
+                <button onClick={() => setSelectedProfessional(null)} style={{ position: "absolute", top: "14px", right: "16px", border: "none", background: "rgba(255,255,255,0.15)", borderRadius: "50%", width: "28px", height: "28px", color: "white", fontSize: "16px", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", lineHeight: 1 }}>×</button>
+                <div style={{ display: "flex", alignItems: "center", gap: "14px" }}>
+                  <div style={{ width: "52px", height: "52px", borderRadius: "50%", backgroundColor: "rgba(255,255,255,0.2)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "18px", fontWeight: "700", color: "white", flexShrink: 0 }}>{selectedProfessional.initials}</div>
+                  <div>
+                    <div style={{ fontSize: "18px", fontWeight: "700", color: "white", letterSpacing: "-0.01em" }}>{selectedProfessional.name}</div>
+                    <div style={{ fontSize: "13px", color: "rgba(255,255,255,0.75)" }}>{selectedProfessional.role} · {selectedProfessional.location}</div>
+                  </div>
+                </div>
+              </div>
+              <div style={{ padding: "22px 24px", maxHeight: "65vh", overflowY: "auto", boxSizing: "border-box" }}>
+                <div style={{ display: "flex", gap: "8px", marginBottom: "16px", flexWrap: "wrap" }}>
+                  <div style={{ backgroundColor: C.accentLight, border: `1px solid ${C.border}`, borderRadius: R.sm, padding: "4px 10px", fontSize: "11px", fontWeight: "600", color: C.accent }}>{selectedProfessional.experience} experience</div>
+                  <div style={{ backgroundColor: C.warmLight, border: "1px solid #e0cfc0", borderRadius: R.sm, padding: "4px 10px", fontSize: "11px", fontWeight: "600", color: C.warm }}>{selectedProfessional.availability}</div>
+                </div>
+                <div style={{ fontSize: "10px", fontWeight: "700", color: C.inkMuted, letterSpacing: "0.08em", marginBottom: "6px" }}>ABOUT</div>
+                <p style={{ fontSize: "13px", lineHeight: "1.7", color: C.inkLight, marginBottom: "18px", marginTop: 0 }}>{selectedProfessional.bio}</p>
+                <div style={{ fontSize: "10px", fontWeight: "700", color: C.inkMuted, letterSpacing: "0.08em", marginBottom: "8px" }}>COVERS THESE TOPICS</div>
+                <div style={{ display: "flex", gap: "6px", flexWrap: "wrap", marginBottom: "20px" }}>
+                  {selectedProfessional.topics.map(t => (
+                    <div key={t} style={{ backgroundColor: C.bg, border: `1px solid ${C.border}`, borderRadius: R.sm, padding: "4px 10px", fontSize: "11px", fontWeight: "500", color: C.ink }}>{t}</div>
+                  ))}
+                </div>
+                <div style={{ fontSize: "10px", fontWeight: "700", color: C.inkMuted, letterSpacing: "0.08em", marginBottom: "8px" }}>SEND A MESSAGE</div>
+                <textarea
+                  value={proMessage}
+                  onChange={e => setProMessage(e.target.value)}
+                  placeholder={`Ask ${selectedProfessional.name.split(" ")[0]} a question about ${selectedProfessional.topics[0]}…`}
+                  rows={3}
+                  style={{ width: "100%", padding: "11px 13px", borderRadius: R.lg, border: `1px solid ${C.border}`, fontSize: "13px", color: C.ink, resize: "none", fontFamily: "inherit", outline: "none", boxSizing: "border-box", backgroundColor: C.bg, lineHeight: "1.6" }}
+                />
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: "10px", gap: "10px", flexWrap: "wrap" }}>
+                  <div style={{ fontSize: "11px", color: C.inkMuted }}>Create a free account to send messages.</div>
+                  <div style={{ display: "flex", gap: "8px" }}>
+                    <button onClick={() => setSelectedProfessional(null)} style={{ ...btn.secondary, padding: "9px 16px", fontSize: "13px" }}>Cancel</button>
+                    <button onClick={() => { setSelectedProfessional(null); openSignup(); }} style={{ ...btn.primary, padding: "9px 16px", fontSize: "13px" }}>Sign up to send</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </>
+        )}
       </div>
     );
   }
-
-  // HOMEPAGE
   const heroActions = [
     { number: "01", title: "Pick a topic", body: "Choose one area and start learning.", action: () => handleNavClick("topics-section","Topics") },
     { number: "02", title: "Read this week's update", body: "Stay close to current market insights.", action: () => handleNavClick("market-trends-section","Newsletter") },
