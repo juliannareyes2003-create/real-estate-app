@@ -81,6 +81,13 @@ export default function App() {
   const [proMessage, setProMessage] = useState("");
   const [selectedNewsletterId, setSelectedNewsletterId] = useState("april-sales-flat");
   const [showPastIssues, setShowPastIssues] = useState(false);
+  const [aiQuestion, setAiQuestion] = useState("");
+  const [aiMessages, setAiMessages] = useState([
+    {
+      role: "assistant",
+      text: "Hi, I’m your MyHome AI guide. Ask me anything beginner-friendly about real estate, like mortgages, zoning, investing, agents, or market data."
+    }
+  ]);
 
   const learningGoals = ["Learn the basics","Understand investing","Explore development","Follow market trends","Learn laws and regulations","Connect with professionals"];
 
@@ -590,6 +597,57 @@ export default function App() {
 
     setSelectedProfessional(professional);
     setProMessage("");
+  };
+
+  const generateAiReply = (question) => {
+    const q = question.toLowerCase();
+
+    if (q.includes("mortgage") || q.includes("loan") || q.includes("interest") || q.includes("rate") || q.includes("down payment")) {
+      return "A mortgage is a loan used to buy property. The big things to understand are the interest rate, the monthly payment, the down payment, and closing costs. When rates rise, monthly payments become more expensive, so buyers can afford less. A good beginner move is to compare the purchase price and the monthly payment, not just the listing price.";
+    }
+
+    if (q.includes("invest") || q.includes("reit") || q.includes("rental") || q.includes("cash flow") || q.includes("cap rate")) {
+      return "For beginners, real estate investing usually starts in one of three ways: REITs, rental property, or house hacking. REITs are the easiest because they trade like stocks. Rental properties give more control but need more money, time, and maintenance. Cash flow means the money left after rent pays the mortgage, taxes, insurance, repairs, and other costs.";
+    }
+
+    if (q.includes("zoning") || q.includes("permit") || q.includes("build") || q.includes("development")) {
+      return "Zoning is the set of rules that controls what can be built on land. It can limit the building type, height, density, and use, like residential, commercial, or mixed-use. This matters because land can become much more valuable if zoning allows more units or a higher-value use.";
+    }
+
+    if (q.includes("agent") || q.includes("broker") || q.includes("commission") || q.includes("buyer") || q.includes("seller")) {
+      return "A good agent does more than open doors. They help with pricing, negotiation, paperwork, and understanding the local market. Before working with one, ask how many deals they have done in that specific neighborhood, how they get paid, and how often they will communicate with you.";
+    }
+
+    if (q.includes("token") || q.includes("blockchain") || q.includes("fractional")) {
+      return "Tokenization means splitting ownership of a real estate asset into digital pieces, usually on a blockchain. The idea is that people could invest smaller amounts into property. The important warning is that the token does not make a bad property good. You still need to understand the property, income, debt, fees, and legal rules.";
+    }
+
+    if (q.includes("market") || q.includes("price") || q.includes("rent") || q.includes("data") || q.includes("inventory")) {
+      return "Market data helps you understand whether a market is heating up or cooling down. Look at median price, days on market, inventory, months of supply, rent trends, and mortgage rates. One number alone can be misleading, so it is better to compare a few signals together.";
+    }
+
+    if (q.includes("first") || q.includes("beginner") || q.includes("start") || q.includes("learn")) {
+      return "The best place to start is with the basics: what property types exist, how buying works, how mortgages work, and who is involved in a deal. After that, pick one lane — buying a home, investing, development, or market data — so you are not trying to learn the whole industry at once.";
+    }
+
+    return "Good question. A simple way to think about it is this: real estate decisions usually come down to property type, location, financing, legal rules, and market timing. Try asking me with one specific topic, like ‘How do mortgages work?’ or ‘What is a cap rate?’ and I can break it down more clearly.";
+  };
+
+  const handleAiSubmit = () => {
+    const trimmed = aiQuestion.trim();
+    if (!trimmed) return;
+
+    const userMessage = { role: "user", text: trimmed };
+    const assistantMessage = { role: "assistant", text: generateAiReply(trimmed) };
+
+    setAiMessages(prev => [...prev, userMessage, assistantMessage]);
+    setAiQuestion("");
+  };
+
+  const askSuggestedQuestion = (question) => {
+    const userMessage = { role: "user", text: question };
+    const assistantMessage = { role: "assistant", text: generateAiReply(question) };
+    setAiMessages(prev => [...prev, userMessage, assistantMessage]);
   };
 
   const font = '"Montserrat", ui-sans-serif, system-ui, -apple-system, sans-serif';
@@ -1547,10 +1605,46 @@ export default function App() {
                 </button>
               ))}
             </div>
-            <div id="ask-question-section" style={{ borderRadius: R.lg, padding: "15px 16px", backgroundColor: C.ink, color: "white" }}>
-              <div style={{ fontSize: "13px", fontWeight: "700", marginBottom: "4px" }}>Ask a beginner question</div>
-              <div style={{ fontSize: "12px", lineHeight: "1.6", color: "rgba(255,255,255,0.55)", marginBottom: "10px" }}>Post a question and get answers from people who work in real estate.</div>
-              <button onClick={isSignedUp ? () => { handleNavClick("ask-question-section","Ask a Question"); } : openSignup} style={{ border: "none", borderRadius: R.md, padding: "8px 14px", backgroundColor: "white", color: C.ink, fontSize: "12px", fontWeight: "600", cursor: "pointer" }}>{isSignedUp ? "Ask a question" : "Join the community"}</button>
+            <div id="ask-question-section" style={{ borderRadius: R.lg, padding: "18px", backgroundColor: C.ink, color: "white" }}>
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: "12px", marginBottom: "12px", flexWrap: "wrap" }}>
+                <div>
+                  <div style={{ fontSize: "10px", fontWeight: "800", color: "rgba(255,255,255,0.45)", letterSpacing: "0.1em", marginBottom: "4px" }}>AI GUIDE</div>
+                  <div style={{ fontSize: "15px", fontWeight: "800", marginBottom: "3px" }}>Ask MyHome AI</div>
+                  <div style={{ fontSize: "12px", lineHeight: "1.6", color: "rgba(255,255,255,0.58)" }}>Get a quick beginner-friendly answer, then keep exploring the topic.</div>
+                </div>
+                {!isSignedUp && (
+                  <button onClick={openSignup} style={{ border: "1px solid rgba(255,255,255,0.22)", borderRadius: R.md, padding: "8px 12px", backgroundColor: "transparent", color: "rgba(255,255,255,0.84)", fontSize: "11px", fontWeight: "700", cursor: "pointer" }}>Sign up to save chats</button>
+                )}
+              </div>
+
+              <div style={{ backgroundColor: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: R.lg, padding: "12px", maxHeight: "220px", overflowY: "auto", display: "grid", gap: "9px", marginBottom: "12px" }}>
+                {aiMessages.map((m, i) => (
+                  <div key={i} style={{ display: "flex", justifyContent: m.role === "user" ? "flex-end" : "flex-start" }}>
+                    <div style={{ maxWidth: "82%", borderRadius: R.md, padding: "9px 11px", backgroundColor: m.role === "user" ? C.accent : "white", color: m.role === "user" ? "white" : C.ink, fontSize: "12px", lineHeight: "1.55", boxShadow: m.role === "assistant" ? "0 8px 18px rgba(0,0,0,0.12)" : "none" }}>
+                      {m.text}
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              <div style={{ display: "flex", gap: "7px", flexWrap: "wrap", marginBottom: "12px" }}>
+                {["What is a mortgage?", "How do I start investing?", "What is zoning?"].map(q => (
+                  <button key={q} onClick={() => askSuggestedQuestion(q)} style={{ border: "1px solid rgba(255,255,255,0.16)", borderRadius: "999px", padding: "6px 10px", backgroundColor: "rgba(255,255,255,0.07)", color: "rgba(255,255,255,0.82)", fontSize: "11px", fontWeight: "600", cursor: "pointer" }}>
+                    {q}
+                  </button>
+                ))}
+              </div>
+
+              <div style={{ display: "grid", gridTemplateColumns: "minmax(0,1fr) auto", gap: "8px" }}>
+                <input
+                  value={aiQuestion}
+                  onChange={e => setAiQuestion(e.target.value)}
+                  onKeyDown={e => { if (e.key === "Enter") handleAiSubmit(); }}
+                  placeholder="Ask about mortgages, agents, zoning, investing..."
+                  style={{ width: "100%", boxSizing: "border-box", border: "1px solid rgba(255,255,255,0.14)", borderRadius: R.md, padding: "10px 12px", backgroundColor: "rgba(255,255,255,0.09)", color: "white", outline: "none", fontFamily: "inherit", fontSize: "12px" }}
+                />
+                <button onClick={handleAiSubmit} style={{ border: "none", borderRadius: R.md, padding: "10px 14px", backgroundColor: "white", color: C.ink, fontSize: "12px", fontWeight: "800", cursor: "pointer" }}>Ask</button>
+              </div>
             </div>
           </div>
         </section>
