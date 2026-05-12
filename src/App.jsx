@@ -463,7 +463,17 @@ export default function App() {
     if (savedInterests.includes(t)) { setSavedInterests(savedInterests.filter(i => i !== t)); return; }
     if (savedInterests.length < 3) setSavedInterests([...savedInterests, t]);
   };
-  const openSignup = () => { setShowSignupModal(true); setOnboardingStep(1); };
+  const openSignup = () => {
+    // If a user already created an account, do not show the sign-up flow again.
+    // Send them straight to their existing profile instead.
+    if (isSignedUp) {
+      setShowProfile(true);
+      return;
+    }
+
+    setShowSignupModal(true);
+    setOnboardingStep(1);
+  };
   const closeSignup = () => { setShowSignupModal(false); setOnboardingStep(1); };
   const handleNavClick = (sectionId, navName) => {
     setActiveNav(navName);
@@ -478,9 +488,24 @@ export default function App() {
     setAccountErrors(e); return Object.keys(e).length === 0;
   };
   const nextStep = () => {
-    if (onboardingStep === 3) { if (!validateAccount()) return; setIsSignedUp(true); setOnboardingStep(4); }
-    else if (onboardingStep < 4) setOnboardingStep(onboardingStep + 1);
-    else { setShowSignupModal(false); setOnboardingStep(1); }
+    if (onboardingStep === 3) {
+      if (!validateAccount()) return;
+
+      // Account is now created, so the rest of the app should treat them as signed in.
+      setIsSignedUp(true);
+      setOnboardingStep(4);
+      return;
+    }
+
+    if (onboardingStep < 4) {
+      setOnboardingStep(onboardingStep + 1);
+      return;
+    }
+
+    // After the success screen, close the modal and show the user's profile.
+    setShowSignupModal(false);
+    setShowProfile(true);
+    setOnboardingStep(1);
   };
 
   const font = '"DM Sans", ui-sans-serif, system-ui, -apple-system, sans-serif';
@@ -606,7 +631,7 @@ export default function App() {
     const firstName = accountInfo.name.split(" ")[0] || "there";
     return (
       <div style={page}>
-        <NavBar onBack={() => setShowProfile(false)} backLabel="← Home" activeNav={activeNav} handleNavClick={handleNavClick} isSignedUp={isSignedUp} setShowProfile={setShowProfile} openSignup={openSignup} accountInfo={accountInfo} />
+        <NavBar onBack={() => setShowProfile(false)} backLabel="← Back to home" activeNav={activeNav} handleNavClick={handleNavClick} isSignedUp={isSignedUp} setShowProfile={setShowProfile} openSignup={openSignup} accountInfo={accountInfo} />
 
         {/* Hero banner */}
         <div style={{ backgroundColor: C.accent, borderBottom: `1px solid ${C.accentHover}` }}>
@@ -1377,8 +1402,8 @@ export default function App() {
         <section style={{ backgroundColor: C.ink, borderRadius: R.xl, padding: "40px 44px", display: "flex", alignItems: "center", justifyContent: "space-between", gap: "28px", flexWrap: "wrap" }}>
           <div>
             <div style={{ fontSize: "10px", fontWeight: "700", color: "rgba(255,255,255,0.4)", letterSpacing: "0.08em", marginBottom: "7px" }}>GET STARTED</div>
-            <h2 style={{ fontSize: "24px", fontWeight: "700", letterSpacing: "-0.02em", color: "white", margin: "0 0 7px" }}>Explore first. Sign up when ready.</h2>
-            <p style={{ fontSize: "13px", color: "rgba(255,255,255,0.45)", margin: 0, maxWidth: "380px", lineHeight: "1.6" }}>Browse freely — create a profile when you want to save your progress and personalize your experience.</p>
+            <h2 style={{ fontSize: "24px", fontWeight: "700", letterSpacing: "-0.02em", color: "white", margin: "0 0 7px" }}>{isSignedUp ? "Welcome back to your real estate hub." : "Explore first. Sign up when ready."}</h2>
+            <p style={{ fontSize: "13px", color: "rgba(255,255,255,0.45)", margin: 0, maxWidth: "380px", lineHeight: "1.6" }}>{isSignedUp ? "Your profile is already saved, so you can return to it anytime without signing up again." : "Browse freely — create a profile when you want to save your progress and personalize your experience."}</p>
           </div>
           <div style={{ display: "flex", gap: "8px", flexWrap: "wrap" }}>
             <button onClick={isSignedUp ? () => setShowProfile(true) : openSignup} style={{ ...btn.primary, backgroundColor: "#c07040", padding: "11px 20px" }}>{isSignedUp ? ("Welcome back, " + accountInfo.name.split(" ")[0]) : "Create free profile"}</button>
