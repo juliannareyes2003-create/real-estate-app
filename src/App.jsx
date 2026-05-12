@@ -22,6 +22,35 @@ const btn = {
   secondary: { border: `1px solid ${C.border}`, borderRadius: R.md, padding: "11px 20px", backgroundColor: C.white, color: C.accent, fontSize: "14px", fontWeight: "600", cursor: "pointer" },
 };
 
+
+const NavBar = ({ onBack, backLabel, activeNav, handleNavClick, isSignedUp, setShowProfile, openSignup, accountInfo }) => (
+    <div style={{ position: "sticky", top: 0, zIndex: 20, backgroundColor: "rgba(245,244,241,0.96)", backdropFilter: "blur(12px)", borderBottom: `1px solid ${C.border}` }}>
+      <div style={{ maxWidth: "1280px", margin: "0 auto", padding: "14px clamp(20px,4vw,48px)", display: "flex", alignItems: "center", justifyContent: "space-between", boxSizing: "border-box" }}>
+        <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+          <div style={{ width: "30px", height: "30px", borderRadius: R.sm, backgroundColor: C.accent, display: "flex", alignItems: "center", justifyContent: "center" }}>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+          </div>
+          <div>
+            <div style={{ fontSize: "15px", fontWeight: "700", color: C.ink, letterSpacing: "-0.02em" }}>MyHome</div>
+            <div style={{ fontSize: "10px", color: C.inkMuted }}>Real estate, made legible</div>
+          </div>
+        </div>
+        {onBack ? (
+          <button onClick={onBack} style={{ ...btn.secondary, fontSize: "13px", padding: "7px 13px" }}>{backLabel || "← Back"}</button>
+        ) : (
+          <div style={{ display: "flex", alignItems: "center", gap: "28px" }}>
+            <nav style={{ display: "flex", gap: "2px" }}>
+              {[{label:"Learn",id:"learn-section"},{label:"Topics",id:"topics-section"},{label:"Newsletter",id:"market-trends-section"},{label:"Community",id:"community-section"}].map(item => (
+                <button key={item.label} onClick={() => handleNavClick(item.id, item.label)} style={{ border: "none", borderRadius: R.sm, padding: "6px 11px", backgroundColor: activeNav===item.label ? C.accentLight : "transparent", color: activeNav===item.label ? C.accent : C.inkLight, fontSize: "13px", fontWeight: "500", cursor: "pointer" }}>{item.label}</button>
+              ))}
+            </nav>
+            <button onClick={isSignedUp ? () => setShowProfile(true) : openSignup} style={{ ...btn.primary, padding: "8px 16px", fontSize: "13px" }}>{isSignedUp ? ("Hi, " + accountInfo.name.split(" ")[0] + " ↗") : "Sign up free"}</button>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+
 export default function App() {
   const [showSignupModal, setShowSignupModal] = useState(false);
   const [onboardingStep, setOnboardingStep] = useState(1);
@@ -33,6 +62,7 @@ export default function App() {
   const [accountErrors, setAccountErrors] = useState({});
   const [isSignedUp, setIsSignedUp] = useState(false);
   const [showProfile, setShowProfile] = useState(false);
+  const [profileTopicDetail, setProfileTopicDetail] = useState(null);
   const [activeComment, setActiveComment] = useState("");
   const [comments, setComments] = useState([]);
   const [selectedProfessional, setSelectedProfessional] = useState(null);
@@ -225,6 +255,202 @@ export default function App() {
     },
   };
 
+  // Rich beginner explainer content shown when a topic card is expanded on the profile page
+  const topicDeepDive = {
+    "First-Time Learning": {
+      sections: [
+        { heading: "What is real estate, exactly?", body: "Real estate is any land and anything permanently attached to it — buildings, homes, parking lots, even trees. When people talk about 'the real estate market,' they usually mean the buying, selling, and renting of property. It's one of the oldest and most common ways people build wealth, and it affects almost everyone whether they own property or not." },
+        { heading: "Residential vs. commercial: the most important split", body: "Residential real estate is where people live — houses, apartments, condos, townhouses. Commercial real estate is where businesses operate — offices, retail stores, warehouses, hotels. The rules, financing, and valuations work very differently between the two. As a beginner, residential is usually the easier starting point because it's more familiar and the data is more accessible." },
+        { heading: "Key terms you'll keep seeing", body: "Equity is the portion of a property's value that you own free and clear — if your home is worth $400,000 and you owe $300,000 on the mortgage, your equity is $100,000. Appreciation means the property is growing in value over time. Depreciation means it's losing value (though in tax language, depreciation is also a deduction investors use). A mortgage is a loan used to buy property where the property itself serves as collateral." },
+        { heading: "How a typical home purchase works", body: "First, a buyer gets pre-approved by a lender — this tells them how much they can borrow. Then they search for homes, make an offer, negotiate, and go under contract. An inspection happens to identify any issues with the property. The lender does an appraisal to confirm the home is worth what's being paid. Finally, closing happens — both parties sign documents, money changes hands, and ownership transfers. The whole process typically takes 30–60 days from accepted offer to close." },
+        { heading: "What closing costs are and why they matter", body: "On top of the down payment, buyers pay closing costs — a collection of fees including lender fees, title insurance, attorney fees, and prepaid taxes and insurance. These typically run 2–5% of the purchase price. On a $400,000 home, that's $8,000–$20,000 extra you need to have ready. Many first-time buyers are surprised by this, so it's important to budget for it from the start." },
+      ],
+      glossary: [
+        { term: "Pre-approval", def: "A lender's conditional commitment to loan you up to a certain amount, based on your credit, income, and assets." },
+        { term: "Down payment", def: "The portion of the purchase price you pay upfront — typically 3–20% for a home." },
+        { term: "Equity", def: "The value of your ownership stake: property value minus what you owe on it." },
+        { term: "Appraisal", def: "An independent estimate of a property's market value, required by lenders before finalizing a loan." },
+        { term: "Title", def: "The legal record of who owns a property. A title search confirms the seller has the right to sell." },
+      ],
+    },
+    "Investing": {
+      sections: [
+        { heading: "Why people invest in real estate", body: "Real estate offers four potential sources of return: cash flow (monthly rent income after expenses), appreciation (the property growing in value), tax benefits (deductions and depreciation), and leverage (using borrowed money to control a larger asset). Not every investment delivers all four, and different strategies prioritize different ones. Understanding which you're pursuing helps you evaluate deals clearly." },
+        { heading: "REITs: the lowest-barrier entry point", body: "A REIT (Real Estate Investment Trust) is a company that owns income-producing real estate — think shopping centers, apartment buildings, or office towers — and trades on the stock market like a share. You can buy a REIT for the price of one stock. You don't manage anything, you don't need a down payment, and you get exposure to real estate returns. The tradeoff is less control and prices that move with the broader market." },
+        { heading: "House hacking: a beginner's first direct investment", body: "House hacking means buying a 2–4 unit property, living in one unit, and renting the others. The rental income offsets — sometimes entirely covers — your mortgage payment. You're building equity while effectively living for free or close to it. It's one of the most practical first steps into direct real estate ownership because you qualify for residential financing (lower rates, lower down payments) rather than investment property financing." },
+        { heading: "The cap rate: the most important investing metric", body: "Cap rate = Net Operating Income ÷ Property Value. Net Operating Income (NOI) is the income the property generates after operating expenses but before debt service. A property with $30,000 NOI priced at $500,000 has a 6% cap rate. Higher cap rates mean more income relative to price — but often also more risk or a less desirable location. Cap rates are a quick way to compare properties and understand what a market is pricing in." },
+        { heading: "How leverage works — and why it cuts both ways", body: "If you put $50,000 down on a $250,000 property and it appreciates 10% to $275,000, your $25,000 gain represents a 50% return on your $50,000 investment. That's the power of leverage. But if the property drops 10% to $225,000, you've lost $25,000 — half your down payment — while still owing the full mortgage. Leverage amplifies both gains and losses, which is why understanding your debt structure matters as much as picking the right property." },
+      ],
+      glossary: [
+        { term: "Cap rate", def: "Net Operating Income divided by property value — used to compare investment properties." },
+        { term: "Cash flow", def: "Monthly income remaining after all expenses (mortgage, taxes, insurance, management, repairs) are paid." },
+        { term: "NOI", def: "Net Operating Income — revenue from a property minus operating expenses, before debt payments." },
+        { term: "Leverage", def: "Using borrowed money (a mortgage) to control a larger asset than your own capital would allow." },
+        { term: "1031 Exchange", def: "A tax rule allowing investors to defer capital gains taxes by rolling proceeds from one property sale into another." },
+      ],
+    },
+    "Tokenization": {
+      sections: [
+        { heading: "What tokenization actually means", body: "Tokenization is the process of converting ownership of a physical asset — like a building — into digital tokens on a blockchain. Instead of one person owning 100% of a property, ownership can be divided into thousands or millions of tokens, each representing a fractional share. This is similar to how a company divides ownership into shares of stock, but for real property." },
+        { heading: "Why people are excited about it", body: "Traditionally, real estate investing requires large amounts of capital — most people can't afford to buy an apartment building outright. Tokenization allows smaller investors to own a fraction of a property, receive a proportional share of rental income, and potentially sell their tokens on a secondary market without waiting for the whole building to be sold. It promises to make real estate more accessible and liquid." },
+        { heading: "Rhino and Jetty: tokenization applied to deposits", body: "You don't have to look at blockchain startups to see tokenization principles in action. Rhino and Jetty applied the core idea — spreading out a large lump sum payment over time — to security deposits. Instead of paying $3,000 upfront, renters pay a small monthly fee. The companies have since merged and now operate in over 6 million homes. The FARE Act in NYC further changed the economics by shifting broker fees from tenants to landlords." },
+        { heading: "What's still uncertain", body: "Most tokenized real estate in the US is structured as a security under SEC regulations, which means there are strict rules about who can invest and how. Fully open, retail-accessible tokenized markets don't widely exist yet. The technology works, but the regulatory and market infrastructure is still catching up. The EU is further along on frameworks for this than the US." },
+        { heading: "What beginners should focus on first", body: "Before evaluating any tokenized investment, evaluate the underlying property using standard real estate metrics: location, income, expenses, debt structure, and the track record of whoever is managing it. The token is a wrapper around the asset — a great token backed by a bad property is still a bad investment. Technology doesn't change the fundamentals." },
+      ],
+      glossary: [
+        { term: "Token", def: "A digital unit of ownership on a blockchain representing a fractional share of a real asset." },
+        { term: "Blockchain", def: "A decentralized digital ledger that records transactions across many computers, making records tamper-resistant." },
+        { term: "Fractionalization", def: "Dividing ownership of an asset into smaller pieces so more people can own a share." },
+        { term: "Security", def: "In financial terms, an investment product regulated by the SEC — most tokenized real estate qualifies." },
+        { term: "Secondary market", def: "A platform where investors can buy and sell tokens from each other, rather than directly with the issuer." },
+      ],
+    },
+    "Market Data": {
+      sections: [
+        { heading: "Why prices alone don't tell the full story", body: "Median sale price tells you where transactions landed — but it doesn't tell you how fast things are moving, whether sellers are cutting prices, or whether what's selling this month is different from last month. A market where 20 luxury homes sold can show a rising median while the typical home price is actually flat. You always need more than one number to understand what a market is really doing." },
+        { heading: "The three numbers that matter most", body: "Days on market (DOM) is how long listings sit before going under contract — a falling DOM means rising demand. Months of supply is how long it would take to sell all current inventory at the current sales pace — below 3 months is a seller's market, above 6 is a buyer's market. The sale-to-list ratio is the average price homes sell at compared to asking price — above 100% means bidding wars, below 98% means room to negotiate." },
+        { heading: "How mortgage rates affect everything", body: "When mortgage rates go up, monthly payments go up, which reduces how much house a given income can afford. This reduces buyer demand, which puts downward pressure on prices. When rates fall, the reverse happens. A 1% rate change on a $400,000 loan changes the monthly payment by roughly $250–270. This is why rate news dominates real estate headlines — it directly affects how many people can actually buy." },
+        { heading: "Local markets vs. national headlines", body: "National real estate data averages across hundreds of very different markets. A 'slowing national market' might mean San Francisco is correcting while Tampa is still hot. Always try to find data at the metro, neighborhood, or even zip code level. Zillow, Redfin, and Realtor.com all offer local market data for free. For commercial, CoStar and LoopNet are the primary sources." },
+        { heading: "What NYC's market looks like right now", body: "In 2024–2025, NYC's outer boroughs — Brooklyn, Queens, the Bronx — have been outperforming Manhattan in first-time buyer demand. Affordability pressure is pushing buyers further from the center. The co-op vs. condo distinction matters in NYC more than anywhere else in the US: co-ops are owned collectively and require board approval, while condos offer individual title. This affects financing, resale, and flexibility." },
+      ],
+      glossary: [
+        { term: "Median sale price", def: "The midpoint of all transaction prices — half sold above, half below. Less distorted by outliers than average price." },
+        { term: "Days on market (DOM)", def: "How many days a listing is active before going under contract." },
+        { term: "Months of supply", def: "Current inventory divided by monthly sales pace — measures how long it would take to sell everything listed." },
+        { term: "Sale-to-list ratio", def: "The percentage of asking price that homes actually sell for. Over 100% = bidding wars." },
+        { term: "Absorption rate", def: "The rate at which available properties are being sold in a market — related to months of supply." },
+      ],
+    },
+    "Brokerage/Agents": {
+      sections: [
+        { heading: "What a real estate agent actually does", body: "Agents help buyers find properties, evaluate them, make offers, negotiate, and navigate the closing process. For sellers, they advise on pricing, market the property, vet buyers, and manage the transaction. The best agents add genuine value through hyper-local market knowledge, negotiation skill, and access to deals before they hit public listings. The weakest ones are overpaid schedulers." },
+        { heading: "How agents get paid", body: "Traditionally, the seller pays a commission — typically 5–6% of the sale price — which gets split between the listing agent and buyer's agent. After recent NAR settlement changes, buyer's agent compensation is now more explicitly negotiated. This is changing how buyers and agents interact: buyers are now more often asked to sign a buyer representation agreement that outlines exactly what the agent earns." },
+        { heading: "The FARE Act and how it changed NYC rentals", body: "In 2024, New York City passed the FARE Act, which moved the responsibility for paying broker fees in rental transactions from the tenant to the landlord. Before this, renters in NYC often paid 1 month's rent (or 15% of annual rent) as a broker fee — typically $3,000–$8,000 — on top of first month, last month, and security deposit. This was a significant upfront cost. Now landlords bear that fee, though some have adjusted asking rents in response." },
+        { heading: "Questions to ask before choosing an agent", body: "How many transactions did you close in the last 12 months in this specific neighborhood? What's your average sale-to-list ratio for listings you've represented? How do you handle multiple offer situations? What's your communication style and how often will you update me? These questions reveal far more than any review or referral. An agent who can answer them with specific data is worth more than one who speaks in generalities." },
+        { heading: "How technology is disrupting the model", body: "Platforms like Zillow, Redfin, and newer startups are compressing the informational advantage agents used to hold. Buyers can now research neighborhoods, pricing history, and comparable sales on their own. This is shifting agent value from information access toward judgment, negotiation, and process management. Agents who can't demonstrate clear value beyond scheduling showings are increasingly at risk." },
+      ],
+      glossary: [
+        { term: "Listing agent", def: "The agent representing the seller — responsible for pricing, marketing, and managing the sale." },
+        { term: "Buyer's agent", def: "The agent representing the buyer — helps with search, offers, negotiation, and closing." },
+        { term: "Commission", def: "The fee paid to agents, traditionally a percentage of the sale price paid by the seller." },
+        { term: "FARE Act", def: "NYC law (2024) shifting broker fee payment in rental transactions from tenants to landlords." },
+        { term: "Buyer representation agreement", def: "A contract between a buyer and agent specifying the agent's compensation and responsibilities." },
+      ],
+    },
+    "Legal & Regulations": {
+      sections: [
+        { heading: "Why the legal layer matters more than most beginners realize", body: "Every real estate transaction is fundamentally a legal transaction. When you buy a property, you're receiving a transfer of title — a legal document establishing your ownership. When you borrow to buy, you're signing a mortgage agreement that gives the lender the right to foreclose if you default. When you rent to a tenant, you're entering a contract governed by landlord-tenant law. Understanding these legal foundations isn't optional — it's the difference between protecting yourself and being exposed." },
+        { heading: "Zoning: what it controls and why it matters", body: "Zoning laws determine what can be built on any piece of land. Residential zones allow homes and apartments. Commercial zones allow offices and retail. Manufacturing zones protect industrial uses. These designations affect property values enormously — a parcel that gets upzoned from single-family to mixed-use can triple in value without anything being built. Understanding what a site's zoning allows is the first step in any development or investment analysis." },
+        { heading: "Title and what it means to own property", body: "Title is the legal concept of ownership. When you close on a property, a title company researches the chain of ownership to confirm the seller actually owns what they're selling and that there are no outstanding liens, judgments, or competing claims. Title insurance protects you against undiscovered claims. An LLC (Limited Liability Company) is a common structure investors use to hold properties — it separates personal assets from investment risk and can offer tax advantages." },
+        { heading: "Rent stabilization and how it works in NYC", body: "About one million apartments in New York City are rent-stabilized, meaning annual rent increases are capped at rates set by the Rent Guidelines Board rather than by market forces. This significantly affects investment analysis for any NYC multifamily property. You need to know which units are stabilized, what the legal rent is, and what limits apply to lease renewals and vacancy increases. Getting this wrong is one of the most common and costly due diligence failures in NYC real estate." },
+        { heading: "What to always do before signing anything", body: "Always have a real estate attorney review any contract before signing — purchase agreements, leases, partnership agreements, and loan documents all carry binding obligations that can be very difficult to undo. Attorney fees in a transaction are a small price compared to the cost of a mistake. Never rely solely on the other party's attorney, their agent, or their word about what a document means." },
+      ],
+      glossary: [
+        { term: "Title", def: "The legal right to own and use a specific property." },
+        { term: "Lien", def: "A legal claim against a property, often for unpaid debts — must be resolved before a property can be sold." },
+        { term: "LLC", def: "Limited Liability Company — a business structure that protects personal assets from liabilities of the investment." },
+        { term: "Rent stabilization", def: "A NYC system that limits how much landlords can raise rents each year on covered apartments." },
+        { term: "Encumbrance", def: "Any claim, lien, or restriction on a property that could affect its use or transfer." },
+      ],
+    },
+    "Development": {
+      sections: [
+        { heading: "What real estate developers actually do", body: "Developers take raw land or underutilized property and turn it into something more valuable — apartment buildings, office towers, mixed-use projects. The job involves assembling land, securing government approvals, arranging financing, hiring architects and contractors, managing construction, and ultimately leasing or selling the completed project. It requires coordinating many professionals over a long timeline with significant capital at risk." },
+        { heading: "The entitlement process: where most projects get stuck", body: "Before breaking ground, a developer needs government approval to build what they're planning. In New York City, this involves the Uniform Land Use Review Procedure (ULURP) for any discretionary approval — a process that moves through community boards, borough presidents, the City Planning Commission, and City Council. A straightforward rezoning can take 18–24 months. Community opposition, environmental reviews, and political complications can add years — or kill a project entirely." },
+        { heading: "How development projects are financed", body: "Development finance has two main components: construction loans (from banks, covering 60–70% of total costs) and equity (the developer's own capital plus any outside investors). Construction loans are short-term, higher-rate, and must be repaid when the project completes. The developer then refinances into a permanent loan (or sells the completed project). The ratio of debt to equity determines how sensitive the project is to cost overruns or market changes." },
+        { heading: "What a pro forma is and why it matters", body: "A pro forma is the financial model that supports every development decision. It projects total costs (land acquisition, construction, architecture, permits, financing, and contingency), expected revenue when the project completes (rental income or sale proceeds), and return metrics — typically IRR (Internal Rate of Return) and equity multiple. A realistic pro forma stress-tests its assumptions: what if construction costs run 15% over? What if leasing takes twice as long as planned?" },
+        { heading: "Why supply responds so slowly to demand", body: "When housing demand rises in a city, it takes years before new supply can respond — because development is slow by nature. Land assembly, entitlement, design, financing, and construction each take substantial time. In NYC, the average ground-up apartment building takes 5–8 years from land acquisition to first tenant. By the time a building delivers, the market conditions that justified it may have shifted significantly." },
+      ],
+      glossary: [
+        { term: "Entitlement", def: "Government approval to build a specific project on a specific site — the most uncertain part of development." },
+        { term: "Pro forma", def: "The financial projection model showing expected costs, revenues, and returns for a development project." },
+        { term: "Construction loan", def: "A short-term, higher-rate loan that funds the building phase — repaid upon project completion." },
+        { term: "Certificate of occupancy (CO)", def: "Government approval confirming a building is safe to occupy — issued when construction meets all code requirements." },
+        { term: "IRR", def: "Internal Rate of Return — a metric expressing the annualized return on an investment over its full life." },
+      ],
+    },
+    "Financing": {
+      sections: [
+        { heading: "The capital stack: what it is and why it matters", body: "Every real estate deal is funded through a combination of debt and equity — the 'capital stack.' At the bottom (safest, paid first) is senior debt — the primary mortgage. Above that may be mezzanine debt or preferred equity. At the top (most risk, paid last) is common equity — the ownership stake. Understanding this hierarchy tells you who takes risk and who gets paid when something goes wrong." },
+        { heading: "How mortgages actually work", body: "A mortgage is a loan secured by real property — meaning if you stop paying, the lender can take the property through foreclosure. The interest rate determines your cost of borrowing. The loan term (usually 15 or 30 years for residential) determines how long you have to repay. A fixed-rate mortgage locks in your rate. An adjustable-rate mortgage (ARM) starts lower but can rise with market rates. For investment properties, lenders look closely at the property's income as well as your personal finances." },
+        { heading: "LTV and DSCR: the two numbers lenders care most about", body: "LTV (Loan-to-Value) is the loan amount divided by the property's appraised value. Lenders typically cap LTV at 75–80% for investment properties, meaning you need at least 20–25% down. DSCR (Debt Service Coverage Ratio) is Net Operating Income divided by annual debt payments. A DSCR of 1.25x means the property earns $1.25 for every $1 of debt payment. Lenders generally require at least 1.20–1.25x. Below that, the loan won't be approved regardless of your credit." },
+        { heading: "Why interest rates matter so much", body: "A 1% change in interest rate on a $500,000 loan changes the monthly payment by roughly $270 and the total cost over 30 years by about $97,000. At the investment level, rising rates compress cap rate spreads — if cap rates are 5% but financing costs 7%, the deal doesn't pencil. This is exactly what happened in 2022–2023, when rapid rate increases caused commercial transaction volumes to collapse. Rates are the most important external variable affecting real estate markets." },
+        { heading: "Bridge loans and what they're used for", body: "A bridge loan is short-term financing (typically 12–36 months) used to 'bridge' a gap — often while a property is being renovated, leased up, or repositioned before it qualifies for permanent financing. They carry higher rates than permanent loans because of the higher risk. Developers use them when a property isn't yet generating stable income but they need capital to improve it. Understanding when bridge financing makes sense versus when it adds unnecessary risk is an important skill." },
+      ],
+      glossary: [
+        { term: "LTV", def: "Loan-to-Value — the loan amount as a percentage of the property's appraised value." },
+        { term: "DSCR", def: "Debt Service Coverage Ratio — property income divided by debt payments. Lenders require 1.20–1.25x." },
+        { term: "Amortization", def: "The process of gradually paying down a loan through scheduled payments of principal and interest." },
+        { term: "Bridge loan", def: "Short-term financing used during a transitional period — higher rate, shorter term than a permanent mortgage." },
+        { term: "Cap rate spread", def: "The difference between a property's cap rate and the prevailing interest rate — determines deal profitability." },
+      ],
+    },
+    "Commercial Real Estate": {
+      sections: [
+        { heading: "How commercial differs from residential", body: "In residential real estate, a home is worth roughly what comparable homes nearby sold for. In commercial real estate, a property is worth the income it generates. This income-based valuation is the single most important difference to understand. It means that improving a commercial property's income — through better leases, lower vacancy, or reduced expenses — directly and immediately increases its value." },
+        { heading: "The main commercial property types", body: "Office buildings house companies and their employees. Retail centers include everything from strip malls to regional shopping centers. Industrial properties are warehouses, distribution centers, and manufacturing facilities — one of the strongest-performing commercial sectors in recent years. Multifamily (apartment buildings with 5+ units) is technically commercial. Mixed-use buildings combine multiple types — retail on the ground floor, offices or apartments above." },
+        { heading: "Cap rates and how commercial is valued", body: "Cap rate = Net Operating Income ÷ Property Value. Rearranging: Value = NOI ÷ Cap Rate. If a property generates $400,000 in NOI and the market cap rate is 5%, the property is worth $8,000,000. If you can increase NOI to $450,000 by improving occupancy, the value rises to $9,000,000 — a $1 million gain for $50,000 of income improvement. This math is why value-add commercial investing is so appealing." },
+        { heading: "Commercial leases: what makes them different", body: "Commercial leases are far more complex than residential leases and can span 5–20 years. They're negotiated individually — there's no standard form. Gross leases have the landlord covering most expenses. Net leases pass expenses to the tenant. Triple net (NNN) leases pass all expenses — taxes, insurance, maintenance — to the tenant, making them lower-maintenance for landlords. Lease term, rent escalations, tenant improvement allowances, and renewal options are all negotiated." },
+        { heading: "The NYC office market post-pandemic", body: "NYC's office market has bifurcated sharply since 2020. Class A buildings — modern, well-located, high-amenity — are seeing strong leasing as companies compete for the best space to attract workers back. Class B and C buildings — older, less amenitized, less well-located — are struggling with high vacancy, expensive required upgrades, and lenders unwilling to refinance. The divergence is creating distressed opportunity in some segments and genuine risk in others." },
+      ],
+      glossary: [
+        { term: "NOI", def: "Net Operating Income — revenue minus operating expenses, before debt payments. The core commercial valuation input." },
+        { term: "Cap rate", def: "NOI divided by property value — the standard metric for comparing and pricing commercial properties." },
+        { term: "Triple net (NNN)", def: "A lease where the tenant pays base rent plus taxes, insurance, and maintenance — minimal landlord obligation." },
+        { term: "Class A/B/C", def: "Quality classifications for commercial buildings — A is newest/best located, C is oldest/most outdated." },
+        { term: "Vacancy rate", def: "The percentage of rentable space in a building or market that is currently unoccupied." },
+      ],
+    },
+    "Zoning": {
+      sections: [
+        { heading: "What zoning actually controls", body: "Zoning laws determine what types of buildings and uses are allowed on any given parcel of land. A residential zone might allow single-family homes but prohibit apartments. A commercial zone might allow retail and offices but not manufacturing. Zoning also controls building height, how much of the lot can be covered, how far buildings must be set back from the street, and density (how many units per acre). These rules collectively shape everything you see in any neighborhood." },
+        { heading: "How NYC's zoning system is organized", body: "New York City divides land into residential (R1–R10), commercial (C1–C8), and manufacturing (M1–M3) districts. The number indicates density — R1 is the lowest-density, suburban-style single-family zone; R10 allows the highest-density towers in central Manhattan. C6 covers major commercial centers. Understanding a site's zone is step one in any development analysis because it tells you what's legally buildable without special approvals." },
+        { heading: "Rezonings: how the rules change", body: "Zoning isn't permanent. A property owner, developer, or the city itself can apply to change a site's zoning designation. In NYC, this goes through the Uniform Land Use Review Procedure (ULURP) — a multi-step process involving community boards, borough presidents, the City Planning Commission, and the City Council. A rezoning that allows higher density can increase land value by 3–5x or more. This is why zoning decisions are intensely political and often contentious." },
+        { heading: "Variances: permission to deviate", body: "A variance allows a specific property to build something that would otherwise violate zoning rules — a slightly taller building, a commercial use in a residential zone, a reduced parking requirement. Variances are site-specific and require demonstrating hardship. They go through the Board of Standards and Appeals in NYC. They don't change the underlying zoning map the way a rezoning does, but they create exceptions for individual properties." },
+        { heading: "Inclusionary zoning and affordable housing", body: "Many zoning codes allow developers to build at higher density than base zoning permits — in exchange for including affordable housing units. NYC's Mandatory Inclusionary Housing (MIH) program requires 25–30% of units to be affordable when a developer takes a density bonus. Whether this works depends on the math: the value of the extra market-rate units has to exceed the cost of the affordable ones. When it does, more housing gets built. When it doesn't, developers walk away." },
+      ],
+      glossary: [
+        { term: "Zoning resolution", def: "The legal document that establishes zoning rules for a jurisdiction — NYC's runs thousands of pages." },
+        { term: "Use", def: "In zoning, what a property or building is used for — residential, commercial, manufacturing, etc." },
+        { term: "FAR (Floor Area Ratio)", def: "The maximum total floor area allowed on a site relative to the lot size — controls building bulk." },
+        { term: "Upzoning", def: "Changing zoning to allow higher density or more uses — typically increases land value." },
+        { term: "ULURP", def: "Uniform Land Use Review Procedure — NYC's process for reviewing zoning changes and land use applications." },
+      ],
+    },
+    "PropTech": {
+      sections: [
+        { heading: "What PropTech actually covers", body: "PropTech (property technology) is a broad term for technology companies that apply software, data, and automation to real estate processes. It includes platforms for searching listings (Zillow, Redfin), tools for managing properties (AppFolio, Yardi), data providers for professional investors (CoStar, Reonomy), iBuyers that use algorithms to purchase homes, and emerging categories like tokenization and AI-powered underwriting." },
+        { heading: "What has actually changed", body: "The biggest shift is information access. Twenty years ago, knowing what a property sold for required a real estate agent or a trip to the county recorder. Now Zillow, Redfin, and Realtor.com show pricing history, days on market, and neighborhood data for free. This has narrowed — but not eliminated — the information gap between professionals and retail investors. Platforms like CoStar still offer data that's inaccessible without a paid subscription." },
+        { heading: "The iBuyer story: what worked and what didn't", body: "iBuyers — companies like Opendoor and Zillow Offers — used algorithms to make near-instant cash offers on homes, buy them, and resell at a profit. The model worked in stable, liquid, homogeneous markets. Zillow exited in 2021 after a $500M+ loss when its algorithm mispriced at scale. Opendoor and Offerpad have survived at reduced scale. The lesson: algorithmic real estate valuation works until the market moves faster than the model." },
+        { heading: "Property management software: the unsexy success story", body: "While headline PropTech was getting venture capital and press, property management software was quietly becoming essential infrastructure. Platforms like Yardi, MRI, AppFolio, and Buildium now handle rent collection, maintenance requests, lease administration, and financial reporting for millions of units. For small landlords managing 5–20 units, tools like AppFolio have materially reduced the administrative burden of ownership." },
+        { heading: "What's still developing", body: "AI-powered valuation models, automated underwriting, and blockchain-based title and closing processes are in early stages. The friction in real estate transactions is deeply embedded in regulation and professional practice. Technology can accelerate workflows, but eliminating human judgment from title searches, attorney review, and lender underwriting requires regulatory change — not just better software." },
+      ],
+      glossary: [
+        { term: "iBuyer", def: "A company that uses algorithms to make near-instant cash offers on homes, then resells them." },
+        { term: "CoStar", def: "The dominant commercial real estate data platform — comprehensive but expensive, subscription-based." },
+        { term: "AppFolio / Yardi", def: "Property management software platforms used by landlords and managers to run operations." },
+        { term: "Automated valuation model (AVM)", def: "An algorithm that estimates property values based on comparable sales data — Zillow's 'Zestimate' is one." },
+        { term: "PropTech", def: "Short for 'property technology' — any software or technology applied to real estate processes." },
+      ],
+    },
+    "Deal Flow": {
+      sections: [
+        { heading: "What deal flow means", body: "Deal flow refers to the pipeline of investment opportunities that reach an investor or buyer. In real estate, deal flow quality — not just quantity — determines what you can build. An investor who sees 200 deals a year but most are widely marketed, overpriced, or outside their criteria is worse off than one who sees 50 deals with strong broker relationships and off-market access. The goal is to see the right deals, not more deals." },
+        { heading: "How commercial deals get distributed", body: "Most institutional commercial deals start with a broker outreach. The seller's broker sends a teaser — a brief overview of the property — to a distribution list. The quality of that list determines who gets first look. Top-tier buyers who close reliably and move quickly receive proactive outreach before deals are widely marketed. Second-tier buyers see deals after the first round. A deal listed on LoopNet or CoStar publicly often signals the first round didn't find a buyer at the target price." },
+        { heading: "Off-market deals: what they are and why they matter", body: "Off-market deals are transactions where a buyer approaches a seller directly — or a broker circulates a deal very quietly — without a formal marketing process. These deals involve less competition and often price at a discount compared to what a formal process would achieve. Building access to off-market deals takes years of relationship-building with brokers, owners, and other market participants. It's one of the most durable competitive advantages in real estate investing." },
+        { heading: "Deal screening vs. full underwriting", body: "When a deal comes in, the first step is screening — a quick assessment of whether the opportunity is worth spending real time on. This means checking if the seller's price expectation implies a return that makes sense, whether the location and asset type fit your criteria, and whether the basic facts add up. Full underwriting — detailed pro forma, lease review, third-party reports, physical inspection — should only happen after a deal passes your screening filters." },
+        { heading: "The FOMO problem and how to avoid it", body: "Once you've invested time underwriting a deal, walking away feels like losing. This psychological cost leads experienced investors to stretch on price, overlook risks, or accept unfavorable terms to avoid feeling like the time was wasted. The discipline to walk away from deals that don't meet your criteria — even after significant investment of time and effort — is one of the hardest skills to develop in real estate, and one of the most valuable." },
+      ],
+      glossary: [
+        { term: "Deal flow", def: "The volume and quality of investment opportunities reaching an investor or buyer." },
+        { term: "Off-market deal", def: "A transaction conducted without broad public marketing — typically less competition, potential pricing advantage." },
+        { term: "Offering memorandum (OM)", def: "A detailed marketing document prepared by a broker describing a property being offered for sale." },
+        { term: "Underwriting", def: "The process of analyzing a deal in detail to determine if it meets investment criteria and return requirements." },
+        { term: "Pro forma", def: "A financial model projecting a property's future income, expenses, and returns — the core underwriting tool." },
+      ],
+    },
+  };
+
   const openTopicPage = (topic) => {
     setCurrentTopicPage(topic);
     const ed = topicEditorial[topic.slug] || topicEditorial["first-time-learning"];
@@ -260,54 +486,140 @@ export default function App() {
   const font = '"DM Sans", ui-sans-serif, system-ui, -apple-system, sans-serif';
   const page = { minHeight: "100vh", backgroundColor: C.bg, color: C.ink, fontFamily: font };
 
-  const NavBar = ({ onBack, backLabel }) => (
-    <div style={{ position: "sticky", top: 0, zIndex: 20, backgroundColor: "rgba(245,244,241,0.96)", backdropFilter: "blur(12px)", borderBottom: `1px solid ${C.border}` }}>
-      <div style={{ maxWidth: "1280px", margin: "0 auto", padding: "14px clamp(20px,4vw,48px)", display: "flex", alignItems: "center", justifyContent: "space-between", boxSizing: "border-box" }}>
-        <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
-          <div style={{ width: "30px", height: "30px", borderRadius: R.sm, backgroundColor: C.accent, display: "flex", alignItems: "center", justifyContent: "center" }}>
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
-          </div>
-          <div>
-            <div style={{ fontSize: "15px", fontWeight: "700", color: C.ink, letterSpacing: "-0.02em" }}>MyHome</div>
-            <div style={{ fontSize: "10px", color: C.inkMuted }}>Real estate, made legible</div>
-          </div>
-        </div>
-        {onBack ? (
-          <button onClick={onBack} style={{ ...btn.secondary, fontSize: "13px", padding: "7px 13px" }}>{backLabel || "← Back"}</button>
-        ) : (
-          <div style={{ display: "flex", alignItems: "center", gap: "28px" }}>
-            <nav style={{ display: "flex", gap: "2px" }}>
-              {[{label:"Learn",id:"learn-section"},{label:"Topics",id:"topics-section"},{label:"Newsletter",id:"market-trends-section"},{label:"Community",id:"community-section"}].map(item => (
-                <button key={item.label} onClick={() => handleNavClick(item.id, item.label)} style={{ border: "none", borderRadius: R.sm, padding: "6px 11px", backgroundColor: activeNav===item.label ? C.accentLight : "transparent", color: activeNav===item.label ? C.accent : C.inkLight, fontSize: "13px", fontWeight: "500", cursor: "pointer" }}>{item.label}</button>
-              ))}
-            </nav>
-            <button onClick={openSignup} style={{ ...btn.primary, padding: "8px 16px", fontSize: "13px" }}>Sign up free</button>
-          </div>
-        )}
-      </div>
-    </div>
-  );
+
+  // DATA: rich beginner explanations shown when a topic card is clicked on the profile
+  const profileTopicContent = {
+    "First-Time Learning": {
+      sections: [
+        { title: "What is real estate?", body: "Real estate is land and anything permanently attached to it — homes, apartment buildings, offices, warehouses, and retail stores. When you own real estate, you own a physical asset that can be rented, sold, or borrowed against. It's one of the oldest forms of wealth in the world, and also one of the most accessible once you understand the basics." },
+        { title: "Residential vs. commercial", body: "Residential real estate is where people live: single-family homes, condos, co-ops, and apartment buildings with up to four units. Commercial real estate is where businesses operate: offices, retail stores, warehouses, hotels, and apartment buildings with five or more units. The rules, financing, and valuation methods differ significantly between the two. As a beginner, most of what you encounter will be residential." },
+        { title: "The people involved in a transaction", body: "Every real estate transaction involves a cast of characters. The buyer and seller are the principals. A real estate agent represents each side. A lender provides the mortgage. A title company confirms ownership is clean and issues title insurance. An appraiser determines the property's market value for the lender. An attorney (required in some states) reviews contracts. Understanding who does what helps you know who to call when something goes wrong." },
+        { title: "Key terms you'll hear constantly", body: "Equity is the portion of the property's value you own outright — calculated as current value minus debt owed. A mortgage is a loan secured by the property itself. Appreciation means the property is worth more over time. Closing costs are additional fees paid at the end of a transaction, typically 2–5% of the purchase price. Pre-approval is a lender's conditional commitment to lend you a specific amount — it's not a guarantee, but it's what sellers require before taking your offer seriously." },
+        { title: "What to focus on first", body: "The most common beginner mistake is trying to learn everything at once. Real estate is broad enough that professionals specialize their entire careers. Pick one area — residential buying, rental investing, or just understanding how mortgages work — and go deep before expanding. Everything else will make more sense once you have a foundation in one area." },
+      ],
+      facts: ["24% of US home purchases in 2024 were by first-time buyers", "The average closing process takes 30–45 days", "Closing costs add 2–5% on top of the purchase price", "A pre-approval letter is typically valid for 60–90 days"],
+    },
+    "Investing": {
+      sections: [
+        { title: "Why people invest in real estate", body: "Real estate investing offers four potential sources of return: cash flow (income after expenses), appreciation (property value increasing over time), debt paydown (tenants effectively paying off your mortgage), and tax benefits (depreciation and deductions). No other common investment vehicle offers all four simultaneously — which is why real estate has created more millionaires than almost any other asset class." },
+        { title: "The spectrum from passive to active", body: "At the passive end, you can invest in a REIT (Real Estate Investment Trust) the same way you'd buy a stock — in under five minutes, with no property knowledge required. REITs own large portfolios of income-producing properties and are required to distribute at least 90% of taxable income as dividends. At the active end, you can buy and manage rental properties directly, which offers more control and often higher returns but requires significant time and expertise." },
+        { title: "House hacking: the most accessible entry point", body: "House hacking means buying a property with 2–4 units, living in one, and renting out the others. The rental income offsets — or sometimes fully covers — your mortgage, letting you build equity while living for free or near-free. It's legal, widely used, and eligible for owner-occupant financing (as low as 3.5% down with FHA loans). For most people with limited capital, it's the clearest path from renter to property owner." },
+        { title: "Understanding cap rate", body: "Cap rate (capitalization rate) = Net Operating Income ÷ Property Value. It's the most universal metric for comparing investment properties. A property generating $30,000/year in net income priced at $500,000 has a 6% cap rate. Higher cap rates mean more income relative to price — but usually also mean more risk, less desirable location, or older condition. Lower cap rates reflect higher-quality assets in stronger markets. Neither is universally better — it depends on your strategy." },
+        { title: "What beginners get wrong most often", body: "The most common mistake is underestimating expenses. Beginners often calculate returns using gross rent without accounting for vacancy (budget 5–10%), property management (8–12% of rent), maintenance (1% of value per year), insurance, taxes, and capital expenditure reserves. A property that looks profitable on paper often isn't when all costs are included. Always underwrite conservatively." },
+      ],
+      facts: ["REITs returned an average of 11.4% annually over the past 20 years", "House hacking can reduce your housing cost by 50–100%", "The 1% rule: monthly rent should be ≥1% of purchase price for strong cash flow", "Leverage amplifies returns — and losses — in both directions"],
+    },
+    "Tokenization": {
+      sections: [
+        { title: "What tokenization actually means", body: "Tokenization converts ownership of a real asset — a building, a development project, a rental property — into digital tokens on a blockchain. Each token represents a fractional ownership stake. Instead of needing $500,000 to invest in a commercial property, tokenization allows the same asset to be divided into thousands of tokens purchasable for as little as $100. The blockchain creates a transparent, tamper-proof record of who owns what." },
+        { title: "Why it matters for regular investors", body: "Historically, high-quality real estate investments — office buildings, industrial parks, multifamily complexes — were only accessible to institutional investors or accredited individuals with millions to invest. Tokenization lowers the minimum investment dramatically and creates a path for retail investors to own fractional stakes in assets that were previously out of reach. The theoretical endgame is a world where real estate is as liquid and accessible as stocks." },
+        { title: "Rhino and Jetty: a real-world example", body: "Rhino and Jetty apply tokenization principles to the mundane but painful problem of security deposits. Traditionally, a renter in NYC pays $2,000–4,000 upfront as a security deposit — money that sits locked away for years. Rhino and Jetty instead charge a small monthly fee (like insurance) that replaces the lump sum deposit. The landlord is still protected; the renter keeps their cash. The two companies have since merged and operate in over 6 million homes across the US." },
+        { title: "What the risks look like", body: "The regulatory framework for tokenized real estate in the US is still evolving. Most offerings are structured as securities under Regulation D, which limits investment to accredited investors (income over $200K or net worth over $1M). True retail access to liquid tokenized real estate markets doesn't yet exist at scale. Additionally, the token is only as good as the underlying asset — a token representing a poorly-located property with bad tenants is still a bad investment, regardless of how innovative the technology is." },
+      ],
+      facts: ["Tokenized RE market: $0.3T (2024) → projected $4T by 2035", "Rhino/Jetty now covers 6M+ homes in the US", "Most US tokenized offerings require accredited investor status", "Average NYC move-in cost without tokenization: $10K–$15K"],
+    },
+    "Market Data": {
+      sections: [
+        { title: "Why median price alone misleads you", body: "Median sale price is the number that makes headlines — but it's one of the least informative metrics for understanding a market. It tells you where transactions closed, not whether prices are rising or falling, not how competitive the market is, and not whether what sold this month is comparable to last month. A spike in median price can mean appreciation — or it can mean that more expensive homes happened to sell that month. Always look at median price alongside other indicators." },
+        { title: "The three metrics that actually matter", body: "Days on market (DOM) tells you velocity — how quickly listings are going under contract. A falling DOM means demand is outpacing supply. Months of supply tells you the absorption rate — at the current sales pace, how long would it take to sell all active listings? Below 3 months is a strong seller's market; above 6 is a buyer's market. The sale-to-list ratio tells you whether buyers are paying over or under asking price — above 100% means bidding wars; below 98% means negotiating room exists." },
+        { title: "How mortgage rates change everything", body: "A 1% increase in mortgage rates on a $500,000 loan increases monthly payments by roughly $320 — and reduces how much home the same income can afford by approximately $50,000–60,000. This is why rate moves dominate real estate news. When rates spike, demand falls, prices soften, and inventory builds. When rates drop, demand surges, inventory tightens, and prices rise. For a beginner, understanding rate sensitivity is essential context for interpreting any market data." },
+        { title: "NYC as a case study in local variation", body: "National real estate statistics can be almost meaningless at the local level. NYC illustrates this perfectly: Manhattan, Brooklyn, Queens, and the Bronx are four distinct markets with different price points, buyer profiles, and demand drivers. In 2024–2025, outer boroughs have seen stronger first-time buyer activity than Manhattan as affordability pressures push buyers further from the center. Always look at data at the most local level available — zip code or neighborhood, not city or metro." },
+      ],
+      facts: ["National months of supply: ~3.8 (April 2025)", "30-year fixed mortgage rate: ~7.1% (April 2025)", "A 1% rate change = ~$320/month on a $500K loan", "Median US home price Q1 2025: ~$412,000"],
+    },
+    "Brokerage/Agents": {
+      sections: [
+        { title: "What agents actually do", body: "A good agent does three things that platforms can't fully replace: they provide hyper-local pricing knowledge built from years of transactions in a specific area; they negotiate on your behalf with professional experience and no emotional attachment to the deal; and they often have access to inventory before it hits public listings. On the seller side, a skilled listing agent develops a pricing strategy, manages marketing, coordinates showings, and guides the transaction through closing. The value varies enormously by agent quality and market." },
+        { title: "How they're paid", body: "In a traditional transaction, the seller pays a total commission of 5–6% of the sale price, which is then split between the listing agent and the buyer's agent (typically 2.5–3% each). This means the buyer's agent is technically paid by the seller — a structure critics argue misaligns incentives, since a higher sale price means a higher commission for the buyer's agent. Following the 2024 NAR settlement, buyers are now required to sign buyer representation agreements explicitly showing what they'll pay their agent." },
+        { title: "How the model is changing", body: "Technology platforms have disrupted the informational advantage that once justified high commissions. Zillow, Redfin, and Realtor.com give buyers access to listing data that once required an agent. New platforms are experimenting with flat-fee structures, algorithm-driven matching, and performance-based compensation. The FARE Act in NYC (effective 2024) moved broker fee payment in rental transactions from tenants to landlords, removing a $4,000–8,000 upfront cost for renters." },
+        { title: "Questions to ask before hiring anyone", body: "Before signing with any agent, ask: How many transactions did you close in the past 12 months in this specific neighborhood? What's your average sale-to-list ratio for listings you've represented? How do you communicate during a transaction — and how often? What happens if I'm unhappy with your service? The answers reveal far more than any online review. A skilled agent answers these questions confidently and specifically." },
+      ],
+      facts: ["1.5M+ licensed real estate agents in the US (NAR)", "Traditional commission: 5–6% of sale price", "NYC FARE Act saved renters $4–8K in upfront broker fees", "Buyers must now sign representation agreements before touring"],
+    },
+    "Legal & Regulations": {
+      sections: [
+        { title: "Why the legal layer matters", body: "Real estate is one of the most heavily regulated industries in the US. Every transaction involves contract law, title law, and lending regulations. Every development project navigates zoning approvals, environmental review, and building codes. Every landlord-tenant relationship is governed by state and local law that varies dramatically by jurisdiction. Skipping the legal layer — or assuming it's someone else's problem — is the most common and expensive mistake beginners make." },
+        { title: "Zoning: the invisible hand", body: "Zoning determines what can be built on any parcel of land. A residential zone might allow only single-family homes; a commercial zone might allow offices and retail; a mixed-use zone allows both. Zoning also controls building height, lot coverage, and density. Importantly, zoning can be changed — through a political process that requires community board review and city council approval. A successful rezoning can multiply a parcel's value 3–5x without any construction occurring." },
+        { title: "Title and ownership structures", body: "Title is the legal concept of ownership. Before any sale closes, a title company conducts a title search to confirm the seller actually owns what they're selling and that there are no liens, unpaid taxes, or competing claims. Title insurance protects both the buyer and lender against claims that weren't discovered in the search. Many investors hold property through LLCs (Limited Liability Companies) to separate personal assets from investment risk — a structure that also offers certain tax advantages when maintained properly." },
+        { title: "The FARE Act and rent regulation", body: "NYC's FARE Act (effective 2024) shifted broker fee payment in rental transactions from tenants to landlords, eliminating a $4,000–8,000 upfront cost for renters. Separately, NYC's rent stabilization system governs roughly one million apartments, capping annual rent increases at rates set by the Rent Guidelines Board. For investors, understanding which units are stabilized — and what the legal rent is versus what's being charged — is essential due diligence before any multifamily acquisition." },
+      ],
+      facts: ["~1M NYC apartments are rent-stabilized (of ~2.3M total rental units)", "LLCs hold 35%+ of US investment property titles", "Title searches catch problems in roughly 25% of all transactions", "Zoning changes can increase land value by 3–5x"],
+    },
+    "Development": {
+      sections: [
+        { title: "What developers actually do", body: "A real estate developer identifies an opportunity (a site, a market gap, a rezoning possibility), assembles the land, secures financing, hires a team (architects, engineers, contractors), navigates approvals, and delivers a completed building. They're general contractors of capital — they don't necessarily build anything themselves, but they coordinate everyone who does. The developer takes the most risk and, if the project succeeds, earns the most reward." },
+        { title: "The entitlement process", body: "Entitlement is the process of getting government permission to build what you want on a specific site. In NYC, this means navigating ULURP (Uniform Land Use Review Procedure) for any discretionary approval — involving community boards, borough presidents, the City Planning Commission, and the City Council. A straightforward rezoning can take 18–24 months. Add environmental review, and you're often looking at 3+ years before you break ground. This is why development timelines are so long." },
+        { title: "How development projects are financed", body: "Development is financed in layers. Construction loans from banks cover hard costs (actual construction) and some soft costs (architecture, permits, legal fees). These are short-term, interest-only loans repaid when the building is complete and either sold or refinanced into permanent debt. The portion not covered by the construction loan — typically 30–40% — must come from equity: the developer's own capital plus any outside investors. The balance of debt to equity determines the project's risk profile." },
+        { title: "Reading a pro forma", body: "A pro forma is the financial model that underlies every development decision. It projects total costs (land, construction, soft costs, financing), expected revenue at completion (sale prices or stabilized rental income), and return metrics — typically IRR (internal rate of return) and equity multiple. A well-constructed pro forma stress-tests its assumptions: what happens if construction costs run 15% over budget? What if rents are 10% below projections at completion? Deals that still work under those conditions are worth pursuing." },
+      ],
+      facts: ["Ground-up NYC development: 5–8 years land to occupancy", "Construction cost inflation 2020–2024: +28% (national average)", "US housing deficit: building ~1.1M units/year vs. 1.5–2M needed", "Typical developer equity requirement: 30–40% of total project cost"],
+    },
+    "Financing": {
+      sections: [
+        { title: "The capital stack explained", body: "Every real estate deal is financed through a combination of debt and equity. The 'capital stack' describes how these are layered. Senior debt (the primary mortgage) sits at the bottom — it's the safest position, gets paid first, and carries the lowest interest rate. Equity sits at the top — it's the riskiest position (last to be paid, first to absorb losses) but has the highest upside. Between them, there may be mezzanine debt or preferred equity, each with different risk/return profiles." },
+        { title: "How mortgages work", body: "A mortgage is a loan secured by real property. You borrow a percentage of the property's value (the loan-to-value, or LTV ratio), and the property itself is the collateral — meaning the lender can foreclose if you stop making payments. For residential purchases, lenders typically allow up to 80% LTV (20% down payment) for conventional loans, and up to 96.5% LTV with FHA loans (3.5% down). Investment property loans typically require 20–25% down and carry higher rates than owner-occupied financing." },
+        { title: "DSCR: the number lenders care most about", body: "For income-producing properties, the key metric is DSCR: Debt Service Coverage Ratio = Net Operating Income ÷ Annual Debt Payments. A DSCR of 1.25x means the property generates $1.25 for every $1.00 of debt payment. Most lenders require a minimum of 1.20–1.25x. Below that, the loan isn't viable regardless of how nice the property is. This is why increasing a property's income — through rent growth, reduced vacancy, or expense cuts — directly increases its borrowing capacity." },
+        { title: "Why interest rates matter so much", body: "A 1% change in interest rates on a $500,000 loan changes the monthly payment by approximately $320. Over a 30-year loan, that's over $115,000 in total interest. For investors, rate changes affect both the cost of financing and the cap rates investors demand — when rates rise, investors typically require higher cap rates to justify their risk, which pushes property values down. The 2022–2023 rate cycle is a real-time case study in how dramatically financing costs reshape the entire real estate market." },
+      ],
+      facts: ["DSCR minimum: most lenders require 1.20–1.25x", "FHA loans: as low as 3.5% down for owner-occupants", "Fed funds rate April 2025: 4.25–4.5%", "Senior LTV for investment property: typically 65–75%"],
+    },
+    "Zoning": {
+      sections: [
+        { title: "What zoning actually controls", body: "Zoning is the local government's tool for controlling land use. It determines what type of building can go on any given lot (residential, commercial, industrial, or mixed-use), how tall it can be, how much of the lot it can cover, and how many units it can contain. These rules are written into a zoning code and mapped across the entire jurisdiction. In New York City, the zoning resolution runs thousands of pages and has been amended thousands of times since it was first adopted in 1961." },
+        { title: "NYC's zoning system", body: "NYC uses letter-number designations. Residential zones run from R1 (single-family homes in low-density suburban neighborhoods) to R10 (maximum-density towers in central Manhattan). Commercial zones run from C1 (neighborhood retail) to C8 (large commercial uses). Manufacturing zones (M1–M3) protect industrial uses. The number indicates intensity — higher numbers mean more density. Each designation comes with detailed rules about building height, setbacks, floor area ratios (FAR), and permitted uses." },
+        { title: "How zoning creates and destroys value", body: "Zoning changes are among the most consequential events in real estate. Upzoning — changing a designation to allow higher density or more uses — can multiply a parcel's value by 3–5x without a single brick being laid, because it increases the potential return from developing the site. Downzoning — restricting what can be built — can significantly reduce value. This is why zoning decisions are politically contested: they redistribute enormous amounts of wealth between property owners, developers, and communities." },
+        { title: "Variances and inclusionary zoning", body: "A variance allows a specific property to deviate from existing zoning rules and requires demonstrating hardship. A rezoning changes the rules for an entire area. Inclusionary zoning programs (like NYC's Mandatory Inclusionary Housing) allow developers to build at higher density than base zoning permits — in exchange for setting aside 25–30% of units as affordable housing. The economics only work when the added market-rate unit value exceeds the cost of the affordable units, which is why these programs don't always generate housing." },
+      ],
+      facts: ["NYC has 7,000+ distinct mapped zoning districts", "Upzoning can increase land value by 3–5x", "NYC's MIH program requires 25–30% affordable units for density bonuses", "ULURP (rezoning review) typically takes 7–12 months minimum"],
+    },
+    "PropTech": {
+      sections: [
+        { title: "What PropTech actually is", body: "PropTech (Property Technology) refers to any software or platform that changes how real estate is bought, sold, rented, financed, or managed. It ranges from consumer-facing apps you use daily (Zillow, Redfin) to institutional-grade data tools (CoStar, Reonomy) to operational software that property managers use (Yardi, AppFolio). The sector attracted over $30 billion in venture investment between 2019 and 2022 before a significant correction in 2023." },
+        { title: "What has genuinely changed", body: "Information access has been transformed. The gap between what a professional with CoStar access knows versus a retail investor has narrowed substantially. Zillow, Redfin, and Realtor.com make listing data freely available that was unimaginable to access 20 years ago. Property management software has also seen genuine adoption — platforms like Yardi, AppFolio, and Buildium automate rent collection, maintenance tracking, and lease administration in ways that have materially reduced operational burden for landlords." },
+        { title: "The iBuyer cautionary tale", body: "iBuyers — companies that use algorithms to make instant cash offers on homes — peaked in 2021. Opendoor, Offerpad, and Zillow Offers were collectively purchasing tens of thousands of homes per month. Zillow exited the business in late 2021 after losing over $500 million. The model works in stable, liquid, homogeneous markets where algorithmic valuation is reliable. It breaks down when markets move faster than the model — exactly what happened in 2021–2022. Opendoor and Offerpad survived but at dramatically smaller scale." },
+        { title: "What's still developing", body: "AI-powered valuation models, automated mortgage underwriting, and blockchain-based title and closing processes are all in development or early adoption. The friction in real estate transactions — title searches, attorney review, lender underwriting — is deeply embedded in regulatory requirements and professional practice. Technology can speed up the workflow, but eliminating the human review layer requires regulatory change, not just better software. The more significant disruption is still ahead." },
+      ],
+      facts: ["PropTech VC investment 2019–2022: $30B+ globally", "Zillow iBuyer losses: $500M+ before exiting", "CoStar annual subscription: $15,000+ for professional access", "Yardi/MRI penetration: ~60% of institutional property portfolios"],
+    },
+    "Commercial Real Estate": {
+      sections: [
+        { title: "How commercial differs from residential", body: "The most important difference is valuation. A home is valued primarily by what similar homes have sold for nearby (comparable sales). A commercial property is valued by the income it generates. This single shift changes everything — how you analyze an asset, how lenders evaluate it, how you improve its value, and how you exit. In commercial real estate, increasing the income is how you create value, not waiting for the market to rise." },
+        { title: "The main property types", body: "Office buildings house businesses and are categorized as Class A (trophy buildings with premium amenities), Class B (functional but not premium), and Class C (older, basic). Retail covers everything from neighborhood strip malls to regional shopping centers. Industrial includes warehouses, distribution centers, and manufacturing facilities — one of the strongest-performing sectors post-pandemic. Multifamily (5+ units) straddles residential and commercial, valued on income but with residential financing available at certain scales." },
+        { title: "Cap rates and income-based valuation", body: "Value = Net Operating Income (NOI) ÷ Cap Rate. If a property generates $500,000 in NOI and similar assets trade at 5% cap rates, the property is worth $10 million. If you can grow NOI to $600,000 through rent increases or improved occupancy, the value rises to $12 million — a $2M gain from operating improvement alone. This is the core logic of value-add commercial investing. Every dollar of NOI improvement at a 5% cap rate creates $20 of value." },
+        { title: "NYC's post-pandemic office market", body: "NYC's office market is bifurcating sharply. Class A buildings — high amenity, well-located, recently renovated — are seeing strong leasing activity and near pre-pandemic rents. Class B and C buildings face persistently high vacancy, rising capital expenditure requirements, and lenders unwilling to refinance at current values. This divergence has created both distressed opportunity (buying B/C at steep discounts) and significant risk (being stuck with obsolete assets). Remote work permanently changed the demand picture for lower-quality office space." },
+      ],
+      facts: ["Commercial deals typically require 25–35% down vs. 3–20% residential", "NYC Class A office vacancy: ~12% (2025); Class B/C: 18–22%", "Industrial cap rates: 4.5–6% nationally (2025)", "Value formula: NOI ÷ Cap Rate = Property Value"],
+    },
+    "Deal Flow": {
+      sections: [
+        { title: "What deal flow means", body: "Deal flow is the pipeline of investment opportunities that reach a buyer or investor. In residential real estate, most deal flow comes through the MLS (Multiple Listing Service) — the shared database agents use to list properties. In commercial real estate, deal flow is much more relationship-dependent: most transactions start with a broker reaching out to a curated list of qualified buyers, and the best deals often never reach public platforms like LoopNet at all." },
+        { title: "How commercial deals are distributed", body: "A seller's broker sends a teaser or offering memorandum (OM) to a distribution list. First-tier buyers — those who close reliably, move quickly, and maintain broker relationships — get proactive outreach before broad marketing. Second-tier buyers see deals only after the first round of offers has been collected. When a deal appears on LoopNet or CoStar's public listings, it's often a signal that the first marketing round didn't achieve the seller's target price." },
+        { title: "Off-market deals: the real opportunity", body: "Off-market transactions — where a buyer approaches a seller directly, or where a deal is sold quietly without a formal process — often offer the best pricing for buyers because competition is limited or nonexistent. Building the relationships that generate off-market access takes years of consistent, genuine engagement with brokers and property owners. There are no shortcuts. Investors who prioritize relationship-building over deal-chasing typically see much better long-term results." },
+        { title: "How to evaluate what you find", body: "Deal screening is the process of quickly determining whether an opportunity is worth full underwriting. First filter: does the implied cap rate make sense given current financing costs? Second filter: does the location, asset type, and tenancy profile fit your criteria? Only deals that pass both filters warrant the time investment of full underwriting — building a pro forma, reviewing leases, ordering third-party reports, and inspecting the property. Discipline in filtering is as important as quality in analysis." },
+      ],
+      facts: ["30–40% of institutional commercial transactions are off-market", "Full commercial due diligence: 2–6 weeks", "Active institutional investors review 50–100 deals per closed deal", "FOMO (fear of missing out) is the #1 reason investors overpay"],
+    },
+  };
 
   // PROFILE PAGE
   if (showProfile && isSignedUp) {
     const firstName = accountInfo.name.split(" ")[0] || "there";
     return (
       <div style={page}>
-        <NavBar onBack={() => setShowProfile(false)} backLabel="← Home" />
+        <NavBar onBack={() => setShowProfile(false)} backLabel="← Home" activeNav={activeNav} handleNavClick={handleNavClick} isSignedUp={isSignedUp} setShowProfile={setShowProfile} openSignup={openSignup} accountInfo={accountInfo} />
 
         {/* Hero banner */}
         <div style={{ backgroundColor: C.accent, borderBottom: `1px solid ${C.accentHover}` }}>
-          <div style={{ maxWidth: "1100px", margin: "0 auto", padding: "36px clamp(20px,4vw,48px) 32px", boxSizing: "border-box" }}>
-            <div style={{ display: "flex", alignItems: "flex-end", justifyContent: "space-between", gap: "24px", flexWrap: "wrap" }}>
-              <div style={{ display: "flex", alignItems: "center", gap: "18px" }}>
-                <div style={{ width: "64px", height: "64px", borderRadius: "50%", backgroundColor: "rgba(255,255,255,0.18)", border: "2px solid rgba(255,255,255,0.25)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "24px", fontWeight: "700", color: "white", flexShrink: 0 }}>{(accountInfo.name[0]||"?").toUpperCase()}</div>
+          <div style={{ maxWidth: "1100px", margin: "0 auto", padding: "32px clamp(20px,4vw,48px) 28px", boxSizing: "border-box" }}>
+            <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: "24px", flexWrap: "wrap" }}>
+              <div style={{ display: "flex", alignItems: "center", gap: "16px" }}>
+                <div style={{ width: "56px", height: "56px", borderRadius: "50%", backgroundColor: "rgba(255,255,255,0.18)", border: "2px solid rgba(255,255,255,0.25)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "22px", fontWeight: "700", color: "white", flexShrink: 0 }}>{(accountInfo.name[0]||"?").toUpperCase()}</div>
                 <div>
-                  <div style={{ fontSize: "11px", fontWeight: "700", opacity: 0.6, letterSpacing: "0.1em", marginBottom: "4px" }}>YOUR PROFILE</div>
-                  <div style={{ fontSize: "26px", fontWeight: "700", color: "white", letterSpacing: "-0.02em", lineHeight: 1.1 }}>{accountInfo.name}</div>
-                  <div style={{ fontSize: "13px", color: "rgba(255,255,255,0.6)", marginTop: "4px" }}>{accountInfo.email}</div>
+                  <div style={{ fontSize: "11px", fontWeight: "700", opacity: 0.6, letterSpacing: "0.1em", marginBottom: "3px" }}>WELCOME BACK</div>
+                  <div style={{ fontSize: "24px", fontWeight: "700", color: "white", letterSpacing: "-0.02em" }}>{accountInfo.name}</div>
                 </div>
               </div>
-              <div style={{ display: "flex", gap: "10px", alignItems: "center" }}>
+              <div style={{ display: "flex", gap: "20px", alignItems: "center" }}>
                 <div style={{ textAlign: "right" }}>
                   <div style={{ fontSize: "10px", fontWeight: "700", color: "rgba(255,255,255,0.55)", letterSpacing: "0.08em", marginBottom: "3px" }}>LEARNING GOAL</div>
                   <div style={{ fontSize: "14px", fontWeight: "600", color: "white" }}>{selectedGoal}</div>
@@ -322,97 +634,91 @@ export default function App() {
           </div>
         </div>
 
-        <main style={{ maxWidth: "1100px", margin: "0 auto", padding: "36px clamp(20px,4vw,48px) 80px", boxSizing: "border-box" }}>
+        <main style={{ maxWidth: "1100px", margin: "0 auto", padding: "32px clamp(20px,4vw,48px) 80px", boxSizing: "border-box" }}>
 
-          {/* Section label */}
-          <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", marginBottom: "24px", flexWrap: "wrap", gap: "8px" }}>
+          <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", marginBottom: "22px", flexWrap: "wrap", gap: "8px" }}>
             <div>
-              <div style={{ fontSize: "10px", fontWeight: "700", color: C.warm, letterSpacing: "0.08em", marginBottom: "5px" }}>YOUR TOPIC DEEP-DIVES</div>
-              <h2 style={{ fontSize: "22px", fontWeight: "700", color: C.ink, margin: 0, letterSpacing: "-0.02em" }}>Curated for your interests</h2>
+              <div style={{ fontSize: "10px", fontWeight: "700", color: C.warm, letterSpacing: "0.08em", marginBottom: "5px" }}>YOUR SAVED TOPICS</div>
+              <h2 style={{ fontSize: "20px", fontWeight: "700", color: C.ink, margin: 0, letterSpacing: "-0.02em" }}>Click any topic to learn more</h2>
             </div>
             <button onClick={() => setShowProfile(false)} style={{ ...btn.secondary, fontSize: "12px", padding: "7px 13px" }}>Browse all 12 topics →</button>
           </div>
 
-          {/* Topic cards — stacked, left-aligned, clean */}
-          <div style={{ display: "grid", gap: "20px" }}>
+          <div style={{ display: "grid", gap: "16px" }}>
             {savedInterests.map((topicTitle, idx) => {
-              const d = topicProfileData[topicTitle]; if (!d) return null;
+              const d = topicProfileData[topicTitle];
+              const content = profileTopicContent[topicTitle];
+              const isOpen = profileTopicDetail === topicTitle;
+              if (!d) return null;
               return (
-                <div key={topicTitle} style={{ backgroundColor: C.white, border: `1px solid ${C.border}`, borderRadius: R.xl, overflow: "hidden" }}>
+                <div key={topicTitle} style={{ backgroundColor: C.white, border: `1px solid ${isOpen ? C.accent : C.border}`, borderRadius: R.xl, overflow: "hidden", transition: "border-color 0.15s" }}>
 
-                  {/* Card header — accent stripe on left, title + meta on right */}
-                  <div style={{ display: "grid", gridTemplateColumns: "4px 1fr", borderBottom: `1px solid ${C.border}` }}>
-                    <div style={{ backgroundColor: d.color }} />
-                    <div style={{ padding: "20px 24px", display: "flex", alignItems: "center", justifyContent: "space-between", gap: "16px", flexWrap: "wrap" }}>
-                      <div>
-                        <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "4px" }}>
-                          <div style={{ fontSize: "10px", fontWeight: "700", color: d.color, letterSpacing: "0.08em" }}>0{idx + 1}</div>
-                          <div style={{ width: "3px", height: "3px", borderRadius: "50%", backgroundColor: C.border }} />
-                          <div style={{ fontSize: "10px", fontWeight: "600", color: C.inkMuted, letterSpacing: "0.04em" }}>TOPIC</div>
+                  {/* Clickable header */}
+                  <button onClick={() => setProfileTopicDetail(isOpen ? null : topicTitle)}
+                    style={{ width: "100%", display: "grid", gridTemplateColumns: "4px 1fr auto", background: "none", border: "none", cursor: "pointer", textAlign: "left", padding: 0 }}>
+                    <div style={{ backgroundColor: isOpen ? C.accent : d.color }} />
+                    <div style={{ padding: "18px 22px" }}>
+                      <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "4px" }}>
+                        <div style={{ fontSize: "10px", fontWeight: "700", color: isOpen ? C.accent : d.color, letterSpacing: "0.08em" }}>0{idx+1} · TOPIC</div>
+                      </div>
+                      <div style={{ fontSize: "18px", fontWeight: "700", color: C.ink, letterSpacing: "-0.01em" }}>{topicTitle}</div>
+                      <div style={{ fontSize: "13px", color: C.inkLight, marginTop: "2px" }}>{d.tagline}</div>
+                    </div>
+                    <div style={{ padding: "18px 22px", display: "flex", alignItems: "center" }}>
+                      <div style={{ fontSize: "18px", color: C.inkMuted, transform: isOpen ? "rotate(90deg)" : "rotate(0deg)", transition: "transform 0.2s" }}>›</div>
+                    </div>
+                  </button>
+
+                  {/* Expanded detail */}
+                  {isOpen && content && (
+                    <div style={{ borderTop: `1px solid ${C.border}` }}>
+                      {/* Quick facts bar */}
+                      <div style={{ backgroundColor: C.accentLight, padding: "12px 22px", display: "flex", gap: "24px", flexWrap: "wrap", borderBottom: `1px solid ${C.border}` }}>
+                        {content.facts.map((f, i) => (
+                          <div key={i} style={{ fontSize: "12px", color: C.accent, fontWeight: "500" }}>· {f}</div>
+                        ))}
+                      </div>
+
+                      {/* Sections */}
+                      <div style={{ padding: "22px", display: "grid", gap: "20px" }}>
+                        {content.sections.map((s, i) => {
+                          const isNotLast = i !== content.sections.length - 1;
+                          return (
+                            <div key={i} style={{ display: "grid", gridTemplateColumns: "200px 1fr", gap: "20px", paddingBottom: "20px", borderBottom: isNotLast ? `1px solid ${C.border}` : "none" }}>
+                              <div style={{ fontSize: "13px", fontWeight: "700", color: C.ink, lineHeight: "1.4", paddingTop: "2px" }}>{s.title}</div>
+                              <div style={{ fontSize: "13px", lineHeight: "1.75", color: C.inkLight }}>{s.body}</div>
+                            </div>
+                          );
+                        })}
+                      </div>
+
+                      {/* Footer actions */}
+                      <div style={{ padding: "14px 22px", backgroundColor: C.bg, borderTop: `1px solid ${C.border}`, display: "flex", alignItems: "center", justifyContent: "space-between", gap: "12px", flexWrap: "wrap" }}>
+                        <div style={{ display: "flex", gap: "6px", flexWrap: "wrap", alignItems: "center" }}>
+                          <span style={{ fontSize: "10px", fontWeight: "700", color: C.inkMuted, letterSpacing: "0.07em", marginRight: "4px" }}>RELATED</span>
+                          {d.relatedTopics.map(rt => {
+                            const relTopic = topics.find(t => t.title === rt);
+                            return (
+                              <button key={rt} onClick={() => { setShowProfile(false); openTopicPage(relTopic || { title: rt, slug: rt.toLowerCase().replace(/[^a-z]/g,"-"), description: "", tag: "" }); }}
+                                style={{ backgroundColor: C.white, border: `1px solid ${C.border}`, borderRadius: R.sm, padding: "4px 11px", fontSize: "12px", fontWeight: "500", color: C.accent, cursor: "pointer" }}
+                                onMouseEnter={e => e.currentTarget.style.backgroundColor = C.accentLight}
+                                onMouseLeave={e => e.currentTarget.style.backgroundColor = C.white}>
+                                {rt} →
+                              </button>
+                            );
+                          })}
                         </div>
-                        <div style={{ fontSize: "20px", fontWeight: "700", color: C.ink, letterSpacing: "-0.015em" }}>{topicTitle}</div>
-                        <div style={{ fontSize: "13px", color: C.inkLight, marginTop: "3px" }}>{d.tagline}</div>
-                      </div>
-                      <button onClick={() => { setShowProfile(false); openTopicPage(topics.find(t => t.title === topicTitle) || { title: topicTitle, slug: topicTitle.toLowerCase().replace(/[^a-z]/g,"-"), description: d.tagline, tag: "" }); }}
-                        style={{ ...btn.secondary, fontSize: "12px", padding: "7px 13px", flexShrink: 0 }}>Read full article →</button>
-                    </div>
-                  </div>
-
-                  {/* Card body — 3 columns */}
-                  <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: "0", borderBottom: `1px solid ${C.border}` }}>
-
-                    {/* Col 1: Why + facts */}
-                    <div style={{ padding: "20px 22px", borderRight: `1px solid ${C.border}` }}>
-                      <div style={{ fontSize: "10px", fontWeight: "700", color: C.inkMuted, letterSpacing: "0.08em", marginBottom: "8px" }}>WHY IT MATTERS</div>
-                      <p style={{ fontSize: "13px", lineHeight: "1.7", color: C.inkLight, margin: "0 0 18px" }}>{d.why}</p>
-                    </div>
-
-                    {/* Col 2: Key facts */}
-                    <div style={{ padding: "20px 22px", borderRight: `1px solid ${C.border}` }}>
-                      <div style={{ fontSize: "10px", fontWeight: "700", color: C.inkMuted, letterSpacing: "0.08em", marginBottom: "10px" }}>KEY FACTS</div>
-                      <div style={{ display: "grid", gap: "7px" }}>
-                        {d.keyFacts.slice(0, 4).map((f, i) => (
-                          <div key={i} style={{ display: "flex", gap: "8px", alignItems: "flex-start" }}>
-                            <div style={{ minWidth: "16px", height: "16px", borderRadius: "3px", backgroundColor: d.bg, border: `1px solid ${d.border}`, display: "flex", alignItems: "center", justifyContent: "center", fontSize: "9px", fontWeight: "700", color: d.color, marginTop: "2px", flexShrink: 0 }}>{i+1}</div>
-                            <div style={{ fontSize: "12px", lineHeight: "1.6", color: C.ink }}>{f}</div>
-                          </div>
-                        ))}
+                        <button onClick={() => { setShowProfile(false); openTopicPage(topics.find(t => t.title === topicTitle) || { title: topicTitle, slug: topicTitle.toLowerCase().replace(/[^a-z]/g,"-"), description: d.tagline, tag: "" }); }}
+                          style={{ ...btn.primary, fontSize: "12px", padding: "8px 14px" }}>Read full article →</button>
                       </div>
                     </div>
-
-                    {/* Col 3: Watch out + explore */}
-                    <div style={{ padding: "20px 22px" }}>
-                      <div style={{ fontSize: "10px", fontWeight: "700", color: C.red, letterSpacing: "0.08em", marginBottom: "8px" }}>WATCH OUT FOR</div>
-                      <div style={{ display: "grid", gap: "7px", marginBottom: "18px" }}>
-                        {d.watchOut.map((w,i) => (
-                          <div key={i} style={{ fontSize: "12px", lineHeight: "1.6", color: "#6a2020", paddingLeft: "9px", borderLeft: `2px solid #e0a898` }}>{w}</div>
-                        ))}
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Card footer — related topics */}
-                  <div style={{ padding: "14px 24px", backgroundColor: C.bg, display: "flex", alignItems: "center", gap: "8px", flexWrap: "wrap" }}>
-                    <div style={{ fontSize: "10px", fontWeight: "700", color: C.inkMuted, letterSpacing: "0.07em", marginRight: "4px" }}>EXPLORE NEXT</div>
-                    {d.relatedTopics.map((rt) => {
-                      const relTopic = topics.find(t => t.title === rt);
-                      return (
-                        <button key={rt} onClick={() => { setShowProfile(false); openTopicPage(relTopic || { title: rt, slug: rt.toLowerCase().replace(/[^a-z]/g,"-"), description: "", tag: "" }); }}
-                          style={{ backgroundColor: C.white, border: `1px solid ${C.border}`, borderRadius: R.sm, padding: "5px 12px", fontSize: "12px", fontWeight: "500", color: C.accent, cursor: "pointer" }}
-                          onMouseEnter={e => { e.currentTarget.style.backgroundColor = C.accentLight; e.currentTarget.style.borderColor = C.accent; }}
-                          onMouseLeave={e => { e.currentTarget.style.backgroundColor = C.white; e.currentTarget.style.borderColor = C.border; }}>
-                          {rt} →
-                        </button>
-                      );
-                    })}
-                  </div>
+                  )}
                 </div>
               );
             })}
           </div>
 
-          {/* Bottom bar */}
-          <div style={{ marginTop: "32px", backgroundColor: C.ink, borderRadius: R.xl, padding: "22px 28px", display: "flex", alignItems: "center", justifyContent: "space-between", gap: "16px", flexWrap: "wrap" }}>
+          <div style={{ marginTop: "28px", backgroundColor: C.ink, borderRadius: R.xl, padding: "22px 28px", display: "flex", alignItems: "center", justifyContent: "space-between", gap: "16px", flexWrap: "wrap" }}>
             <div>
               <div style={{ fontSize: "15px", fontWeight: "700", color: "white", marginBottom: "3px" }}>Ready to go further?</div>
               <div style={{ fontSize: "12px", color: "rgba(255,255,255,0.45)" }}>Browse all 12 topics or post a question to the community.</div>
@@ -433,11 +739,6 @@ export default function App() {
       issue: "Issue No. 01", date: "April 2025", readTime: "6 min read",
       headline: "Real Estate Isn't as Complicated as It Looks",
       subheadline: "Most people avoid learning about real estate because the language feels deliberately exclusive. It isn't. Here's where to start.",
-      videos: [
-        { id: "Czx9oRcpjSM", title: "Real Estate Investing for Beginners", channel: "Graham Stephan" },
-        { id: "0YbWKxOhIPc", title: "Buying Your First Home: Complete Guide", channel: "BiggerPockets" },
-        { id: "RqcT74WH3Ms", title: "Real Estate Terminology You Must Know", channel: "Kris Krohn" },
-      ],
       body: [
         { type: "p", text: "Real estate is one of those fields where jargon does a lot of heavy lifting. Words like 'encumbrance,' 'cap rate,' and 'debt service coverage ratio' get thrown around in ways that make the whole industry feel like a closed club. It isn't. Most of what matters can be understood with a few foundational ideas." },
         { type: "h3", text: "The two categories that shape everything" },
@@ -463,11 +764,6 @@ export default function App() {
       issue: "Issue No. 06", date: "April 2025", readTime: "7 min read",
       headline: "How to Read the Market Without Getting Lost in the Numbers",
       subheadline: "Prices are the headline. But the real story is always in inventory, velocity, and the gap between asking and closing.",
-      videos: [
-        { id: "E6tPeRNlMx0", title: "How to Analyze a Real Estate Market", channel: "BiggerPockets" },
-        { id: "AEgkKTKkVhQ", title: "Understanding the Housing Market in 2025", channel: "Graham Stephan" },
-        { id: "0p4bSYWbFWk", title: "How Mortgage Rates Affect Home Prices", channel: "Andrei Jikh" },
-      ],
       body: [
         { type: "p", text: "The most common mistake beginners make when reading real estate market data is treating median sale price as a complete picture. It isn't. Price tells you where transactions landed — it doesn't tell you how fast things are moving, whether sellers are negotiating, or whether the apparent trend is hiding something in the composition of what sold." },
         { type: "p", text: "Days on market (DOM) tells you velocity — how quickly homes are moving from listing to contract. A falling DOM signals rising demand or tightening supply. Months of supply tells you the absorption rate — at the current pace of sales, how long would it take to sell everything currently listed? Below 3 months is a strong seller's market. Above 6 months is a buyer's market. The sale-to-list ratio tells you whether buyers are paying over or under asking — a ratio above 100% means bidding wars; below 98% means negotiating room." },
@@ -492,21 +788,6 @@ export default function App() {
       issue: "Issue No. 07", date: "April 2025", readTime: "5 min read",
       headline: "What Agents Actually Do — and Where the Model Is Breaking",
       subheadline: "The traditional brokerage model is under pressure from technology, regulation, and shifting buyer expectations. Understanding both sides helps you make a smarter decision.",
-      videos: [
-        { id: "pP7y3GxFQOQ", title: "Do You Really Need a Buyer's Agent?", channel: "BiggerPockets" },
-        { id: "UTSLkVtxHv4", title: "How Real Estate Commissions Work", channel: "Graham Stephan" },
-        { id: "8kODGGfYcBM", title: "How to Choose the Right Real Estate Agent", channel: "Kevin O'Leary" },
-      ], 
-      body: [
-        { type: "p", text: "The standard narrative about real estate agents is that they're overpaid door-openers. The reality is more nuanced — and the model is genuinely changing. Agents who add value do so through market knowledge, negotiation skill, and access to off-market inventory. Those who don't are increasingly being displaced by platforms that make the informational layer of real estate transactions free." },
-        { type: "h3", text: "What a good agent actually provides" },
-        { type: "p", text: "On the buyer side, a skilled agent provides three things that platforms can't fully replicate: hyper-local pricing knowledge, negotiation experience, and access to deals before they hit public listings. On the seller side, the value is in pricing strategy, staging guidance, marketing reach, and managing the transaction process through closing. The commission question is really a question of whether the agent's contribution justifies the cost — which varies enormously by agent and market." },
-        { type: "callout", text: "The FARE Act, which took effect in NYC in 2024, shifted broker fee payment from tenants to landlords in rental transactions. This removed a $3,000–8,000 upfront cost for renters — but some landlords have adjusted asking rents in response. The net effect on total renter cost is still being evaluated." },
-        { type: "h3", text: "How the model is changing" },
-        { type: "p", text: "New platforms are building algorithm-driven matching systems that connect buyers and sellers more efficiently than traditional referral networks. Some are moving to flat-fee or performance-based compensation structures. The pay-for-leads model — where agents buy access to prospective clients from platforms like Zillow — is facing criticism because it doesn't align agent incentives with client outcomes. The next wave of disruption is likely to come from data advantage: agents who can demonstrate a track record of pricing accuracy and negotiation outcomes will have a defensible position." },
-        { type: "h3", text: "Questions to ask before hiring" },
-        { type: "p", text: "Before signing with any agent, ask: How many transactions did you close in the last 12 months in this specific area? What's your average sale-to-list ratio for listings you've represented? How do you handle multiple offer situations? What's your communication process during the transaction? The answers to these questions reveal more than any referral or online review." },
-      ],
       stats: [
         { label: "Avg. buyer agent commission", value: "2.5–3%", note: "Of purchase price" },
         { label: "Agents in the US", value: "1.5M+", note: "NAR membership (2024)" },
@@ -522,11 +803,6 @@ export default function App() {
       issue: "Issue No. 02", date: "April 2025", readTime: "8 min read",
       headline: "The Real Estate Investing Landscape: From REITs to Syndications",
       subheadline: "Every investing strategy sounds compelling in a pitch deck. The differences become clear when you understand what each one actually requires.",
-      videos: [
-        { id: "Czx9oRcpjSM", title: "Real Estate Investing 101", channel: "Graham Stephan" },
-        { id: "XEBhbwGFPTU", title: "How to Analyze a Rental Property", channel: "BiggerPockets" },
-        { id: "q9Golb9mnLs", title: "House Hacking: Live for Free", channel: "BiggerPockets" },
-      ],
       body: [
         { type: "p", text: "Real estate investing is not a single strategy — it's a spectrum. At one end, you can buy a REIT ETF in your brokerage account in under five minutes with no real estate knowledge required. At the other end, you can syndicate a 200-unit apartment acquisition requiring millions in equity, months of due diligence, and a team of professionals. Most people belong somewhere in the middle, and figuring out where requires honest self-assessment about capital, time, and risk tolerance." },
         { type: "h3", text: "REITs: the starting point most beginners skip" },
@@ -552,11 +828,6 @@ export default function App() {
       issue: "Issue No. 05", date: "April 2025", readTime: "6 min read",
       headline: "Tokenization: The Infrastructure Is Real. The Market Is Still Early.",
       subheadline: "Blockchain-based real estate ownership is no longer theoretical — but the practical path from idea to investable asset is more complex than the pitch suggests.",
-      videos: [
-        { id: "G3GB7FJKNE8", title: "Real Estate Tokenization Explained", channel: "Whiteboard Finance" },
-        { id: "jGX3xBbcuiU", title: "Fractional Real Estate: Is It Worth It?", channel: "Andrei Jikh" },
-        { id: "9zGNWNmLQhY", title: "Blockchain and Real Estate: What You Need to Know", channel: "CNBC" },
-      ],
       body: [
         { type: "p", text: "Tokenization — the conversion of real property ownership into digital tokens on a blockchain — has been described as the next great democratization of real estate investing. The underlying technology is legitimate. The regulatory path is clearer than it was three years ago. But the gap between what's technically possible and what's commercially viable remains significant, and most retail investors are still years away from having meaningful access to liquid tokenized real estate markets." },
         { type: "h3", text: "What tokenization actually changes" },
@@ -582,11 +853,6 @@ export default function App() {
       issue: "Issue No. 04", date: "April 2025", readTime: "7 min read",
       headline: "The Legal Layer: Why Real Estate Rules Shape Everything Else",
       subheadline: "From zoning to the FARE Act, legal and regulatory frameworks don't just govern transactions — they determine what's even possible in a given market.",
-      videos: [
-        { id: "G3UpbFMQDFo", title: "Real Estate Law Basics for Investors", channel: "BiggerPockets" },
-        { id: "OhKdRbfkFdA", title: "Zoning Laws: How Cities Control Development", channel: "City Beautiful" },
-        { id: "cxhX1mTiIYE", title: "LLC vs Personal Name for Real Estate", channel: "Clint Coons" },
-      ],
       body: [
         { type: "p", text: "Real estate is one of the most heavily regulated industries in the American economy. Every transaction involves title law, contract law, lending regulations, and local land use rules. Every development project navigates zoning, environmental review, and building codes. Every landlord-tenant relationship is governed by a patchwork of state and local law that varies dramatically across jurisdictions. Understanding the legal layer isn't optional — it's foundational." },
         { type: "h3", text: "Zoning: the invisible hand" },
@@ -612,11 +878,6 @@ export default function App() {
       issue: "Issue No. 03", date: "April 2025", readTime: "7 min read",
       headline: "Development: Why the Gap Between Demand and Supply Is So Hard to Close",
       subheadline: "New housing takes years to deliver because the process is genuinely complex — not because developers are slow.",
-      videos: [
-        { id: "gFMgTNXaRqg", title: "How Real Estate Development Works", channel: "BiggerPockets" },
-        { id: "nRxqKCboAeo", title: "Ground-Up Construction: Step by Step", channel: "Ken McElroy" },
-        { id: "hkn8QZHDQ3Q", title: "How to Read a Real Estate Pro Forma", channel: "Break Into CRE" },
-      ],
       body: [
         { type: "p", text: "The question of why housing supply doesn't respond faster to demand is one of the most important in urban economics. The short answer is that real estate development is slow by nature: assembling land, securing entitlements, arranging financing, and completing construction takes years in even the best conditions. In high-demand coastal markets with active community opposition and complex zoning, it can take a decade from site control to certificate of occupancy." },
         { type: "h3", text: "The entitlement process" },
@@ -642,11 +903,6 @@ export default function App() {
       issue: "Issue No. 09", date: "April 2025", readTime: "7 min read",
       headline: "The Capital Stack: Understanding How Real Estate Deals Are Actually Funded",
       subheadline: "Every real estate transaction has a financing structure. Understanding it tells you who takes risk, who gets paid first, and why deals succeed or fail.",
-      videos: [
-        { id: "gqiUHi6JKFY", title: "The Real Estate Capital Stack Explained", channel: "Break Into CRE" },
-        { id: "Czx9oRcpjSM", title: "How to Finance Your First Rental Property", channel: "Graham Stephan" },
-        { id: "MExCMmSBMgY", title: "Mortgage Basics: Everything You Need to Know", channel: "Andrei Jikh" },
-      ],
       body: [
         { type: "p", text: "Every real estate transaction — from a $300,000 condo to a $300 million office tower — is financed through a combination of debt and equity. The mix of these two components, how they're layered, and who holds each piece determines the risk and return profile of the deal. This structure is called the capital stack, and understanding it is one of the most important things any real estate investor or professional can learn." },
         { type: "h3", text: "Debt: senior and mezzanine" },
@@ -672,11 +928,6 @@ export default function App() {
       issue: "Issue No. 08", date: "April 2025", readTime: "7 min read",
       headline: "Commercial Real Estate: Why It Operates by Completely Different Rules",
       subheadline: "Valuation, financing, leasing, and risk all work differently in commercial. Understanding the distinctions unlocks a much larger part of the market.",
-      videos: [
-        { id: "4qfMkz_JFQM", title: "Commercial Real Estate for Beginners", channel: "Break Into CRE" },
-        { id: "ZZQ-AKFk2kA", title: "Cap Rates Explained", channel: "BiggerPockets" },
-        { id: "D2cgsJIYfNI", title: "Office vs Retail vs Industrial Investing", channel: "Ken McElroy" },
-      ],
       body: [
         { type: "p", text: "Commercial real estate — offices, retail, industrial, and multifamily above four units — operates under fundamentally different rules than residential. The most important difference is valuation: while a home is valued primarily by what comparable homes sold for, a commercial property is valued by the income it generates. This single shift in framework changes how you analyze, buy, finance, and manage these assets." },
         { type: "h3", text: "Income-based valuation" },
@@ -702,11 +953,6 @@ export default function App() {
       issue: "Issue No. 10", date: "April 2025", readTime: "6 min read",
       headline: "Zoning: The Political Economy of What Gets Built and Where",
       subheadline: "Land use rules are the most consequential — and least understood — force in real estate. Changing them creates enormous value. Protecting them destroys supply.",
-      videos: [
-        { id: "GrCOcDFyOK0", title: "How Zoning Laws Shape Cities", channel: "City Beautiful" },
-        { id: "6ppVPsFhfqs", title: "Zoning for Real Estate Investors", channel: "BiggerPockets" },
-        { id: "Pb72MqxL5kE", title: "The Housing Crisis and Zoning", channel: "Vox" },
-      ],
       body: [
         { type: "p", text: "Zoning is the regulatory framework that governs land use — what types of buildings can go where, how tall they can be, and how much of a lot they can cover. In theory, it exists to organize urban development and protect property values. In practice, it's a deeply political process that reflects the preferences of existing property owners far more than the needs of future residents. Understanding zoning is essential for understanding why housing supply is constrained, why certain neighborhoods change and others don't, and where development opportunity hides." },
         { type: "h3", text: "How NYC's zoning system works" },
@@ -732,11 +978,6 @@ export default function App() {
       issue: "Issue No. 11", date: "April 2025", readTime: "6 min read",
       headline: "PropTech: What Actually Stuck and What's Still a Promise",
       subheadline: "After a decade of disruption narratives, it's worth being clear-eyed about which real estate technologies have changed the industry and which remain experiments.",
-      videos: [
-        { id: "DtLsGH5bJ44", title: "How Technology Is Disrupting Real Estate", channel: "CNBC" },
-        { id: "Czx9oRcpjSM", title: "Zillow vs Traditional Agents", channel: "Graham Stephan" },
-        { id: "gFMgTNXaRqg", title: "PropTech Platforms You Should Know", channel: "BiggerPockets" },
-      ],
       body: [
         { type: "p", text: "The PropTech sector attracted over $30 billion in venture investment between 2019 and 2022. The subsequent correction — with several high-profile failures and declining valuations — forced a more sober reckoning with what technology actually changes in real estate versus what it merely makes easier or cheaper at the margin. The distinction matters for anyone trying to understand which tools are worth learning and which platforms are likely to still exist in five years." },
         { type: "h3", text: "What has genuinely changed" },
@@ -762,11 +1003,6 @@ export default function App() {
       issue: "Issue No. 12", date: "April 2025", readTime: "6 min read",
       headline: "Deal Flow: Why Access Matters More Than Analysis in Real Estate",
       subheadline: "The best analysis in the world doesn't matter if you're not seeing the right deals. Understanding how opportunities are sourced and shared is the first step to improving your deal flow.",
-      videos: [
-        { id: "XEBhbwGFPTU", title: "How to Find Off-Market Real Estate Deals", channel: "BiggerPockets" },
-        { id: "gqiUHi6JKFY", title: "Commercial Deal Analysis Step by Step", channel: "Break Into CRE" },
-        { id: "E6tPeRNlMx0", title: "How to Evaluate a Real Estate Market", channel: "BiggerPockets" },
-      ],
       body: [
         { type: "p", text: "In most industries, superior analysis confers sustainable advantage. In real estate, the advantage is more often informational — specifically, access to deals before they're broadly available. The best commercial real estate investors spend as much time on relationship cultivation as they do on underwriting, because deal flow quality determines the ceiling of what's achievable. A sophisticated investor seeing only publicly marketed deals is at a structural disadvantage to a moderately capable investor with strong broker relationships." },
         { type: "h3", text: "How commercial deals actually get distributed" },
@@ -801,7 +1037,7 @@ export default function App() {
 
     return (
       <div style={page}>
-        <NavBar onBack={goBackToHome} backLabel="← All topics" />
+        <NavBar onBack={goBackToHome} backLabel="← All topics" activeNav={activeNav} handleNavClick={handleNavClick} isSignedUp={isSignedUp} setShowProfile={setShowProfile} openSignup={openSignup} accountInfo={accountInfo} />
         <main style={{ maxWidth: "1100px", margin: "0 auto", padding: "32px clamp(20px,4vw,48px) 80px", boxSizing: "border-box", display: "grid", gridTemplateColumns: "1fr 320px", gap: "24px", alignItems: "start" }}>
 
           {/* LEFT: Main editorial content */}
@@ -818,7 +1054,7 @@ export default function App() {
                 <button onClick={() => saveInterest(currentTopicPage.title)} style={{ ...btn.primary, padding: "9px 16px", fontSize: "13px", backgroundColor: savedInterests.includes(currentTopicPage.title) ? C.accentHover : C.accent }}>
                   {savedInterests.includes(currentTopicPage.title) ? "Saved" : "Save to interests"}
                 </button>
-                <button onClick={openSignup} style={{ ...btn.secondary, padding: "9px 16px", fontSize: "13px" }}>Create an account</button>
+                <button onClick={isSignedUp ? () => { setCurrentTopicPage(null); setShowProfile(true); } : openSignup} style={{ ...btn.secondary, padding: "9px 16px", fontSize: "13px" }}>{isSignedUp ? "View my profile" : "Create an account"}</button>
                 <div style={{ fontSize: "12px", color: C.inkMuted, marginLeft: "auto" }}>{comments.length} comments in this thread</div>
               </div>
             </div>
@@ -845,43 +1081,6 @@ export default function App() {
                 return null;
               })}
             </div>
-
-            {/* Videos section */}
-            {ed.videos && (
-              <div style={{ backgroundColor: C.white, border: `1px solid ${C.border}`, borderRadius: R.xl, padding: "26px", marginBottom: "16px" }}>
-                <div style={{ fontSize: "10px", fontWeight: "700", color: C.warm, letterSpacing: "0.08em", marginBottom: "6px" }}>WATCH & LEARN</div>
-                <h2 style={{ fontSize: "18px", fontWeight: "700", color: C.ink, margin: "0 0 16px", letterSpacing: "-0.01em" }}>Recommended videos for this topic</h2>
-                <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "14px" }}>
-                  {ed.videos.map((v, i) => (
-                    <a key={i} href={`https://www.youtube.com/watch?v=${v.id}`} target="_blank" rel="noopener noreferrer"
-                      style={{ borderRadius: R.lg, overflow: "hidden", border: `1px solid ${C.border}`, textDecoration: "none", display: "block", backgroundColor: C.white }}
-                      onMouseEnter={e => e.currentTarget.style.borderColor = C.accent}
-                      onMouseLeave={e => e.currentTarget.style.borderColor = C.border}>
-                      {/* Thumbnail */}
-                      <div style={{ position: "relative", paddingBottom: "56.25%", height: 0, backgroundColor: "#0a0a0a", overflow: "hidden" }}>
-                        <img
-                          src={`https://img.youtube.com/vi/${v.id}/hqdefault.jpg`}
-                          alt={v.title}
-                          style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%", objectFit: "cover" }}
-                        />
-                        {/* Play button overlay */}
-                        <div style={{ position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center", backgroundColor: "rgba(0,0,0,0.25)" }}>
-                          <div style={{ width: "44px", height: "44px", borderRadius: "50%", backgroundColor: "rgba(255,255,255,0.92)", display: "flex", alignItems: "center", justifyContent: "center" }}>
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill={C.accent}><polygon points="5,3 19,12 5,21"/></svg>
-                          </div>
-                        </div>
-                      </div>
-                      {/* Info */}
-                      <div style={{ padding: "11px 13px", backgroundColor: C.bg }}>
-                        <div style={{ fontSize: "12px", fontWeight: "600", color: C.ink, lineHeight: "1.4", marginBottom: "3px" }}>{v.title}</div>
-                        <div style={{ fontSize: "11px", color: C.accent }}>{v.channel} ↗</div>
-                      </div>
-                    </a>
-                  ))}
-                </div>
-                <div style={{ fontSize: "11px", color: C.inkMuted, marginTop: "12px" }}>Opens on YouTube in a new tab.</div>
-              </div>
-            )}
 
             {/* Community discussion */}
             <div style={{ backgroundColor: C.white, border: `1px solid ${C.border}`, borderRadius: R.xl, padding: "28px" }}>
@@ -1027,7 +1226,7 @@ export default function App() {
                   <div style={{ fontSize: "11px", color: C.inkMuted }}>Create a free account to send messages.</div>
                   <div style={{ display: "flex", gap: "8px" }}>
                     <button onClick={() => setSelectedProfessional(null)} style={{ ...btn.secondary, padding: "9px 16px", fontSize: "13px" }}>Cancel</button>
-                    <button onClick={() => { setSelectedProfessional(null); openSignup(); }} style={{ ...btn.primary, padding: "9px 16px", fontSize: "13px" }}>Sign up to send</button>
+                    <button onClick={() => { setSelectedProfessional(null); isSignedUp ? null : openSignup(); }} style={{ ...btn.primary, padding: "9px 16px", fontSize: "13px" }}>{isSignedUp ? "Send message" : "Sign up to send"}</button>
                   </div>
                 </div>
               </div>
@@ -1045,7 +1244,7 @@ export default function App() {
 
   return (
     <div style={page}>
-      <NavBar />
+      <NavBar activeNav={activeNav} handleNavClick={handleNavClick} isSignedUp={isSignedUp} setShowProfile={setShowProfile} openSignup={openSignup} accountInfo={accountInfo} />
       <main style={{ maxWidth: "1280px", margin: "0 auto", padding: "36px clamp(20px,4vw,48px) 80px", boxSizing: "border-box" }}>
 
         {/* HERO */}
@@ -1057,7 +1256,7 @@ export default function App() {
                 <h1 style={{ fontSize: "44px", lineHeight: "1.06", margin: "0 0 14px", color: C.ink, fontWeight: "700", letterSpacing: "-0.025em", maxWidth: "520px" }}>Learn real estate without feeling lost.</h1>
                 <p style={{ fontSize: "15px", lineHeight: "1.75", color: C.inkLight, maxWidth: "500px", margin: "0 0 26px" }}>MyHome helps beginners understand real estate clearly — explore topics at your own pace, follow market updates, and connect with experienced professionals.</p>
                 <div style={{ display: "flex", gap: "8px", flexWrap: "wrap" }}>
-                  <button onClick={openSignup} style={btn.primary}>Start learning</button>
+                  <button onClick={isSignedUp ? () => handleNavClick("topics-section","Topics") : openSignup} style={btn.primary}>{isSignedUp ? "Browse topics" : "Start learning"}</button>
                   <button onClick={() => handleNavClick("topics-section","Topics")} style={btn.secondary}>Browse topics</button>
                   <button onClick={() => handleNavClick("market-trends-section","Newsletter")} style={btn.secondary}>Market updates</button>
                 </div>
@@ -1169,7 +1368,7 @@ export default function App() {
             <div id="ask-question-section" style={{ borderRadius: R.lg, padding: "15px 16px", backgroundColor: C.ink, color: "white" }}>
               <div style={{ fontSize: "13px", fontWeight: "700", marginBottom: "4px" }}>Ask a beginner question</div>
               <div style={{ fontSize: "12px", lineHeight: "1.6", color: "rgba(255,255,255,0.55)", marginBottom: "10px" }}>Post a question and get answers from people who work in real estate.</div>
-              <button onClick={openSignup} style={{ border: "none", borderRadius: R.md, padding: "8px 14px", backgroundColor: "white", color: C.ink, fontSize: "12px", fontWeight: "600", cursor: "pointer" }}>Join the community</button>
+              <button onClick={isSignedUp ? () => { handleNavClick("ask-question-section","Ask a Question"); } : openSignup} style={{ border: "none", borderRadius: R.md, padding: "8px 14px", backgroundColor: "white", color: C.ink, fontSize: "12px", fontWeight: "600", cursor: "pointer" }}>{isSignedUp ? "Ask a question" : "Join the community"}</button>
             </div>
           </div>
         </section>
@@ -1182,7 +1381,7 @@ export default function App() {
             <p style={{ fontSize: "13px", color: "rgba(255,255,255,0.45)", margin: 0, maxWidth: "380px", lineHeight: "1.6" }}>Browse freely — create a profile when you want to save your progress and personalize your experience.</p>
           </div>
           <div style={{ display: "flex", gap: "8px", flexWrap: "wrap" }}>
-            <button onClick={openSignup} style={{ ...btn.primary, backgroundColor: "#c07040", padding: "11px 20px" }}>Create free profile</button>
+            <button onClick={isSignedUp ? () => setShowProfile(true) : openSignup} style={{ ...btn.primary, backgroundColor: "#c07040", padding: "11px 20px" }}>{isSignedUp ? ("Welcome back, " + accountInfo.name.split(" ")[0]) : "Create free profile"}</button>
             <button style={{ border: "1px solid rgba(255,255,255,0.18)", borderRadius: R.md, padding: "11px 20px", backgroundColor: "transparent", color: "rgba(255,255,255,0.8)", fontSize: "14px", fontWeight: "600", cursor: "pointer" }}>Browse as guest</button>
           </div>
         </section>
@@ -1197,15 +1396,22 @@ export default function App() {
 
             {onboardingStep < 4 && (
               <div style={{ display: "flex", alignItems: "center", gap: "6px", marginBottom: "24px" }}>
-                {["Goal","Topics","Account"].map((label,i) => (
-                  <div key={label} style={{ display: "flex", alignItems: "center", gap: "5px", flex: i<2?1:"none" }}>
-                    <div style={{ display: "flex", alignItems: "center", gap: "5px" }}>
-                      <div style={{ width: "20px", height: "20px", borderRadius: "50%", backgroundColor: onboardingStep>i+1?C.accent:onboardingStep===i+1?C.accent:C.border, display: "flex", alignItems: "center", justifyContent: "center", fontSize: "9px", fontWeight: "700", color: onboardingStep>=i+1?"white":C.inkMuted, flexShrink: 0 }}>{onboardingStep>i+1?"✓":i+1}</div>
-                      <span style={{ fontSize: "11px", fontWeight: "600", color: onboardingStep===i+1?C.ink:C.inkMuted }}>{label}</span>
+                {["Goal","Topics","Account"].map((label,i) => {
+                  const stepNum = i + 1;
+                  const isPast = onboardingStep > stepNum;
+                  const isCurrent = onboardingStep === stepNum;
+                  const isReached = onboardingStep >= stepNum;
+                  const isNotLast = i < 2;
+                  return (
+                    <div key={label} style={{ display: "flex", alignItems: "center", gap: "5px", flex: isNotLast ? 1 : "none" }}>
+                      <div style={{ display: "flex", alignItems: "center", gap: "5px" }}>
+                        <div style={{ width: "20px", height: "20px", borderRadius: "50%", backgroundColor: isPast || isCurrent ? C.accent : C.border, display: "flex", alignItems: "center", justifyContent: "center", fontSize: "9px", fontWeight: "700", color: isReached ? "white" : C.inkMuted, flexShrink: 0 }}>{isPast ? "✓" : stepNum}</div>
+                        <span style={{ fontSize: "11px", fontWeight: "600", color: isCurrent ? C.ink : C.inkMuted }}>{label}</span>
+                      </div>
+                      {isNotLast && <div style={{ flex: 1, height: "1px", backgroundColor: isPast ? C.accent : C.border }} />}
                     </div>
-                    {i<2&&<div style={{ flex:1, height:"1px", backgroundColor:onboardingStep>i+1?C.accent:C.border }} />}
-                  </div>
-                ))}
+                  );
+                })}
               </div>
             )}
 
