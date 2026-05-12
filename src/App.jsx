@@ -521,7 +521,7 @@ export default function App() {
   };
 
   const font = '"Montserrat", ui-sans-serif, system-ui, -apple-system, sans-serif';
-  const page = { minHeight: "100vh", backgroundColor: C.bg, color: C.ink, fontFamily: font };
+  const page = { minHeight: "100vh", backgroundColor: C.bg, color: C.ink, fontFamily: font, boxSizing: "border-box" };
 
 
   // DATA: rich beginner explanations shown when a topic card is clicked on the profile
@@ -1282,25 +1282,25 @@ export default function App() {
   return (
     <div style={page}>
       <NavBar activeNav={activeNav} handleNavClick={handleNavClick} isSignedUp={isSignedUp} setShowProfile={setShowProfile} openSignup={openSignup} accountInfo={accountInfo} />
-      <main style={{ maxWidth: "1280px", margin: "0 auto", padding: "36px clamp(20px,4vw,48px) 80px", boxSizing: "border-box" }}>
+      <main style={{ maxWidth: "1180px", margin: "0 auto", padding: "36px clamp(20px,4vw,48px) 80px", boxSizing: "border-box" }}> 
 
         {/* HERO */}
         <section id="learn-section" style={{ marginBottom: "60px" }}>
-          <div style={{ backgroundColor: C.white, border: `1px solid ${C.border}`, borderRadius: R.xl, padding: "40px 44px 36px", boxSizing: "border-box" }}>
-            <div style={{ display: "grid", gridTemplateColumns: "1fr auto", gap: "44px", alignItems: "center", marginBottom: "36px" }}>
+          <div style={{ backgroundColor: C.white, border: `1px solid ${C.border}`, borderRadius: R.xl, padding: "42px clamp(26px,4vw,48px) 36px", boxSizing: "border-box" }}> 
+            <div style={{ display: "grid", gridTemplateColumns: "minmax(0,1.35fr) minmax(240px,0.65fr)", gap: "44px", alignItems: "center", marginBottom: "36px" }}> 
               <div>
                 <div style={{ display: "inline-block", padding: "4px 10px", borderRadius: R.sm, backgroundColor: C.accentLight, color: C.accent, fontSize: "10px", fontWeight: "700", letterSpacing: "0.07em", marginBottom: "18px" }}>BEGINNER-FIRST REAL ESTATE PLATFORM</div>
                 <h1 style={{ fontSize: "44px", lineHeight: "1.06", margin: "0 0 14px", color: C.ink, fontWeight: "700", letterSpacing: "-0.025em", maxWidth: "520px" }}>Learn real estate without feeling lost.</h1>
                 <p style={{ fontSize: "15px", lineHeight: "1.75", color: C.inkLight, maxWidth: "500px", margin: "0 0 26px" }}>MyHome helps beginners understand real estate clearly — explore topics at your own pace, follow market updates, and connect with experienced professionals.</p>
                 <div style={{ display: "flex", gap: "8px", flexWrap: "wrap" }}>
-                  <button onClick={isSignedUp ? () => handleNavClick("topics-section","Topics") : openSignup} style={btn.primary}>{isSignedUp ? "Browse topics" : "Start learning"}</button>
+                  <button onClick={isSignedUp ? () => setShowProfile(true) : openSignup} style={btn.primary}>{isSignedUp ? "Go to my profile" : "Start learning"}</button>
                   <button onClick={() => handleNavClick("topics-section","Topics")} style={btn.secondary}>Browse topics</button>
                   <button onClick={() => handleNavClick("market-trends-section","Newsletter")} style={btn.secondary}>Market updates</button>
                 </div>
               </div>
-              <div style={{ display: "flex", flexDirection: "column", gap: "18px", minWidth: "190px" }}>
+              <div style={{ display: "flex", flexDirection: "column", gap: "14px", minWidth: "0" }}> 
                 {[{title:"Beginner-first",body:"No assumed knowledge. Start wherever you are."},{title:"Step by step",body:"Topics build on each other logically."},{title:"Real professionals",body:"Ask questions and learn from people in the field."}].map(c => (
-                  <div key={c.title} style={{ borderLeft: `2px solid ${C.border}`, paddingLeft: "13px" }}>
+                  <div key={c.title} style={{ border: `1px solid ${C.border}`, borderRadius: R.lg, backgroundColor: C.bg, padding: "14px 16px" }}> 
                     <div style={{ fontSize: "13px", fontWeight: "600", color: C.ink, marginBottom: "2px" }}>{c.title}</div>
                     <div style={{ fontSize: "12px", color: C.inkMuted, lineHeight: "1.5" }}>{c.body}</div>
                   </div>
@@ -1308,8 +1308,8 @@ export default function App() {
               </div>
             </div>
             <div style={{ borderTop: `1px solid ${C.border}`, paddingTop: "26px" }}>
-              <div style={{ fontSize: "10px", fontWeight: "700", color: C.inkMuted, letterSpacing: "0.08em", marginBottom: "12px" }}>THREE WAYS TO GET STARTED</div>
-              <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: "10px" }}>
+              <div style={{ fontSize: "10px", fontWeight: "700", color: C.inkMuted, letterSpacing: "0.08em", marginBottom: "12px", textAlign: "center" }}>THREE WAYS TO GET STARTED</div>
+              <div style={{ display: "grid", gridTemplateColumns: "repeat(3,minmax(0,1fr))", gap: "12px" }}>
                 {heroActions.map(item => (
                   <button key={item.title} onClick={item.action}
                     style={{ textAlign: "left", backgroundColor: C.bg, border: `1px solid ${C.border}`, borderRadius: R.lg, padding: "16px 18px", cursor: "pointer" }}
@@ -1327,15 +1327,15 @@ export default function App() {
 
         {/* TOPICS */}
         <section id="topics-section" style={{ marginBottom: "60px" }}>
-          <div style={{ marginBottom: "28px" }}>
+          <div style={{ marginBottom: "28px", textAlign: "center" }}>
             <div style={{ fontSize: "10px", fontWeight: "700", color: C.warm, letterSpacing: "0.08em", marginBottom: "6px" }}>TOPICS</div>
-            <h2 style={{ fontSize: "26px", fontWeight: "700", letterSpacing: "-0.02em", marginBottom: "6px", marginTop: 0 }}>Pick a topic and start there</h2>
-            <p style={{ fontSize: "14px", color: C.inkLight, lineHeight: "1.6", maxWidth: "520px", margin: 0 }}>Each topic is structured to help you understand one area clearly before moving to the next.</p>
+            <h2 style={{ fontSize: "26px", fontWeight: "700", letterSpacing: "-0.02em", marginBottom: "8px", marginTop: 0 }}>Pick a topic and start there</h2>
+            <p style={{ fontSize: "14px", color: C.inkLight, lineHeight: "1.6", maxWidth: "620px", margin: "0 auto" }}>Each topic is structured to help you understand one area clearly before moving to the next.</p>
           </div>
           <div style={{ display: "grid", gap: "28px" }}>
             {topicGroups.map(group => (
               <div key={group.groupTitle}>
-                <div style={{ marginBottom: "12px", display: "flex", alignItems: "baseline", gap: "10px" }}>
+                <div style={{ marginBottom: "12px", display: "flex", alignItems: "baseline", justifyContent: "space-between", gap: "10px", flexWrap: "wrap" }}>
                   <h3 style={{ fontSize: "14px", fontWeight: "700", color: C.ink, margin: 0 }}>{group.groupTitle}</h3>
                   <span style={{ fontSize: "12px", color: C.inkMuted }}>{group.groupDescription}</span>
                 </div>
@@ -1360,7 +1360,7 @@ export default function App() {
         </section>
 
         {/* NEWSLETTER + COMMUNITY */}
-        <section id="market-trends-section" style={{ display: "grid", gridTemplateColumns: "1.1fr 0.9fr", gap: "16px", marginBottom: "60px" }}>
+        <section id="market-trends-section" style={{ display: "grid", gridTemplateColumns: "minmax(0,1fr) minmax(0,1fr)", gap: "20px", marginBottom: "60px", alignItems: "stretch" }}> 
           <div style={{ backgroundColor: C.white, border: `1px solid ${C.border}`, borderRadius: R.xl, padding: "26px" }}>
             <div style={{ fontSize: "10px", fontWeight: "700", color: C.warm, letterSpacing: "0.08em", marginBottom: "14px" }}>THIS WEEK'S NEWSLETTER</div>
             <h2 style={{ fontSize: "22px", fontWeight: "700", letterSpacing: "-0.02em", marginBottom: "8px", marginTop: 0 }}>What we're highlighting this week</h2>
@@ -1380,7 +1380,7 @@ export default function App() {
                   </div>
                 ))}
               </div>
-              <div style={{ display: "flex", gap: "8px" }}>
+              <div style={{ display: "flex", gap: "8px", flexWrap: "wrap" }}>
                 <button style={btn.primary}>Read this week's issue</button>
                 <button style={btn.secondary}>Past issues</button>
               </div>
@@ -1411,15 +1411,15 @@ export default function App() {
         </section>
 
         {/* BOTTOM CTA */}
-        <section style={{ backgroundColor: C.ink, borderRadius: R.xl, padding: "40px 44px", display: "flex", alignItems: "center", justifyContent: "space-between", gap: "28px", flexWrap: "wrap" }}>
+        <section style={{ backgroundColor: C.ink, borderRadius: R.xl, padding: "42px clamp(26px,4vw,48px)", display: "grid", gridTemplateColumns: "minmax(0,1fr) auto", alignItems: "center", gap: "28px" }}>
           <div>
             <div style={{ fontSize: "10px", fontWeight: "700", color: "rgba(255,255,255,0.4)", letterSpacing: "0.08em", marginBottom: "7px" }}>GET STARTED</div>
             <h2 style={{ fontSize: "24px", fontWeight: "700", letterSpacing: "-0.02em", color: "white", margin: "0 0 7px" }}>{isSignedUp ? "Welcome back to your real estate hub." : "Explore first. Sign up when ready."}</h2>
             <p style={{ fontSize: "13px", color: "rgba(255,255,255,0.45)", margin: 0, maxWidth: "380px", lineHeight: "1.6" }}>{isSignedUp ? "Your profile is already saved, so you can return to it anytime without signing up again." : "Browse freely — create a profile when you want to save your progress and personalize your experience."}</p>
           </div>
-          <div style={{ display: "flex", gap: "8px", flexWrap: "wrap" }}>
+          <div style={{ display: "flex", gap: "8px", flexWrap: "wrap", justifyContent: "flex-end" }}>
             <button onClick={isSignedUp ? () => setShowProfile(true) : openSignup} style={{ ...btn.primary, backgroundColor: "#c07040", padding: "11px 20px" }}>{isSignedUp ? ("Welcome back, " + accountInfo.name.split(" ")[0]) : "Create free profile"}</button>
-            <button style={{ border: "1px solid rgba(255,255,255,0.18)", borderRadius: R.md, padding: "11px 20px", backgroundColor: "transparent", color: "rgba(255,255,255,0.8)", fontSize: "14px", fontWeight: "600", cursor: "pointer" }}>Browse as guest</button>
+            <button onClick={() => handleNavClick("topics-section","Topics")} style={{ border: "1px solid rgba(255,255,255,0.18)", borderRadius: R.md, padding: "11px 20px", backgroundColor: "transparent", color: "rgba(255,255,255,0.8)", fontSize: "14px", fontWeight: "600", cursor: "pointer" }}>{isSignedUp ? "Back to topics" : "Browse as guest"}</button>
           </div>
         </section>
       </main>
