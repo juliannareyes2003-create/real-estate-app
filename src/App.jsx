@@ -1422,48 +1422,48 @@ export default function App() {
         </section>
 
         {/* NEWSLETTER + COMMUNITY */}
-        <section id="market-trends-section" style={{ marginBottom: "60px" }}>
-          <div style={{ backgroundColor: C.white, border: `1px solid ${C.border}`, borderRadius: R.xl, padding: "clamp(26px,4vw,42px)", marginBottom: "22px" }}>
-            <div style={{ textAlign: "center", maxWidth: "760px", margin: "0 auto 28px" }}>
-              <div style={{ fontSize: "10px", fontWeight: "800", color: C.warm, letterSpacing: "0.16em", marginBottom: "12px" }}>THIS WEEK'S NEWSLETTER</div>
-              <h2 style={{ fontSize: "clamp(26px,4vw,38px)", fontWeight: "800", letterSpacing: "-0.035em", margin: "0 0 12px", color: C.ink }}>What we're highlighting this week</h2>
-              <p style={{ fontSize: "15px", color: C.inkLight, lineHeight: "1.8", margin: "0 auto", maxWidth: "680px" }}>Choose a current real estate headline on the right, and the featured newsletter will update here.</p>
+        <section id="market-trends-section" style={{ marginBottom: "46px" }}>
+          <div style={{ backgroundColor: C.white, border: `1px solid ${C.border}`, borderRadius: R.xl, padding: "clamp(20px,3vw,30px)", marginBottom: "18px" }}>
+            <div style={{ textAlign: "center", maxWidth: "650px", margin: "0 auto 20px" }}>
+              <div style={{ fontSize: "9px", fontWeight: "800", color: C.warm, letterSpacing: "0.16em", marginBottom: "8px" }}>THIS WEEK'S NEWSLETTER</div>
+              <h2 style={{ fontSize: "clamp(22px,3vw,30px)", fontWeight: "800", letterSpacing: "-0.03em", margin: "0 0 8px", color: C.ink }}>What we're highlighting this week</h2>
+              <p style={{ fontSize: "13px", color: C.inkLight, lineHeight: "1.55", margin: "0 auto", maxWidth: "540px" }}>Choose a current real estate headline on the right, and the featured newsletter will update here.</p>
             </div>
 
-            <div style={{ display: "grid", gridTemplateColumns: "minmax(0,1.35fr) minmax(300px,0.75fr)", gap: "22px", alignItems: "stretch" }}>
-              <article style={{ backgroundColor: C.bg, border: `1px solid ${C.borderStrong}`, borderRadius: R.xl, padding: "clamp(24px,4vw,36px)", display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
+            <div style={{ display: "grid", gridTemplateColumns: "minmax(0,1.25fr) minmax(260px,0.7fr)", gap: "16px", alignItems: "stretch" }}>
+              <article style={{ backgroundColor: C.bg, border: `1px solid ${C.borderStrong}`, borderRadius: R.xl, padding: "clamp(18px,3vw,26px)", display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
                 <div>
-                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: "14px", flexWrap: "wrap", marginBottom: "22px" }}>
-                    <div style={{ fontSize: "11px", fontWeight: "800", color: C.warm, letterSpacing: "0.12em", padding: "8px 13px", backgroundColor: C.warmLight, borderRadius: R.md }}>{weeklyNewsletter.label}</div>
-                    <div style={{ fontSize: "13px", color: C.inkMuted }}>{weeklyNewsletter.date}</div>
+                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: "12px", flexWrap: "wrap", marginBottom: "14px" }}>
+                    <div style={{ fontSize: "9px", fontWeight: "800", color: C.warm, letterSpacing: "0.12em", padding: "6px 10px", backgroundColor: C.warmLight, borderRadius: R.md }}>{weeklyNewsletter.label}</div>
+                    <div style={{ fontSize: "12px", color: C.inkMuted }}>{weeklyNewsletter.date}</div>
                   </div>
 
-                  <div style={{ fontSize: "12px", fontWeight: "700", color: C.accent, letterSpacing: "0.08em", textTransform: "uppercase", marginBottom: "10px" }}>{weeklyNewsletter.category}</div>
-                  <h3 style={{ fontSize: "clamp(24px,3vw,34px)", fontWeight: "800", letterSpacing: "-0.035em", margin: "0 0 14px", color: C.ink, lineHeight: "1.15" }}>{weeklyNewsletter.title}</h3>
-                  <p style={{ fontSize: "15px", color: C.inkLight, lineHeight: "1.8", margin: "0 0 22px" }}>{weeklyNewsletter.intro}</p>
+                  <div style={{ fontSize: "10px", fontWeight: "700", color: C.accent, letterSpacing: "0.08em", textTransform: "uppercase", marginBottom: "7px" }}>{weeklyNewsletter.category}</div>
+                  <h3 style={{ fontSize: "clamp(20px,2.5vw,26px)", fontWeight: "800", letterSpacing: "-0.03em", margin: "0 0 10px", color: C.ink, lineHeight: "1.15" }}>{weeklyNewsletter.title}</h3>
+                  <p style={{ fontSize: "13px", color: C.inkLight, lineHeight: "1.6", margin: "0 0 16px" }}>{weeklyNewsletter.intro}</p>
 
-                  <div style={{ display: "grid", gap: "12px", marginBottom: "26px" }}>
+                  <div style={{ display: "grid", gap: "8px", marginBottom: "18px" }}>
                     {weeklyNewsletter.bullets.map((b,i) => (
-                      <div key={i} style={{ display: "grid", gridTemplateColumns: "18px minmax(0,1fr)", gap: "10px", alignItems: "start" }}>
-                        <div style={{ width: "6px", height: "6px", borderRadius: "50%", backgroundColor: C.accent, marginTop: "9px", justifySelf: "center" }} />
-                        <div style={{ fontSize: "14px", color: C.inkLight, lineHeight: "1.65" }}>{b}</div>
+                      <div key={i} style={{ display: "grid", gridTemplateColumns: "16px minmax(0,1fr)", gap: "8px", alignItems: "start" }}>
+                        <div style={{ width: "5px", height: "5px", borderRadius: "50%", backgroundColor: C.accent, marginTop: "8px", justifySelf: "center" }} />
+                        <div style={{ fontSize: "12.5px", color: C.inkLight, lineHeight: "1.5" }}>{b}</div>
                       </div>
                     ))}
                   </div>
                 </div>
 
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: "12px", flexWrap: "wrap" }}>
-                  <div style={{ fontSize: "12px", color: C.inkMuted }}>Source: {weeklyNewsletter.source}</div>
+                  <div style={{ fontSize: "11px", color: C.inkMuted }}>Source: {weeklyNewsletter.source}</div>
                   <div style={{ display: "flex", gap: "10px", flexWrap: "wrap" }}>
                     <button
                       onClick={() => weeklyNewsletter.sourceUrl !== "#" && window.open(weeklyNewsletter.sourceUrl, "_blank", "noopener,noreferrer")}
-                      style={{ ...btn.primary, padding: "12px 18px" }}
+                      style={{ ...btn.primary, padding: "9px 14px", fontSize: "12px" }}
                     >
                       Read this issue ↗
                     </button>
                     <button
                       onClick={() => setShowPastIssues(!showPastIssues)}
-                      style={{ ...btn.secondary, padding: "12px 18px" }}
+                      style={{ ...btn.secondary, padding: "9px 14px", fontSize: "12px" }}
                     >
                       {showPastIssues ? "Hide past issues" : "Past issues"}
                     </button>
@@ -1471,24 +1471,24 @@ export default function App() {
                 </div>
               </article>
 
-              <aside style={{ display: "flex", flexDirection: "column", gap: "14px" }}>
-                <div style={{ border: `1px solid ${C.border}`, borderRadius: R.xl, padding: "20px", backgroundColor: C.white }}>
-                  <div style={{ fontSize: "10px", fontWeight: "800", color: C.warm, letterSpacing: "0.12em", marginBottom: "12px" }}>CURRENT NEWS</div>
-                  <div style={{ display: "grid", gap: "10px" }}>
+              <aside style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
+                <div style={{ border: `1px solid ${C.border}`, borderRadius: R.xl, padding: "16px", backgroundColor: C.white }}>
+                  <div style={{ fontSize: "9px", fontWeight: "800", color: C.warm, letterSpacing: "0.12em", marginBottom: "10px" }}>CURRENT NEWS</div>
+                  <div style={{ display: "grid", gap: "8px" }}>
                     {currentNews.map(item => {
                       const active = selectedNewsletterId === item.id;
                       return (
                         <button
                           key={item.id}
                           onClick={() => setSelectedNewsletterId(item.id)}
-                          style={{ textAlign: "left", border: `1px solid ${active ? C.accent : C.border}`, borderRadius: R.lg, padding: "14px", backgroundColor: active ? C.accentLight : C.bg, cursor: "pointer" }}
+                          style={{ textAlign: "left", border: `1px solid ${active ? C.accent : C.border}`, borderRadius: R.lg, padding: "11px", backgroundColor: active ? C.accentLight : C.bg, cursor: "pointer" }}
                         >
-                          <div style={{ display: "flex", justifyContent: "space-between", gap: "10px", marginBottom: "7px" }}>
-                            <span style={{ fontSize: "11px", fontWeight: "700", color: active ? C.accent : C.inkMuted }}>{item.category}</span>
-                            <span style={{ fontSize: "11px", color: C.inkMuted }}>{item.source}</span>
+                          <div style={{ display: "flex", justifyContent: "space-between", gap: "8px", marginBottom: "5px" }}>
+                            <span style={{ fontSize: "10px", fontWeight: "700", color: active ? C.accent : C.inkMuted }}>{item.category}</span>
+                            <span style={{ fontSize: "10px", color: C.inkMuted }}>{item.source}</span>
                           </div>
-                          <div style={{ fontSize: "14px", fontWeight: "800", color: C.ink, lineHeight: "1.35", marginBottom: "5px" }}>{item.title}</div>
-                          <div style={{ fontSize: "12px", color: C.inkLight, lineHeight: "1.5" }}>{item.date}</div>
+                          <div style={{ fontSize: "12px", fontWeight: "800", color: C.ink, lineHeight: "1.32", marginBottom: "4px" }}>{item.title}</div>
+                          <div style={{ fontSize: "10.5px", color: C.inkLight, lineHeight: "1.4" }}>{item.date}</div>
                         </button>
                       );
                     })}
@@ -1496,17 +1496,17 @@ export default function App() {
                 </div>
 
                 {showPastIssues && (
-                  <div style={{ border: `1px solid ${C.border}`, borderRadius: R.xl, padding: "20px", backgroundColor: C.white }}>
-                    <div style={{ fontSize: "10px", fontWeight: "800", color: C.warm, letterSpacing: "0.12em", marginBottom: "12px" }}>PAST ISSUES</div>
-                    <div style={{ display: "grid", gap: "10px" }}>
+                  <div style={{ border: `1px solid ${C.border}`, borderRadius: R.xl, padding: "16px", backgroundColor: C.white }}>
+                    <div style={{ fontSize: "9px", fontWeight: "800", color: C.warm, letterSpacing: "0.12em", marginBottom: "10px" }}>PAST ISSUES</div>
+                    <div style={{ display: "grid", gap: "8px" }}>
                       {pastIssues.map(item => (
                         <button
                           key={item.id}
                           onClick={() => { setSelectedNewsletterId(item.id); setShowPastIssues(false); }}
-                          style={{ textAlign: "left", border: `1px solid ${C.border}`, borderRadius: R.lg, padding: "14px", backgroundColor: C.bg, cursor: "pointer" }}
+                          style={{ textAlign: "left", border: `1px solid ${C.border}`, borderRadius: R.lg, padding: "11px", backgroundColor: C.bg, cursor: "pointer" }}
                         >
-                          <div style={{ fontSize: "11px", fontWeight: "700", color: C.inkMuted, marginBottom: "7px" }}>{item.date}</div>
-                          <div style={{ fontSize: "14px", fontWeight: "800", color: C.ink, lineHeight: "1.35" }}>{item.title}</div>
+                          <div style={{ fontSize: "10px", fontWeight: "700", color: C.inkMuted, marginBottom: "5px" }}>{item.date}</div>
+                          <div style={{ fontSize: "12px", fontWeight: "800", color: C.ink, lineHeight: "1.3" }}>{item.title}</div>
                         </button>
                       ))}
                     </div>
