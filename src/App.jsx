@@ -582,6 +582,16 @@ export default function App() {
     setOnboardingStep(1);
   };
 
+  const openProfessional = (professional) => {
+    if (!isSignedUp) {
+      openSignup();
+      return;
+    }
+
+    setSelectedProfessional(professional);
+    setProMessage("");
+  };
+
   const font = '"Montserrat", ui-sans-serif, system-ui, -apple-system, sans-serif';
   const page = { minHeight: "100vh", backgroundColor: C.bg, color: C.ink, fontFamily: font, boxSizing: "border-box" };
 
@@ -1260,7 +1270,7 @@ export default function App() {
               <div style={{ fontSize: "10px", fontWeight: "700", color: C.warm, letterSpacing: "0.08em", marginBottom: "10px" }}>ASK A PROFESSIONAL</div>
               <div style={{ display: "grid", gap: "8px", marginBottom: "12px" }}>
                 {professionals.map(p => (
-                  <button key={p.name} onClick={() => { setSelectedProfessional(p); setProMessage(""); }}
+                  <button key={p.name} onClick={() => openProfessional(p)}
                     style={{ borderRadius: R.md, padding: "12px", backgroundColor: C.bg, border: `1px solid ${C.border}`, textAlign: "left", cursor: "pointer", width: "100%" }}
                     onMouseEnter={e => { e.currentTarget.style.borderColor = C.accent; e.currentTarget.style.backgroundColor = C.accentLight; }}
                     onMouseLeave={e => { e.currentTarget.style.borderColor = C.border; e.currentTarget.style.backgroundColor = C.bg; }}>
@@ -1322,10 +1332,10 @@ export default function App() {
                   style={{ width: "100%", padding: "11px 13px", borderRadius: R.lg, border: `1px solid ${C.border}`, fontSize: "13px", color: C.ink, resize: "none", fontFamily: "inherit", outline: "none", boxSizing: "border-box", backgroundColor: C.bg, lineHeight: "1.6" }}
                 />
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: "10px", gap: "10px", flexWrap: "wrap" }}>
-                  <div style={{ fontSize: "11px", color: C.inkMuted }}>Create a free account to send messages.</div>
+                  <div style={{ fontSize: "11px", color: C.inkMuted }}>{isSignedUp ? "Your question will be sent from your saved profile." : "Create a free account to send messages."}</div>
                   <div style={{ display: "flex", gap: "8px" }}>
                     <button onClick={() => setSelectedProfessional(null)} style={{ ...btn.secondary, padding: "9px 16px", fontSize: "13px" }}>Cancel</button>
-                    <button onClick={() => { setSelectedProfessional(null); isSignedUp ? null : openSignup(); }} style={{ ...btn.primary, padding: "9px 16px", fontSize: "13px" }}>{isSignedUp ? "Send message" : "Sign up to send"}</button>
+                    <button onClick={() => { setSelectedProfessional(null); if (!isSignedUp) openSignup(); }} style={{ ...btn.primary, padding: "9px 16px", fontSize: "13px" }}>{isSignedUp ? "Send message" : "Sign up to send"}</button>
                   </div>
                 </div>
               </div>
@@ -1522,13 +1532,19 @@ export default function App() {
             <p style={{ fontSize: "13px", color: C.inkLight, lineHeight: "1.7", marginBottom: "16px" }}>Professionals are here to support the learning process — not to dominate the platform.</p>
             <div style={{ display: "grid", gridTemplateColumns: "repeat(3,minmax(0,1fr))", gap: "10px", flex: 1, marginBottom: "16px" }}>
               {professionals.map(p => (
-                <div key={p.name} style={{ border: `1px solid ${C.border}`, borderRadius: R.lg, padding: "13px 15px", backgroundColor: C.bg }}>
+                <button
+                  key={p.name}
+                  onClick={() => openProfessional(p)}
+                  style={{ border: `1px solid ${C.border}`, borderRadius: R.lg, padding: "13px 15px", backgroundColor: C.bg, textAlign: "left", cursor: "pointer", fontFamily: "inherit" }}
+                  onMouseEnter={e => { e.currentTarget.style.borderColor = C.accent; e.currentTarget.style.backgroundColor = C.accentLight; }}
+                  onMouseLeave={e => { e.currentTarget.style.borderColor = C.border; e.currentTarget.style.backgroundColor = C.bg; }}
+                >
                   <div style={{ display: "flex", alignItems: "baseline", gap: "6px", marginBottom: "3px", flexWrap: "wrap" }}>
                     <div style={{ fontSize: "13px", fontWeight: "700", color: C.ink }}>{p.name}</div>
                     <div style={{ fontSize: "11px", color: C.inkMuted }}>— {p.role}</div>
                   </div>
-                  <div style={{ fontSize: "12px", color: C.inkLight, lineHeight: "1.6" }}>{p.help}</div>
-                </div>
+                  <div style={{ fontSize: "12px", color: C.inkLight, lineHeight: "1.6" }}>{isSignedUp ? p.help : "Sign up to view this professional profile and ask a question."}</div>
+                </button>
               ))}
             </div>
             <div id="ask-question-section" style={{ borderRadius: R.lg, padding: "15px 16px", backgroundColor: C.ink, color: "white" }}>
@@ -1552,6 +1568,55 @@ export default function App() {
           </div>
         </section>
       </main>
+
+        {/* Professional profile modal */}
+        {selectedProfessional && (
+          <>
+            <div onClick={() => setSelectedProfessional(null)} style={{ position: "fixed", inset: 0, backgroundColor: "rgba(10,18,26,0.55)", zIndex: 40 }} />
+            <div style={{ position: "fixed", top: "50%", left: "50%", transform: "translate(-50%,-50%)", width: "520px", maxWidth: "92%", backgroundColor: C.white, borderRadius: R.xl, zIndex: 50, boxShadow: "0 20px 60px rgba(0,0,0,0.2)", overflow: "hidden", boxSizing: "border-box" }}>
+              <div style={{ backgroundColor: C.accent, padding: "24px 24px 20px", position: "relative" }}>
+                <button onClick={() => setSelectedProfessional(null)} style={{ position: "absolute", top: "14px", right: "16px", border: "none", background: "rgba(255,255,255,0.15)", borderRadius: "50%", width: "28px", height: "28px", color: "white", fontSize: "16px", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", lineHeight: 1 }}>×</button>
+                <div style={{ display: "flex", alignItems: "center", gap: "14px" }}>
+                  <div style={{ width: "52px", height: "52px", borderRadius: "50%", backgroundColor: "rgba(255,255,255,0.2)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "18px", fontWeight: "700", color: "white", flexShrink: 0 }}>{selectedProfessional.initials}</div>
+                  <div>
+                    <div style={{ fontSize: "18px", fontWeight: "700", color: "white", letterSpacing: "-0.01em" }}>{selectedProfessional.name}</div>
+                    <div style={{ fontSize: "13px", color: "rgba(255,255,255,0.75)" }}>{selectedProfessional.role} · {selectedProfessional.location}</div>
+                  </div>
+                </div>
+              </div>
+              <div style={{ padding: "22px 24px", maxHeight: "65vh", overflowY: "auto", boxSizing: "border-box" }}>
+                <div style={{ display: "flex", gap: "8px", marginBottom: "16px", flexWrap: "wrap" }}>
+                  <div style={{ backgroundColor: C.accentLight, border: `1px solid ${C.border}`, borderRadius: R.sm, padding: "4px 10px", fontSize: "11px", fontWeight: "600", color: C.accent }}>{selectedProfessional.experience} experience</div>
+                  <div style={{ backgroundColor: C.warmLight, border: "1px solid #e0cfc0", borderRadius: R.sm, padding: "4px 10px", fontSize: "11px", fontWeight: "600", color: C.warm }}>{selectedProfessional.availability}</div>
+                </div>
+                <div style={{ fontSize: "10px", fontWeight: "700", color: C.inkMuted, letterSpacing: "0.08em", marginBottom: "6px" }}>ABOUT</div>
+                <p style={{ fontSize: "13px", lineHeight: "1.7", color: C.inkLight, marginBottom: "18px", marginTop: 0 }}>{selectedProfessional.bio}</p>
+                <div style={{ fontSize: "10px", fontWeight: "700", color: C.inkMuted, letterSpacing: "0.08em", marginBottom: "8px" }}>COVERS THESE TOPICS</div>
+                <div style={{ display: "flex", gap: "6px", flexWrap: "wrap", marginBottom: "20px" }}>
+                  {selectedProfessional.topics.map(t => (
+                    <div key={t} style={{ backgroundColor: C.bg, border: `1px solid ${C.border}`, borderRadius: R.sm, padding: "4px 10px", fontSize: "11px", fontWeight: "500", color: C.ink }}>{t}</div>
+                  ))}
+                </div>
+                <div style={{ fontSize: "10px", fontWeight: "700", color: C.inkMuted, letterSpacing: "0.08em", marginBottom: "8px" }}>SEND A MESSAGE</div>
+                <textarea
+                  value={proMessage}
+                  onChange={e => setProMessage(e.target.value)}
+                  placeholder={`Ask ${selectedProfessional.name.split(" ")[0]} a question about ${selectedProfessional.topics[0]}…`}
+                  rows={3}
+                  style={{ width: "100%", padding: "11px 13px", borderRadius: R.lg, border: `1px solid ${C.border}`, fontSize: "13px", color: C.ink, resize: "none", fontFamily: "inherit", outline: "none", boxSizing: "border-box", backgroundColor: C.bg, lineHeight: "1.6" }}
+                />
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: "10px", gap: "10px", flexWrap: "wrap" }}>
+                  <div style={{ fontSize: "11px", color: C.inkMuted }}>{isSignedUp ? "Your question will be sent from your saved profile." : "Create a free account to send messages."}</div>
+                  <div style={{ display: "flex", gap: "8px" }}>
+                    <button onClick={() => setSelectedProfessional(null)} style={{ ...btn.secondary, padding: "9px 16px", fontSize: "13px" }}>Cancel</button>
+                    <button onClick={() => { setSelectedProfessional(null); if (!isSignedUp) openSignup(); }} style={{ ...btn.primary, padding: "9px 16px", fontSize: "13px" }}>{isSignedUp ? "Send message" : "Sign up to send"}</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </>
+        )}
+
 
       {/* MODAL */}
       {showSignupModal && (
