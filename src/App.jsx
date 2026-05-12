@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const C = {
   bg: "#f5f4f1",
@@ -52,6 +52,18 @@ const NavBar = ({ onBack, backLabel, activeNav, handleNavClick, isSignedUp, setS
   );
 
 export default function App() {
+  // Loads Montserrat so the whole website uses the new font.
+  useEffect(() => {
+    const fontId = "myhome-montserrat-font";
+
+    if (!document.getElementById(fontId)) {
+      const link = document.createElement("link");
+      link.id = fontId;
+      link.rel = "stylesheet";
+      link.href = "https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap";
+      document.head.appendChild(link);
+    }
+  }, []);
   const [showSignupModal, setShowSignupModal] = useState(false);
   const [onboardingStep, setOnboardingStep] = useState(1);
   const [selectedGoal, setSelectedGoal] = useState("");
@@ -508,7 +520,7 @@ export default function App() {
     setOnboardingStep(1);
   };
 
-  const font = '"DM Sans", ui-sans-serif, system-ui, -apple-system, sans-serif';
+  const font = '"Montserrat", ui-sans-serif, system-ui, -apple-system, sans-serif';
   const page = { minHeight: "100vh", backgroundColor: C.bg, color: C.ink, fontFamily: font };
 
 
