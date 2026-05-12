@@ -88,6 +88,19 @@ export default function App() {
       text: "Hi, I’m your MyHome AI guide. Ask me anything beginner-friendly about real estate, like mortgages, zoning, investing, agents, or market data."
     }
   ]);
+  const [aiError, setAiError] = useState("");
+  const [guestAiCount, setGuestAiCount] = useState(0);
+
+  const AI_MAX_CHARS = 180;
+  const AI_GUEST_LIMIT = 3;
+  const aiAllowedTopics = [
+    "mortgage", "loan", "interest", "rate", "down payment", "closing cost",
+    "invest", "reit", "rental", "cash flow", "cap rate", "appreciation",
+    "zoning", "permit", "development", "build", "property", "land",
+    "agent", "broker", "commission", "buyer", "seller",
+    "token", "blockchain", "fractional", "market", "price", "rent", "data",
+    "inventory", "home", "house", "real estate", "commercial", "residential"
+  ];
 
   const learningGoals = ["Learn the basics","Understand investing","Explore development","Follow market trends","Learn laws and regulations","Connect with professionals"];
 
@@ -599,15 +612,48 @@ export default function App() {
     setProMessage("");
   };
 
+  const isAiQuestionAllowed = (question) => {
+    const q = question.toLowerCase();
+    return aiAllowedTopics.some(topic => q.includes(topic));
+  };
+
+  const addAiExchange = (question) => {
+    const trimmed = question.trim();
+    if (!trimmed) return;
+
+    if (!isSignedUp && guestAiCount >= AI_GUEST_LIMIT) {
+      setAiError("You’ve reached the guest preview limit. Create a free profile to keep asking and save your chats.");
+      return;
+    }
+
+    if (trimmed.length > AI_MAX_CHARS) {
+      setAiError(`Keep the question under ${AI_MAX_CHARS} characters so the answer stays focused.`);
+      return;
+    }
+
+    const userMessage = { role: "user", text: trimmed };
+    const assistantMessage = { role: "assistant", text: generateAiReply(trimmed) };
+
+    setAiMessages(prev => [...prev.slice(-8), userMessage, assistantMessage]);
+    setAiQuestion("");
+    setAiError("");
+
+    if (!isSignedUp) setGuestAiCount(prev => prev + 1);
+  };
+
   const generateAiReply = (question) => {
     const q = question.toLowerCase();
 
-    if (q.includes("mortgage") || q.includes("loan") || q.includes("interest") || q.includes("rate") || q.includes("down payment")) {
+    if (!isAiQuestionAllowed(question)) {
+      return "I’m focused on beginner real estate questions, so I can help with topics like mortgages, investing, zoning, agents, market data, tokenization, and property basics. Try rephrasing your question around one of those areas.";
+    }
+
+    if (q.includes("mortgage") || q.includes("loan") || q.includes("interest") || q.includes("rate") || q.includes("down payment") || q.includes("closing cost")) {
       return "A mortgage is a loan used to buy property. The big things to understand are the interest rate, the monthly payment, the down payment, and closing costs. When rates rise, monthly payments become more expensive, so buyers can afford less. A good beginner move is to compare the purchase price and the monthly payment, not just the listing price.";
     }
 
-    if (q.includes("invest") || q.includes("reit") || q.includes("rental") || q.includes("cash flow") || q.includes("cap rate")) {
-      return "For beginners, real estate investing usually starts in one of three ways: REITs, rental property, or house hacking. REITs are the easiest because they trade like stocks. Rental properties give more control but need more money, time, and maintenance. Cash flow means the money left after rent pays the mortgage, taxes, insurance, repairs, and other costs.";
+    if (q.includes("invest") || q.includes("reit") || q.includes("rental") || q.includes("cash flow") || q.includes("cap rate") || q.includes("make money") || q.includes("wealth")) {
+      return "Real estate can make money in a few ways: rent income, property appreciation, tax benefits, and leverage. For beginners, the safest way to learn is usually to compare REITs, rental properties, and house hacking. Each has a different level of cost, risk, and responsibility.";
     }
 
     if (q.includes("zoning") || q.includes("permit") || q.includes("build") || q.includes("development")) {
@@ -626,28 +672,19 @@ export default function App() {
       return "Market data helps you understand whether a market is heating up or cooling down. Look at median price, days on market, inventory, months of supply, rent trends, and mortgage rates. One number alone can be misleading, so it is better to compare a few signals together.";
     }
 
-    if (q.includes("first") || q.includes("beginner") || q.includes("start") || q.includes("learn")) {
+    if (q.includes("first") || q.includes("beginner") || q.includes("start") || q.includes("learn") || q.includes("home") || q.includes("house") || q.includes("property") || q.includes("real estate")) {
       return "The best place to start is with the basics: what property types exist, how buying works, how mortgages work, and who is involved in a deal. After that, pick one lane — buying a home, investing, development, or market data — so you are not trying to learn the whole industry at once.";
     }
 
-    return "Good question. A simple way to think about it is this: real estate decisions usually come down to property type, location, financing, legal rules, and market timing. Try asking me with one specific topic, like ‘How do mortgages work?’ or ‘What is a cap rate?’ and I can break it down more clearly.";
+    return "Good question. I can answer it better if you connect it to one real estate topic, like mortgages, investing, zoning, agents, market data, or buying your first property.";
   };
 
   const handleAiSubmit = () => {
-    const trimmed = aiQuestion.trim();
-    if (!trimmed) return;
-
-    const userMessage = { role: "user", text: trimmed };
-    const assistantMessage = { role: "assistant", text: generateAiReply(trimmed) };
-
-    setAiMessages(prev => [...prev, userMessage, assistantMessage]);
-    setAiQuestion("");
+    addAiExchange(aiQuestion);
   };
 
   const askSuggestedQuestion = (question) => {
-    const userMessage = { role: "user", text: question };
-    const assistantMessage = { role: "assistant", text: generateAiReply(question) };
-    setAiMessages(prev => [...prev, userMessage, assistantMessage]);
+    addAiExchange(question);
   };
 
   const font = '"Montserrat", ui-sans-serif, system-ui, -apple-system, sans-serif';
@@ -1605,19 +1642,29 @@ export default function App() {
                 </button>
               ))}
             </div>
-            <div id="ask-question-section" style={{ borderRadius: R.lg, padding: "18px", backgroundColor: C.ink, color: "white" }}>
-              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: "12px", marginBottom: "12px", flexWrap: "wrap" }}>
-                <div>
-                  <div style={{ fontSize: "10px", fontWeight: "800", color: "rgba(255,255,255,0.45)", letterSpacing: "0.1em", marginBottom: "4px" }}>AI GUIDE</div>
-                  <div style={{ fontSize: "15px", fontWeight: "800", marginBottom: "3px" }}>Ask MyHome AI</div>
-                  <div style={{ fontSize: "12px", lineHeight: "1.6", color: "rgba(255,255,255,0.58)" }}>Get a quick beginner-friendly answer, then keep exploring the topic.</div>
+            <div id="ask-question-section" style={{ borderRadius: R.lg, padding: "20px", backgroundColor: C.ink, color: "white", textAlign: "center" }}>
+              <div style={{ maxWidth: "820px", margin: "0 auto" }}>
+                <div style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: "12px", marginBottom: "12px", flexWrap: "wrap" }}>
+                  <div style={{ textAlign: "center" }}>
+                    <div style={{ fontSize: "10px", fontWeight: "800", color: "rgba(255,255,255,0.45)", letterSpacing: "0.1em", marginBottom: "4px" }}>AI GUIDE</div>
+                    <div style={{ fontSize: "16px", fontWeight: "800", marginBottom: "4px" }}>Ask MyHome AI</div>
+                    <div style={{ fontSize: "12px", lineHeight: "1.6", color: "rgba(255,255,255,0.58)", maxWidth: "560px", margin: "0 auto" }}>Ask short beginner real estate questions only — mortgages, investing, zoning, agents, market data, tokenization, or property basics.</div>
+                  </div>
                 </div>
-                {!isSignedUp && (
-                  <button onClick={openSignup} style={{ border: "1px solid rgba(255,255,255,0.22)", borderRadius: R.md, padding: "8px 12px", backgroundColor: "transparent", color: "rgba(255,255,255,0.84)", fontSize: "11px", fontWeight: "700", cursor: "pointer" }}>Sign up to save chats</button>
-                )}
-              </div>
 
-              <div style={{ backgroundColor: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: R.lg, padding: "12px", maxHeight: "220px", overflowY: "auto", display: "grid", gap: "9px", marginBottom: "12px" }}>
+                {!isSignedUp && (
+                  <div style={{ display: "flex", justifyContent: "center", marginBottom: "12px" }}>
+                    <button onClick={openSignup} style={{ border: "1px solid rgba(255,255,255,0.22)", borderRadius: R.md, padding: "8px 12px", backgroundColor: "transparent", color: "rgba(255,255,255,0.84)", fontSize: "11px", fontWeight: "700", cursor: "pointer" }}>Sign up to save chats · {Math.max(AI_GUEST_LIMIT - guestAiCount, 0)} guest asks left</button>
+                  </div>
+                )}
+
+                <div style={{ display: "flex", justifyContent: "center", gap: "7px", flexWrap: "wrap", marginBottom: "12px" }}>
+                  {["Mortgages", "Investing", "Zoning", "Agents", "Market data", "Tokenization"].map(topic => (
+                    <span key={topic} style={{ border: "1px solid rgba(255,255,255,0.12)", borderRadius: "999px", padding: "5px 9px", color: "rgba(255,255,255,0.62)", fontSize: "10px", fontWeight: "700" }}>{topic}</span>
+                  ))}
+                </div>
+
+                <div style={{ backgroundColor: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: R.lg, padding: "12px", maxHeight: "220px", overflowY: "auto", display: "grid", gap: "9px", margin: "0 auto 12px", textAlign: "left" }}>
                 {aiMessages.map((m, i) => (
                   <div key={i} style={{ display: "flex", justifyContent: m.role === "user" ? "flex-end" : "flex-start" }}>
                     <div style={{ maxWidth: "82%", borderRadius: R.md, padding: "9px 11px", backgroundColor: m.role === "user" ? C.accent : "white", color: m.role === "user" ? "white" : C.ink, fontSize: "12px", lineHeight: "1.55", boxShadow: m.role === "assistant" ? "0 8px 18px rgba(0,0,0,0.12)" : "none" }}>
@@ -1627,23 +1674,30 @@ export default function App() {
                 ))}
               </div>
 
-              <div style={{ display: "flex", gap: "7px", flexWrap: "wrap", marginBottom: "12px" }}>
-                {["What is a mortgage?", "How do I start investing?", "What is zoning?"].map(q => (
-                  <button key={q} onClick={() => askSuggestedQuestion(q)} style={{ border: "1px solid rgba(255,255,255,0.16)", borderRadius: "999px", padding: "6px 10px", backgroundColor: "rgba(255,255,255,0.07)", color: "rgba(255,255,255,0.82)", fontSize: "11px", fontWeight: "600", cursor: "pointer" }}>
-                    {q}
-                  </button>
-                ))}
-              </div>
+                <div style={{ display: "flex", justifyContent: "center", gap: "7px", flexWrap: "wrap", marginBottom: "12px" }}>
+                  {["What is a mortgage?", "How do I start investing?", "What is zoning?"].map(q => (
+                    <button key={q} onClick={() => askSuggestedQuestion(q)} style={{ border: "1px solid rgba(255,255,255,0.16)", borderRadius: "999px", padding: "6px 10px", backgroundColor: "rgba(255,255,255,0.07)", color: "rgba(255,255,255,0.82)", fontSize: "11px", fontWeight: "600", cursor: "pointer" }}>
+                      {q}
+                    </button>
+                  ))}
+                </div>
 
-              <div style={{ display: "grid", gridTemplateColumns: "minmax(0,1fr) auto", gap: "8px" }}>
-                <input
-                  value={aiQuestion}
-                  onChange={e => setAiQuestion(e.target.value)}
-                  onKeyDown={e => { if (e.key === "Enter") handleAiSubmit(); }}
-                  placeholder="Ask about mortgages, agents, zoning, investing..."
-                  style={{ width: "100%", boxSizing: "border-box", border: "1px solid rgba(255,255,255,0.14)", borderRadius: R.md, padding: "10px 12px", backgroundColor: "rgba(255,255,255,0.09)", color: "white", outline: "none", fontFamily: "inherit", fontSize: "12px" }}
-                />
-                <button onClick={handleAiSubmit} style={{ border: "none", borderRadius: R.md, padding: "10px 14px", backgroundColor: "white", color: C.ink, fontSize: "12px", fontWeight: "800", cursor: "pointer" }}>Ask</button>
+                <div style={{ display: "grid", gridTemplateColumns: "minmax(0,1fr) auto", gap: "8px", alignItems: "center" }}>
+                  <input
+                    value={aiQuestion}
+                    maxLength={AI_MAX_CHARS}
+                    onChange={e => { setAiQuestion(e.target.value); if (aiError) setAiError(""); }}
+                    onKeyDown={e => { if (e.key === "Enter") handleAiSubmit(); }}
+                    placeholder="Ask one real estate question..."
+                    style={{ width: "100%", boxSizing: "border-box", border: "1px solid rgba(255,255,255,0.14)", borderRadius: R.md, padding: "10px 12px", backgroundColor: "rgba(255,255,255,0.09)", color: "white", outline: "none", fontFamily: "inherit", fontSize: "12px" }}
+                  />
+                  <button onClick={handleAiSubmit} style={{ border: "none", borderRadius: R.md, padding: "10px 14px", backgroundColor: "white", color: C.ink, fontSize: "12px", fontWeight: "800", cursor: "pointer" }}>Ask</button>
+                </div>
+
+                <div style={{ display: "flex", justifyContent: "space-between", gap: "12px", marginTop: "8px", color: aiError ? C.redLight : "rgba(255,255,255,0.42)", fontSize: "10px", fontWeight: "600", flexWrap: "wrap" }}>
+                  <span>{aiError || "Keep it focused: one beginner real estate question at a time."}</span>
+                  <span>{aiQuestion.length}/{AI_MAX_CHARS}</span>
+                </div>
               </div>
             </div>
           </div>
