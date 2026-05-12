@@ -79,6 +79,8 @@ export default function App() {
   const [comments, setComments] = useState([]);
   const [selectedProfessional, setSelectedProfessional] = useState(null);
   const [proMessage, setProMessage] = useState("");
+  const [selectedNewsletterId, setSelectedNewsletterId] = useState("april-sales-flat");
+  const [showPastIssues, setShowPastIssues] = useState(false);
 
   const learningGoals = ["Learn the basics","Understand investing","Explore development","Follow market trends","Learn laws and regulations","Connect with professionals"];
 
@@ -161,12 +163,72 @@ export default function App() {
     "deal-flow": { label: "Deal Sourcing", title: "How Opportunities Reach Investors", intro: "How deals move through networks, platforms, and relationships.", bullets: ["Deal flow determines what opportunities you see and when.","Strong relationships often provide first access to the best deals.","Evaluation discipline matters as much as sourcing quality."] },
   };
 
-  const weeklyNewsletter = {
-    label: "THIS WEEK", date: "Week of April 21, 2025",
-    title: "NYC Spotlight: What Beginners Should Be Watching",
-    intro: "This week's featured piece examines why New York remains a critical market to study — covering rent pressure, outer-borough demand, and the structural difference between co-ops and condos.",
-    bullets: ["Outer boroughs are gaining traction among first-time buyers.","The co-op vs. condo distinction has significant practical implications.","New York provides a useful lens for comparing multiple market types simultaneously."],
-  };
+  const newsletterIssues = [
+    {
+      id: "april-sales-flat",
+      label: "THIS WEEK",
+      date: "May 11, 2026",
+      category: "Market Pulse",
+      title: "April Home Sales Barely Moved. What That Tells Beginners",
+      intro: "Existing-home sales rose only slightly in April while prices stayed high and inventory improved. This issue explains what that means for buyers, sellers, and anyone trying to read the market without getting overwhelmed.",
+      bullets: [
+        "Sales increased 0.2% month-over-month, showing a slow spring market rather than a dramatic rebound.",
+        "The median existing-home sale price reached $417,700, so affordability is still the main pressure point.",
+        "More inventory gives buyers a little breathing room, but supply is still not fully back to normal."
+      ],
+      source: "NAR",
+      sourceUrl: "https://www.nar.realtor/newsroom/nar-existing-home-sales-report-shows-0-2-increase-in-april"
+    },
+    {
+      id: "inventory-watch",
+      label: "CURRENT NEWS",
+      date: "April 30, 2026",
+      category: "Inventory",
+      title: "Listings Are Rising, but Buyers Are Still Careful",
+      intro: "Realtor.com reported that active listings passed one million in April, while median list prices were down year-over-year. This is a useful read for understanding why more supply does not automatically mean homes are affordable.",
+      bullets: [
+        "Active listings reached 1,002,935 nationally.",
+        "Median list price was $425,000, down 1.4% year-over-year.",
+        "Homes spent a median of 51.5 days on the market, signaling a slower pace than recent years."
+      ],
+      source: "Realtor.com",
+      sourceUrl: "https://www.realtor.com/research/april-2026-data/"
+    },
+    {
+      id: "pending-sales",
+      label: "CURRENT NEWS",
+      date: "May 7, 2026",
+      category: "Buyer Demand",
+      title: "Pending Sales Picked Up When Rates Dipped",
+      intro: "Redfin reported that pending home sales reached their highest level since 2022 during the four weeks ending May 3. The takeaway: buyers are still sensitive to mortgage-rate movement.",
+      bullets: [
+        "Pending sales rose 7.7% year-over-year on a seasonally adjusted basis.",
+        "A temporary mortgage-rate dip helped pull some buyers back into the market.",
+        "The market is active, but still slower than a typical spring season."
+      ],
+      source: "Redfin",
+      sourceUrl: "https://www.redfin.com/news/housing-market-news/"
+    },
+    {
+      id: "nyc-beginner-guide",
+      label: "PAST ISSUE",
+      date: "April 21, 2025",
+      category: "NYC Basics",
+      title: "NYC Spotlight: What Beginners Should Be Watching",
+      intro: "A beginner-friendly issue on rent pressure, outer-borough demand, and the practical difference between co-ops and condos.",
+      bullets: [
+        "Outer boroughs are gaining traction among first-time buyers.",
+        "The co-op vs. condo distinction has significant practical implications.",
+        "New York gives beginners a useful lens for comparing multiple market types at once."
+      ],
+      source: "MyHome Editorial",
+      sourceUrl: "#"
+    }
+  ];
+
+  const currentNews = newsletterIssues.filter(issue => issue.label === "CURRENT NEWS");
+  const pastIssues = newsletterIssues.filter(issue => issue.label === "PAST ISSUE");
+  const weeklyNewsletter = newsletterIssues.find(issue => issue.id === selectedNewsletterId) || newsletterIssues[0];
 
   const topicProfileData = {
     "Tokenization": {
@@ -1360,30 +1422,97 @@ export default function App() {
         </section>
 
         {/* NEWSLETTER + COMMUNITY */}
-        <section id="market-trends-section" style={{ display: "grid", gridTemplateColumns: "minmax(0,1fr) minmax(0,1fr)", gap: "20px", marginBottom: "60px", alignItems: "stretch" }}> 
-          <div style={{ backgroundColor: C.white, border: `1px solid ${C.border}`, borderRadius: R.xl, padding: "26px" }}>
-            <div style={{ fontSize: "10px", fontWeight: "700", color: C.warm, letterSpacing: "0.08em", marginBottom: "14px" }}>THIS WEEK'S NEWSLETTER</div>
-            <h2 style={{ fontSize: "22px", fontWeight: "700", letterSpacing: "-0.02em", marginBottom: "8px", marginTop: 0 }}>What we're highlighting this week</h2>
-            <p style={{ fontSize: "13px", color: C.inkLight, lineHeight: "1.7", marginBottom: "18px" }}>One focused weekly read — timely, concise, and designed for people building their understanding.</p>
-            <div style={{ backgroundColor: C.bg, border: `1px solid ${C.border}`, borderRadius: R.lg, padding: "20px" }}>
-              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "10px" }}>
-                <div style={{ fontSize: "10px", fontWeight: "700", color: C.warm, letterSpacing: "0.07em", padding: "3px 7px", backgroundColor: C.warmLight, borderRadius: R.sm }}>{weeklyNewsletter.label}</div>
-                <div style={{ fontSize: "11px", color: C.inkMuted }}>{weeklyNewsletter.date}</div>
-              </div>
-              <div style={{ fontSize: "18px", fontWeight: "700", letterSpacing: "-0.015em", marginBottom: "8px", color: C.ink, lineHeight: "1.25" }}>{weeklyNewsletter.title}</div>
-              <p style={{ fontSize: "13px", color: C.inkLight, lineHeight: "1.7", marginBottom: "12px" }}>{weeklyNewsletter.intro}</p>
-              <div style={{ display: "grid", gap: "5px", marginBottom: "16px" }}>
-                {weeklyNewsletter.bullets.map((b,i) => (
-                  <div key={i} style={{ display: "flex", gap: "9px", alignItems: "flex-start" }}>
-                    <div style={{ width: "3px", height: "3px", borderRadius: "50%", backgroundColor: C.accent, marginTop: "8px", flexShrink: 0 }} />
-                    <div style={{ fontSize: "13px", color: C.inkLight, lineHeight: "1.6" }}>{b}</div>
+        <section id="market-trends-section" style={{ marginBottom: "60px" }}>
+          <div style={{ backgroundColor: C.white, border: `1px solid ${C.border}`, borderRadius: R.xl, padding: "clamp(26px,4vw,42px)", marginBottom: "22px" }}>
+            <div style={{ textAlign: "center", maxWidth: "760px", margin: "0 auto 28px" }}>
+              <div style={{ fontSize: "10px", fontWeight: "800", color: C.warm, letterSpacing: "0.16em", marginBottom: "12px" }}>THIS WEEK'S NEWSLETTER</div>
+              <h2 style={{ fontSize: "clamp(26px,4vw,38px)", fontWeight: "800", letterSpacing: "-0.035em", margin: "0 0 12px", color: C.ink }}>What we're highlighting this week</h2>
+              <p style={{ fontSize: "15px", color: C.inkLight, lineHeight: "1.8", margin: "0 auto", maxWidth: "680px" }}>Choose a current real estate headline on the right, and the featured newsletter will update here.</p>
+            </div>
+
+            <div style={{ display: "grid", gridTemplateColumns: "minmax(0,1.35fr) minmax(300px,0.75fr)", gap: "22px", alignItems: "stretch" }}>
+              <article style={{ backgroundColor: C.bg, border: `1px solid ${C.borderStrong}`, borderRadius: R.xl, padding: "clamp(24px,4vw,36px)", display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
+                <div>
+                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: "14px", flexWrap: "wrap", marginBottom: "22px" }}>
+                    <div style={{ fontSize: "11px", fontWeight: "800", color: C.warm, letterSpacing: "0.12em", padding: "8px 13px", backgroundColor: C.warmLight, borderRadius: R.md }}>{weeklyNewsletter.label}</div>
+                    <div style={{ fontSize: "13px", color: C.inkMuted }}>{weeklyNewsletter.date}</div>
                   </div>
-                ))}
-              </div>
-              <div style={{ display: "flex", gap: "8px", flexWrap: "wrap" }}>
-                <button style={btn.primary}>Read this week's issue</button>
-                <button style={btn.secondary}>Past issues</button>
-              </div>
+
+                  <div style={{ fontSize: "12px", fontWeight: "700", color: C.accent, letterSpacing: "0.08em", textTransform: "uppercase", marginBottom: "10px" }}>{weeklyNewsletter.category}</div>
+                  <h3 style={{ fontSize: "clamp(24px,3vw,34px)", fontWeight: "800", letterSpacing: "-0.035em", margin: "0 0 14px", color: C.ink, lineHeight: "1.15" }}>{weeklyNewsletter.title}</h3>
+                  <p style={{ fontSize: "15px", color: C.inkLight, lineHeight: "1.8", margin: "0 0 22px" }}>{weeklyNewsletter.intro}</p>
+
+                  <div style={{ display: "grid", gap: "12px", marginBottom: "26px" }}>
+                    {weeklyNewsletter.bullets.map((b,i) => (
+                      <div key={i} style={{ display: "grid", gridTemplateColumns: "18px minmax(0,1fr)", gap: "10px", alignItems: "start" }}>
+                        <div style={{ width: "6px", height: "6px", borderRadius: "50%", backgroundColor: C.accent, marginTop: "9px", justifySelf: "center" }} />
+                        <div style={{ fontSize: "14px", color: C.inkLight, lineHeight: "1.65" }}>{b}</div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: "12px", flexWrap: "wrap" }}>
+                  <div style={{ fontSize: "12px", color: C.inkMuted }}>Source: {weeklyNewsletter.source}</div>
+                  <div style={{ display: "flex", gap: "10px", flexWrap: "wrap" }}>
+                    <button
+                      onClick={() => weeklyNewsletter.sourceUrl !== "#" && window.open(weeklyNewsletter.sourceUrl, "_blank", "noopener,noreferrer")}
+                      style={{ ...btn.primary, padding: "12px 18px" }}
+                    >
+                      Read this issue ↗
+                    </button>
+                    <button
+                      onClick={() => setShowPastIssues(!showPastIssues)}
+                      style={{ ...btn.secondary, padding: "12px 18px" }}
+                    >
+                      {showPastIssues ? "Hide past issues" : "Past issues"}
+                    </button>
+                  </div>
+                </div>
+              </article>
+
+              <aside style={{ display: "flex", flexDirection: "column", gap: "14px" }}>
+                <div style={{ border: `1px solid ${C.border}`, borderRadius: R.xl, padding: "20px", backgroundColor: C.white }}>
+                  <div style={{ fontSize: "10px", fontWeight: "800", color: C.warm, letterSpacing: "0.12em", marginBottom: "12px" }}>CURRENT NEWS</div>
+                  <div style={{ display: "grid", gap: "10px" }}>
+                    {currentNews.map(item => {
+                      const active = selectedNewsletterId === item.id;
+                      return (
+                        <button
+                          key={item.id}
+                          onClick={() => setSelectedNewsletterId(item.id)}
+                          style={{ textAlign: "left", border: `1px solid ${active ? C.accent : C.border}`, borderRadius: R.lg, padding: "14px", backgroundColor: active ? C.accentLight : C.bg, cursor: "pointer" }}
+                        >
+                          <div style={{ display: "flex", justifyContent: "space-between", gap: "10px", marginBottom: "7px" }}>
+                            <span style={{ fontSize: "11px", fontWeight: "700", color: active ? C.accent : C.inkMuted }}>{item.category}</span>
+                            <span style={{ fontSize: "11px", color: C.inkMuted }}>{item.source}</span>
+                          </div>
+                          <div style={{ fontSize: "14px", fontWeight: "800", color: C.ink, lineHeight: "1.35", marginBottom: "5px" }}>{item.title}</div>
+                          <div style={{ fontSize: "12px", color: C.inkLight, lineHeight: "1.5" }}>{item.date}</div>
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+
+                {showPastIssues && (
+                  <div style={{ border: `1px solid ${C.border}`, borderRadius: R.xl, padding: "20px", backgroundColor: C.white }}>
+                    <div style={{ fontSize: "10px", fontWeight: "800", color: C.warm, letterSpacing: "0.12em", marginBottom: "12px" }}>PAST ISSUES</div>
+                    <div style={{ display: "grid", gap: "10px" }}>
+                      {pastIssues.map(item => (
+                        <button
+                          key={item.id}
+                          onClick={() => { setSelectedNewsletterId(item.id); setShowPastIssues(false); }}
+                          style={{ textAlign: "left", border: `1px solid ${C.border}`, borderRadius: R.lg, padding: "14px", backgroundColor: C.bg, cursor: "pointer" }}
+                        >
+                          <div style={{ fontSize: "11px", fontWeight: "700", color: C.inkMuted, marginBottom: "7px" }}>{item.date}</div>
+                          <div style={{ fontSize: "14px", fontWeight: "800", color: C.ink, lineHeight: "1.35" }}>{item.title}</div>
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </aside>
             </div>
           </div>
 
@@ -1391,10 +1520,10 @@ export default function App() {
             <div style={{ fontSize: "10px", fontWeight: "700", color: C.warm, letterSpacing: "0.08em", marginBottom: "14px" }}>COMMUNITY</div>
             <h2 style={{ fontSize: "22px", fontWeight: "700", letterSpacing: "-0.02em", marginBottom: "7px", marginTop: 0 }}>Learn from people in the field</h2>
             <p style={{ fontSize: "13px", color: C.inkLight, lineHeight: "1.7", marginBottom: "16px" }}>Professionals are here to support the learning process — not to dominate the platform.</p>
-            <div style={{ display: "grid", gap: "8px", flex: 1, marginBottom: "16px" }}>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(3,minmax(0,1fr))", gap: "10px", flex: 1, marginBottom: "16px" }}>
               {professionals.map(p => (
                 <div key={p.name} style={{ border: `1px solid ${C.border}`, borderRadius: R.lg, padding: "13px 15px", backgroundColor: C.bg }}>
-                  <div style={{ display: "flex", alignItems: "baseline", gap: "6px", marginBottom: "3px" }}>
+                  <div style={{ display: "flex", alignItems: "baseline", gap: "6px", marginBottom: "3px", flexWrap: "wrap" }}>
                     <div style={{ fontSize: "13px", fontWeight: "700", color: C.ink }}>{p.name}</div>
                     <div style={{ fontSize: "11px", color: C.inkMuted }}>— {p.role}</div>
                   </div>
